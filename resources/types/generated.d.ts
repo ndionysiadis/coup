@@ -30,4 +30,9 @@ updatedAt: string | null;
 deletedAt: string | null;
 category: App.Data.CategoryData | null;
 };
+export type UserData = {
+id: number;
+name: string;
+email: string;
+};
 }
