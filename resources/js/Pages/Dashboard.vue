@@ -5,16 +5,16 @@ import {Head} from '@inertiajs/vue3';
 const props = defineProps<{
     user: App.Data.UserData
 }>()
+
+const title = 'Dashboard - COUP'
 </script>
 
 <template>
-    <Head title="Dashboard"/>
+    <Head :title="title"/>
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Welcome back {{user.name}}
-            </h2>
+
         </template>
 
         <div class="py-12">

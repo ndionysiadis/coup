@@ -13,8 +13,26 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Manrope', ...defaultTheme.fontFamily.sans],
+                heading : ['Tinos', ...defaultTheme.fontFamily.sans],
             },
+
+            colors: {
+                primary: {
+                    '50': '#f8f6f4',
+                    '100': '#f0ece4',
+                    '200': '#dfd8c9',
+                    '300': '#cbbda6',
+                    '400': '#baa589',
+                    '500': '#a68969',
+                    '600': '#99785d',
+                    '700': '#80634e',
+                    '800': '#695243',
+                    '900': '#554339',
+                    '950': '#2d221d',
+                    DEFAULT: '#baa589'
+                },
+            }
         },
     },
 
