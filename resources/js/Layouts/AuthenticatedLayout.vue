@@ -6,12 +6,10 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import AppLink from "@/Components/Links/AppLink.vue";
 import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
+import {PhUser} from "@phosphor-icons/vue";
 
 const showingNavigationDropdown = ref(false);
 
-const props = defineProps<{
-    user: App.Data.UserData
-}>()
 </script>
 
 <template>
@@ -26,8 +24,8 @@ const props = defineProps<{
                                 <ApplicationLogo class="block h-8 fill-primary-400"/>
                             </AppLink>
                             <div class="h-6 border-l border-gray-500 mx-2"/>
-                            <HeadingTiny>
-                                Welcome back, {{ user.name }}.
+                            <HeadingTiny  v-motion-slide-left :delay="500">
+                                Welcome back, {{ $page.props.auth.user.name }}.
                             </HeadingTiny>
                         </div>
 
@@ -41,6 +39,7 @@ const props = defineProps<{
                                                 type="button"
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
                                             >
+                                                <PhUser weight="fill"/>
                                                 {{ $page.props.auth.user.name }}
 
                                                 <svg

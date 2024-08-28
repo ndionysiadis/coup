@@ -12,7 +12,7 @@ const title = 'Dashboard - COUP'
 <template>
     <Head :title="title"/>
 
-    <AuthenticatedLayout :user="props.user">
+    <AuthenticatedLayout>
         <template #header>
 
         </template>
