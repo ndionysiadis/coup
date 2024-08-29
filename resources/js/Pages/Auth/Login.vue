@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 import {Head, useForm} from '@inertiajs/vue3';
-import TextLink from "@/Components/Links/TextLink.vue";
+import FormInput from "@/Components/FormElements/FormInput.vue";
+import {PhAt, PhPassword} from "@phosphor-icons/vue";
+import FormCheckbox from "@/Components/FormElements/FormCheckbox.vue";
+import Copyrights from "@/Components/Copyrights.vue";
+import PrimaryButtonWide from "@/Components/PrimaryButtonWide.vue";
 
 defineProps<{
     canResetPassword?: boolean;
@@ -39,54 +38,63 @@ const title = 'Login - COUP'
         </div>
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email"/>
-
-                <TextInput
+            <div class="flex flex-col gap-4">
+                <FormInput
+                    label="Email"
+                    v-model="form.email"
                     id="email"
                     type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+                    :required="true"
+                    :autofocus="true"
+                    :error="form.errors.email">
 
-                <InputError class="mt-2" :message="form.errors.email"/>
-            </div>
+                    <PhAt weight="bold"/>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password"/>
+                </FormInput>
 
-                <TextInput
+                <FormInput
+                    label="Password"
+                    v-model="form.password"
                     id="password"
                     type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
+                    :required="true"
+                    :autofocus="true"
+                    :error="form.errors.password">
 
-                <InputError class="mt-2" :message="form.errors.password"/>
+                    <PhPassword weight="bold"/>
+
+                </FormInput>
             </div>
 
             <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember"/>
-                    <span class="ms-2 text-sm text-primary-50">Remember me</span>
-                </label>
+                <FormCheckbox
+                    v-model="form.remember"
+                    name="remember"
+                    label="Remember me"
+                />
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <TextLink v-if="canResetPassword"
-                          :href="route('password.request')">
-                    Forgot your password?
-                </TextLink>
+<!--                <TextLink v-if="canResetPassword"-->
+<!--                          :href="route('password.request')">-->
+<!--                    Forgot your password?-->
+<!--                </TextLink>-->
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButtonWide :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
-                </PrimaryButton>
+                </PrimaryButtonWide>
+
+<!--                <PrimaryButton direction="right" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">-->
+<!--                    <template #icon>-->
+<!--                        <PhSignIn weight="bold"/>-->
+<!--                    </template>-->
+<!--                    Log in-->
+<!--                </PrimaryButton>-->
             </div>
         </form>
+
+       <template #bottom>
+           <Copyrights/>
+       </template>
     </GuestLayout>
 </template>
