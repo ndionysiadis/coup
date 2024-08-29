@@ -1,7 +1,35 @@
+<script setup lang="ts">
+const props = withDefaults(
+    defineProps<{
+        direction?: 'left' | 'right'
+    }>(),
+    {
+        direction: 'left'
+    }
+)
+</script>
+
 <template>
-    <button
-        class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
-    >
-        <slot />
+    <button class="group relative inline-flex items-center overflow-hidden bg-primary-600 px-8 py-2 text-white
+                   focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-0 active:bg-primary-500">
+
+        <span
+            v-if="direction === 'left'"
+            class="absolute -start-full transition-all group-hover:start-4">
+            <slot name="icon"/>
+        </span>
+
+        <span
+            v-if="direction === 'right'"
+            class="absolute -end-full transition-all group-hover:end-4">
+            <slot name="icon"/>
+        </span>
+
+        <span
+            class="text-sm font-medium transition-all"
+            :class="direction === 'left' ? 'group-hover:ms-4' : 'group-hover:me-4'">
+            <slot/>
+        </span>
+
     </button>
 </template>

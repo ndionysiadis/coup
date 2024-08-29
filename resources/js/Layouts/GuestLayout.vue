@@ -4,26 +4,29 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-900 relative overflow-hidden">
-        <!-- Animated Background Lines -->
-        <div class="lines">
+    <div class="min-h-screen flex flex-col justify-center items-center pb-20 bg-gray-900 relative overflow-hidden">
+        <div class="lines absolute inset-0">
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
         </div>
 
-        <!-- Content -->
-        <div>
+        <div class="w-full flex justify-center mb-6">
             <Link href="/">
-                <ApplicationLogo class="w-44 fill-current text-primary-500" />
+                <ApplicationLogo class="w-32 sm:w-44 fill-current text-primary-500" />
             </Link>
         </div>
 
-        <div class="w-full z-10 sm:max-w-md mt-6 px-6 py-6 bg-gray-800 shadow-2xl shadow-gray-950/50 overflow-hidden">
+        <div class="w-full z-10 sm:max-w-md mt-6 px-4 sm:px-6 py-6 bg-gray-800 shadow-2xl shadow-gray-950/50 overflow-hidden">
             <slot />
+        </div>
+
+        <div class="absolute inset-x-0 bottom-3 px-4 sm:px-0">
+            <slot name="bottom"/>
         </div>
     </div>
 </template>
+
 
 <style scoped>
 * {
