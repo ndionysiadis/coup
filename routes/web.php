@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +31,42 @@ Route::middleware(['auth', 'verified'])
                 Route::patch('/', 'update')->name('update');
                 Route::delete('/', 'destroy')->name('destroy');
             });
-});
+
+        Route::controller(MenuController::class)
+            ->prefix('menu')
+            ->name('menu.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{menu}', 'show')->name('show');
+                Route::patch('/{menu}', 'update')->name('update');
+                Route::delete('/{menu}', 'destroy')->name('destroy');
+            });
+
+        Route::controller(CategoryController::class)
+            ->prefix('category')
+            ->name('category.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{menu}', 'show')->name('show');
+                Route::patch('/{menu}', 'update')->name('update');
+                Route::delete('/{menu}', 'destroy')->name('destroy');
+            });
+
+        Route::controller(ProductController::class)
+            ->prefix('product')
+            ->name('product.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{menu}', 'show')->name('show');
+                Route::patch('/{menu}', 'update')->name('update');
+                Route::delete('/{menu}', 'destroy')->name('destroy');
+            });
+    });
 
 require __DIR__ . '/auth.php';

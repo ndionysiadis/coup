@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {Head} from "@inertiajs/vue3";
 
-const title = 'COUP - Coffee, Wine, Kitchen'
+const title = 'Coffee, Wine, Kitchen'
 </script>
 
 <template>
