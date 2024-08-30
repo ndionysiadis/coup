@@ -5,7 +5,7 @@ import FormInput from "@/Components/FormElements/FormInput.vue";
 import {PhAt, PhPassword} from "@phosphor-icons/vue";
 import FormCheckbox from "@/Components/FormElements/FormCheckbox.vue";
 import Copyrights from "@/Components/Copyrights.vue";
-import PrimaryButtonWide from "@/Components/PrimaryButtonWide.vue";
+import PrimaryButtonWide from "@/Components/Buttons/PrimaryButtonWide.vue";
 
 defineProps<{
     canResetPassword?: boolean;
@@ -26,7 +26,7 @@ const submit = () => {
     });
 };
 
-const title = 'Login - COUP'
+const title = 'Login'
 </script>
 
 <template>
