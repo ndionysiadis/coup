@@ -10,17 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     public $guarded = [];
 
-    public function menuType(): BelongsTo
-    {
-        return $this->belongsTo(MenuType::class);
-    }
-
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'category_id');
     }
 }
