@@ -7,6 +7,8 @@ import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
 import {PhCaretRight, PhSignOut} from "@phosphor-icons/vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
+import Dropdown from "@/Components/Dropdown.vue";
 
 const showingNavigationDropdown = ref(false);
 
@@ -47,7 +49,7 @@ const props = defineProps<{
                         </PrimaryButton>
                     </AppLink>
 
-                    <AppLink :href="route('logout')" method="post">
+                    <AppLink :href="route('logout')" method="post" as="button">
                         <IconSecondaryButton title="Αποσύνδεση">
                             <PhSignOut weight="bold" size="16" />
                         </IconSecondaryButton>

@@ -10,13 +10,11 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-<span class="cursor-pointer">
-     <Link v-if="!blank" :href="href">
+    <Link v-if="!blank" :href="href" class="cursor-pointer">
         <slot/>
-     </Link>
+    </Link>
 
-     <a v-else :href="href" target="_blank">
-            <slot/>
-     </a>
-</span>
+    <a v-else :href="href" target="_blank" class="cursor-pointer">
+        <slot/>
+    </a>
 </template>
