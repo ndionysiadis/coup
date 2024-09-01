@@ -49,7 +49,9 @@ function updateValue(event: Event) {
             {{ props.label }}
         </span>
 
-        <span class="absolute inset-y-0 right-0 flex items-center text-gray-400 bg-gray-800 px-3">
+        <span
+            v-if="$slots.default"
+            class="absolute inset-y-0 right-0 flex items-center text-gray-400 bg-gray-800 px-3">
             <slot/>
         </span>
     </div>

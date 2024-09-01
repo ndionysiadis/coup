@@ -7,23 +7,35 @@ import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
 import {PhCaretRight, PhSignOut} from "@phosphor-icons/vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
+import Dropdown from "@/Components/Dropdown.vue";
 
 const showingNavigationDropdown = ref(false);
+
+const props = defineProps<{
+    withGreeting?: boolean
+}>()
 
 </script>
 
 <template>
     <div>
         <div class="min-h-screen bg-gray-900">
-            <nav class="flex m-2 p-4 justify-between bg-gray-800 ring-1 ring-inset ring-gray-600">
+            <nav class="flex m-2 p-4 justify-between bg-gray-800 ring-1 ring-inset ring-gray-600" v-motion-slide-top :delay="200">
                 <div class="flex items-center gap-2">
                     <AppLink :href="route('dashboard')">
                         <ApplicationLogo class="block h-8 fill-primary-400"/>
                     </AppLink>
-                    <div class="h-6 border-l border-gray-500 mx-2 hidden sm:inline-flex"/>
-                    <HeadingTiny  v-motion-slide-left :delay="500" class="hidden sm:inline-flex">
+                    <div
+
+                        class="h-6 border-l border-gray-500 mx-2"/>
+                    <HeadingTiny v-if="withGreeting" v-motion-slide-left :delay="700" class="hidden sm:inline-flex">
                         Welcome back, {{ $page.props.auth.user.name }}.
                     </HeadingTiny>
+
+                    <div v-motion-slide-left :delay="500">
+                        <slot name="breadcrumbs"/>
+                    </div>
                 </div>
 
                 <div class="hidden sm:flex sm:items-center gap-2 sm:ms-6">
@@ -37,7 +49,7 @@ const showingNavigationDropdown = ref(false);
                         </PrimaryButton>
                     </AppLink>
 
-                    <AppLink :href="route('logout')" method="post">
+                    <AppLink :href="route('logout')" method="post" as="button">
                         <IconSecondaryButton title="Αποσύνδεση">
                             <PhSignOut weight="bold" size="16" />
                         </IconSecondaryButton>
@@ -106,7 +118,7 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Content -->
-            <main class="m-2">
+            <main class="m-2" v-motion-fade-visible :delay="200">
                 <slot/>
             </main>
         </div>

@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
@@ -38,10 +37,11 @@ Route::middleware(['auth', 'verified'])
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/create', 'create')->name('create');
+                Route::get('/{menuType}', 'show')->name('show');
+                Route::get('/{menuType}/edit', 'edit')->name('edit');
                 Route::post('/', 'store')->name('store');
-                Route::get('/{menu}', 'show')->name('show');
-                Route::patch('/{menu}', 'update')->name('update');
-                Route::delete('/{menu}', 'destroy')->name('destroy');
+                Route::put('/{menuType}', 'update')->name('update');
+                Route::delete('/{menuType}', 'destroy')->name('destroy');
             });
 
         Route::controller(CategoryController::class)
@@ -51,9 +51,10 @@ Route::middleware(['auth', 'verified'])
                 Route::get('/', 'index')->name('index');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/', 'store')->name('store');
-                Route::get('/{menu}', 'show')->name('show');
-                Route::patch('/{menu}', 'update')->name('update');
-                Route::delete('/{menu}', 'destroy')->name('destroy');
+                Route::get('/{category}', 'show')->name('show');
+                Route::get('/{category}/edit', 'edit')->name('edit');
+                Route::patch('/{category}', 'update')->name('update');
+                Route::delete('/{category}', 'destroy')->name('destroy');
             });
 
         Route::controller(ProductController::class)
@@ -63,10 +64,12 @@ Route::middleware(['auth', 'verified'])
                 Route::get('/', 'index')->name('index');
                 Route::get('/create', 'create')->name('create');
                 Route::post('/', 'store')->name('store');
-                Route::get('/{menu}', 'show')->name('show');
-                Route::patch('/{menu}', 'update')->name('update');
-                Route::delete('/{menu}', 'destroy')->name('destroy');
+                Route::get('/{product}', 'show')->name('show');
+                Route::get('/{product}/edit', 'edit')->name('edit');
+                Route::patch('/{product}', 'update')->name('update');
+                Route::delete('/{product}', 'destroy')->name('destroy');
             });
     });
 
 require __DIR__ . '/auth.php';
+

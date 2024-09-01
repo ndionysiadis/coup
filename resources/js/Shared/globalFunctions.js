@@ -1,7 +1,5 @@
 import moment from "moment";
 import {usePage} from '@inertiajs/vue3'
-import formTranslations from '@/Shared/Translations/formTranslations.json'
-import {Translation} from "@/Shared/Translation";
 
 function formatMinutes(totalMinutes) {
     let unRoundedMinutes = totalMinutes % 60
@@ -107,19 +105,6 @@ function removeFilter(filters, key, value) {
     filters[key] = filters[key].filter(option => option?.id !== value?.id)
 }
 
-function getBooleanOptions() {
-    return [
-        {
-            id: 1,
-            name: Translation.get(formTranslations.yes)
-        },
-        {
-            id: 0,
-            name: Translation.get(formTranslations.no)
-        },
-    ]
-}
-
 function formatTitleCase(str) {
     str = str.toLowerCase().split('-');
 
@@ -191,7 +176,6 @@ export {
     formatDateTimeDifference,
     removeFilter,
     toTwoDecimals,
-    getBooleanOptions,
     formatTitleCase,
     tabTitleWithCount,
     calculatePercentage,

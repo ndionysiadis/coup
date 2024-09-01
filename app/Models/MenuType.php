@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MenuType extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     public $guarded = [];
 
-    public function category(): HasMany
+    public function categories(): HasMany
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Category::class, 'menu_id');
     }
 }
 
