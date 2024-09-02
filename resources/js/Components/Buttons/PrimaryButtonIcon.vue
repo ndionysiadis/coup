@@ -29,7 +29,7 @@ const props = withDefaults(
 
         <span
             class="text-sm font-medium transition-all"
-            :class="direction === 'left' ? 'group-hover:ms-4' : 'group-hover:me-4'">
+            :class="direction === 'left' ? 'group-hover:ms-4 -ml-1' : 'group-hover:me-4'">
             <slot/>
         </span>
 

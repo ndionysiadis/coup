@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Data\MenuTypeData;
 use App\Data\MenuTypePageData;
+use App\Data\ProductData;
 use App\Data\ToastData;
 use App\Models\MenuType;
-use App\Repositories\MenuRepository;
-use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
 
 class MenuController extends Controller
 {
+
     public function index(): Response
     {
         return Inertia::render('Menu/Index', new MenuTypePageData());
@@ -21,7 +21,22 @@ class MenuController extends Controller
 
     public function create()
     {
-        return Inertia::render('Menu/Create');
+        return Inertia::render('Menu/Create', [
+            'menuType' => MenuTypeData::empty()
+        ]);
+    }
+
+    public function store(MenuTypeData $request)
+    {
+        $menuType = MenuType::create($request->toDatabase());
+
+        return redirect()
+            ->route('menu.show', $menuType)
+            ->with([
+                'toast' => ToastData::success(
+                    'Το μενού δημιουργήθηκε με επιτυχία.'
+                )
+            ]);
     }
 
     public function show(MenuType $menuType): Response
@@ -45,18 +60,33 @@ class MenuController extends Controller
     /**
      * @throws Throwable
      */
-    public function update(MenuTypeData $request, MenuType $menuType): RedirectResponse
+    public function update(MenuTypeData $request, MenuType $menuType)
     {
+        $menuType->update($request->toDatabase());
+
         return redirect()
             ->route('menu.show', $menuType)
-            ->with(
-                key: 'toast',
-                value: ToastData::handle(
-                    successMessage: 'Το option group ενημερώθηκε με επιτυχία.',
-                    errorMessage: 'Δεν καταφέραμε να ενημερώσουμε το option group.',
-                    callback: [(new MenuRepository($menuType)), 'update'],
-                    args: [$request]
+            ->with([
+                'toast' => ToastData::success(
+                    'Το μενού ενημερώθηκε με επιτυχία.'
                 )
-            );
+            ]);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function destroy(MenuType $menuType)
+    {
+
+        $menuType->delete();
+
+        return redirect()
+            ->route('menu.index')
+            ->with([
+                'toast' => ToastData::success(
+                    'Το μενού διαγράφτηκε με επιτυχία.'
+                )
+            ]);
     }
 }

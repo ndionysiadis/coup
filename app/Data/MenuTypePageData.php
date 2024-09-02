@@ -15,9 +15,10 @@ class MenuTypePageData extends Data
     {
         $this->menuTypes = MenuTypeData::collect(
             MenuType::query()
-            ->orderBy('name')
-            ->paginate(10)
-            ->withQueryString()
+                ->orderBy('name')
+                ->paginate(10)
+                ->withQueryString(),
+            PaginatedDataCollection::class
         )->include('totalCategories', 'totalProducts');
     }
 }

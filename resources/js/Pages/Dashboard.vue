@@ -35,7 +35,9 @@ const title = 'Dashboard'
                             >
                                 <div class="flex gap-2 items-center">
                                     <HeadingMedium>Menu's</HeadingMedium>
-                                    <PhPlusSquare weight="fill" size="32"/>
+                                    <AppLink :href="route('menu.create')">
+                                        <PhPlusSquare weight="fill" size="32"/>
+                                    </AppLink>
                                 </div>
 
                                 <p class="mt-4 text-sm sm:text-base">

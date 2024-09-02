@@ -8,7 +8,7 @@ description: string | null;
 createdAt: string | null;
 updatedAt: string | null;
 deletedAt: string | null;
-products: any | App.Data.ProductData | null;
+products: any | any | Array<App.Data.ProductData> | null;
 };
 export type MenuTypeData = {
 id: number | null;

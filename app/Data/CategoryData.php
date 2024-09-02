@@ -4,7 +4,9 @@ namespace App\Data;
 
 use App\Models\Category;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
+use Spatie\LaravelData\Optional;
 
 /** @typescript */
 class CategoryData extends Data
@@ -20,7 +22,8 @@ class CategoryData extends Data
         public ?string               $updatedAt,
         public ?string               $deletedAt,
 
-        public Lazy|ProductData|null $products,
+        /** @var Optional|Lazy|DataCollection<ProductData> */
+        public Lazy|DataCollection|Optional|null $products,
     )
     {
     }

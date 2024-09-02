@@ -7,6 +7,8 @@ import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { nextTick, ref } from 'vue';
+import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
+import FormInput from "@/Components/FormElements/FormInput.vue";
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref<HTMLInputElement | null>(null);
@@ -42,7 +44,7 @@ const closeModal = () => {
 <template>
     <section class="space-y-6">
         <header>
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Delete Account</h2>
+            <HeadingSmall>Delete Account</HeadingSmall>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
@@ -64,19 +66,14 @@ const closeModal = () => {
                 </p>
 
                 <div class="mt-6">
-                    <InputLabel for="password" value="Password" class="sr-only" />
-
-                    <TextInput
+                    <FormInput
                         id="password"
+                        type="password"
+                        label="Password"
                         ref="passwordInput"
                         v-model="form.password"
-                        type="password"
-                        class="mt-1 block w-3/4"
-                        placeholder="Password"
-                        @keyup.enter="deleteUser"
-                    />
-
-                    <InputError :message="form.errors.password" class="mt-2" />
+                        :error="form.errors.password"
+                        @keyup.enter="deleteUser"/>
                 </div>
 
                 <div class="mt-6 flex justify-end">

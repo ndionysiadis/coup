@@ -42,9 +42,6 @@ const props = defineProps<{
 
                     <AppLink :href="route('profile.edit')">
                         <PrimaryButton direction="right" title="Προφίλ">
-                            <template #icon>
-                                <PhCaretRight weight="bold"/>
-                            </template>
                             Profile
                         </PrimaryButton>
                     </AppLink>

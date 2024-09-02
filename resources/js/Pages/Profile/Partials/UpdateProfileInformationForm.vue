@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/Buttons/PrimaryButtonIcon.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
+import {Link, useForm, usePage} from '@inertiajs/vue3';
+import FormInput from "@/Components/FormElements/FormInput.vue";
+import CardContainer from "@/Components/Cards/CardContainer.vue";
+import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
 
 defineProps<{
     mustVerifyEmail?: Boolean;
@@ -21,7 +21,7 @@ const form = useForm({
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Profile Information</h2>
+            <HeadingSmall>Profile Information</HeadingSmall>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 Update your account's profile information and email address.
@@ -29,35 +29,24 @@ const form = useForm({
         </header>
 
         <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
-            <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
+            <div class="flex flex-col gap-4">
+                <FormInput
                     id="name"
                     type="text"
-                    class="mt-1 block w-full"
+                    label="Name"
                     v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+                    :required="true"
+                    :autofocus="true"
+                    :error="form.errors.name"/>
 
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
-
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
+                <FormInput
                     id="email"
                     type="email"
-                    class="mt-1 block w-full"
+                    label="Email"
                     v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+                    :required="true"
+                    :autofocus="false"
+                    :error="form.errors.email"/>
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">

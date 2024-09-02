@@ -8,6 +8,8 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
+import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
+import {PhPlus} from "@phosphor-icons/vue";
 
 const title = "Menu's"
 
@@ -21,11 +23,11 @@ const props = defineProps<{
 
     <AuthenticatedLayout>
         <template #breadcrumbs>
-           <Breadcrumbs>
-               <Breadcrumb first :href="route('menu.index')">
-                   Menu's
-               </Breadcrumb>
-           </Breadcrumbs>
+            <Breadcrumbs>
+                <Breadcrumb first :href="route('menu.index')">
+                    Menu's
+                </Breadcrumb>
+            </Breadcrumbs>
         </template>
 
         <div class="flex items-center justify-between mb-4">
@@ -34,9 +36,21 @@ const props = defineProps<{
                 <PaginationMeta :meta="menuTypes.meta"/>
             </div>
 
-            <PaginationLinks
-                v-if="menuTypes?.meta?.total > 0"
-                :links="menuTypes.links"/>
+            <div class="flex items-center gap-2">
+                <AppLink :href="route('menu.create')">
+                    <PrimaryButtonIcon direction="right">
+                        <template #icon>
+                            <PhPlus weight="bold" size="16"/>
+                        </template>
+
+                        Δημιουργία
+                    </PrimaryButtonIcon>
+                </AppLink>
+
+                <PaginationLinks
+                    v-if="menuTypes?.meta?.total > 0"
+                    :links="menuTypes.links"/>
+            </div>
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
