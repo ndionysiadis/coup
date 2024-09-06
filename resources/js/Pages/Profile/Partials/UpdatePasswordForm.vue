@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/Buttons/PrimaryButtonIcon.vue';
-import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
@@ -40,10 +37,10 @@ const updatePassword = () => {
 <template>
     <section>
         <header>
-            <HeadingSmall>Update Password</HeadingSmall>
+            <HeadingSmall>Ενημέρωση κωδικού πρόσβασης</HeadingSmall>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Ensure your account is using a long, random password to stay secure.
+                Βεβαιωθείτε ότι ο λογαριασμός σας χρησιμοποιεί έναν μακρύ, τυχαίο κωδικό πρόσβασης για να παραμείνετε ασφαλείς.
             </p>
         </header>
 
@@ -53,7 +50,7 @@ const updatePassword = () => {
                     id="current_password"
                     ref="currentPasswordInput"
                     type="password"
-                    label="Current Password"
+                    label="Τρέχων κωδικός πρόσβασης"
                     v-model="form.current_password"
                     :required="false"
                     :autofocus="false"
@@ -63,7 +60,7 @@ const updatePassword = () => {
                     id="password"
                     ref="passwordInput"
                     type="password"
-                    label="New Password"
+                    label="Νέος κωδικός πρόσβασης"
                     v-model="form.password"
                     :required="false"
                     :autofocus="false"
@@ -72,7 +69,7 @@ const updatePassword = () => {
                 <FormInput
                     id="password_confirmation"
                     type="password"
-                    label="Confirm Password"
+                    label="Επιβεβαίωση νέου κωδικού πρόσβασης"
                     v-model="form.password"
                     :required="false"
                     :autofocus="false"
@@ -80,7 +77,7 @@ const updatePassword = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <PrimaryButton :disabled="form.processing">Αποθήκευση</PrimaryButton>
 
                 <Transition
                     enter-active-class="transition ease-in-out"
@@ -88,7 +85,7 @@ const updatePassword = () => {
                     leave-active-class="transition ease-in-out"
                     leave-to-class="opacity-0"
                 >
-                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600 dark:text-gray-400">Saved.</p>
+                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600 dark:text-gray-400">Αποθηκεύτηκε.</p>
                 </Transition>
             </div>
         </form>

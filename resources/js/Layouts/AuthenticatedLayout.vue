@@ -40,7 +40,7 @@ const props = defineProps<{
 
                     <AppLink :href="route('profile.edit')">
                         <PrimaryButton direction="right" title="Προφίλ">
-                            Προφίλ
+                            Λογαριασμός
                         </PrimaryButton>
                     </AppLink>
 
