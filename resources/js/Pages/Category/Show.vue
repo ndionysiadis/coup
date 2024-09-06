@@ -6,27 +6,28 @@ import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import {formatTitleCase} from "@/Shared/globalFunctions";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
-import {PhArrowUUpLeft, PhPencilSimple, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
-import CategoryCard from "@/Models/CategoryCard.vue";
+import {PhArrowUUpLeft, PhChefHat, PhPencilSimple, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import {ref} from "vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
+import ProductCard from "@/Models/ProductCard.vue";
+import TextLink from "@/Components/Links/TextLink.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
 
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeData
+    category: App.Data.CategoryData
 }>()
 
 const modalOpen = ref<boolean>(false)
 
-const title = formatTitleCase(props.menuType.name)
+const title = formatTitleCase(props.category.name)
 
 function destroy() {
-    router.delete(route('menu.destroy', props.menuType), {
+    router.delete(route('category.destroy', props.category), {
         preserveState: true,
         preserveScroll: true,
         only: [
@@ -42,11 +43,11 @@ function destroy() {
     <AuthenticatedLayout>
         <template #breadcrumbs>
             <Breadcrumbs>
-                <Breadcrumb first :href="route('menu.index')">
-                    Μενού
+                <Breadcrumb first :href="route('category.index')">
+                    Κατηγορίες
                 </Breadcrumb>
 
-                <Breadcrumb :href="route('menu.show', menuType)">
+                <Breadcrumb :href="route('category.show', category)">
                     {{ title }}
                 </Breadcrumb>
             </Breadcrumbs>
@@ -58,13 +59,13 @@ function destroy() {
             </div>
 
             <div class="flex items-center gap-2">
-                <AppLink :href="route('menu.index')">
+                <AppLink :href="route('category.index')">
                     <IconSecondaryButton title="Επιστροφή">
                         <PhArrowUUpLeft weight="bold"/>
                     </IconSecondaryButton>
                 </AppLink>
 
-                <AppLink :href="route('menu.edit', menuType)">
+                <AppLink :href="route('category.edit', category)">
                     <IconSecondaryButton title="Επεξεργασία">
                         <PhPencilSimple weight="fill"/>
                     </IconSecondaryButton>
@@ -84,12 +85,13 @@ function destroy() {
                 </template>
 
                 <template #title>
-                    Διαγραφή μενού: {{ formatTitleCase(menuType.name) }}
+                    Διαγραφή κατηγορίας: {{ formatTitleCase(category.name) }}
                 </template>
 
                 <template #body>
-                    Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο μενού; Η διαγραφή θα γίνει μόνο στο μενού
-                    και όχι στις συνδεδεμένες κατηγορίες & προϊόντα.
+                    Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη κατηγορία; Η διαγραφή θα γίνει μόνο στη
+                    κατηγορία
+                    και όχι στα συνδεδεμένα μενού & προϊόντα.
                 </template>
 
                 <template #actions>
@@ -104,16 +106,26 @@ function destroy() {
             </PrimaryModal>
         </div>
 
-        <CardContainer class="mb-4">
-            {{ menuType.description }}
+
+        <CardContainer class="mb-4 flex flex-col gap-2">
+            <div v-if="category.menuType" class="flex items-center gap-1">
+                <PhChefHat size="16" weight="bold"/>
+                <TextLink :href="route('menu.show', category.menuType)">
+                    {{ formatTitleCase(category.menuType.name) }}
+                </TextLink>
+            </div>
+
+            <div>
+                {{ category.description }}
+            </div>
         </CardContainer>
 
-        <HeadingSmall>Κατηγορίες</HeadingSmall>
+        <HeadingSmall>Products</HeadingSmall>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-            <CategoryCard v-for="category in menuType.categories"
-                          :key="category.id"
-                          :category="category"/>
+            <ProductCard v-for="product in category.products"
+                         :key="product.id"
+                         :product="product"/>
         </div>
 
     </AuthenticatedLayout>

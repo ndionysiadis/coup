@@ -4,11 +4,9 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import AppLink from "@/Components/Links/AppLink.vue";
 import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
-import {PhCaretRight, PhSignOut} from "@phosphor-icons/vue";
+import {PhSignOut} from "@phosphor-icons/vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
-import DropdownLink from "@/Components/DropdownLink.vue";
-import Dropdown from "@/Components/Dropdown.vue";
 
 const showingNavigationDropdown = ref(false);
 
@@ -30,7 +28,7 @@ const props = defineProps<{
 
                         class="h-6 border-l border-gray-500 mx-2"/>
                     <HeadingTiny v-if="withGreeting" v-motion-slide-left :delay="700" class="hidden sm:inline-flex">
-                        Welcome back, {{ $page.props.auth.user.name }}.
+                        Καλώς ήρθες, {{ $page.props.auth.user.name }}.
                     </HeadingTiny>
 
                     <div v-motion-slide-left :delay="500">
@@ -42,7 +40,7 @@ const props = defineProps<{
 
                     <AppLink :href="route('profile.edit')">
                         <PrimaryButton direction="right" title="Προφίλ">
-                            Profile
+                            Προφίλ
                         </PrimaryButton>
                     </AppLink>
 

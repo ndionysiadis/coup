@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->foreignId('menu_id')->constrained('menu_types')->cascadeOnDelete();
+            $table->foreignId('menu_id')->nullable()->constrained('menu_types')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

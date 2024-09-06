@@ -3,18 +3,18 @@ import {Head} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
-import MenuCard from "@/Models/MenuCard.vue";
 import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import {PhPlus} from "@phosphor-icons/vue";
+import CategoryCard from "@/Models/CategoryCard.vue";
 
-const title = "Μενού"
+const title = "Κατηγορίες"
 
 const props = defineProps<{
-    menuTypes: LaravelPaginator<App.Data.MenuTypeData>
+    categories: LaravelPaginator<App.Data.CategoryData>
 }>()
 </script>
 
@@ -24,8 +24,8 @@ const props = defineProps<{
     <AuthenticatedLayout>
         <template #breadcrumbs>
             <Breadcrumbs>
-                <Breadcrumb first :href="route('menu.index')">
-                    Μενού
+                <Breadcrumb first :href="route('category.index')">
+                    Κατηγορίες
                 </Breadcrumb>
             </Breadcrumbs>
         </template>
@@ -33,15 +33,15 @@ const props = defineProps<{
         <div class="flex items-center justify-between mb-4">
             <div class="flex flex-col">
                 <HeadingLarge>{{ title }}</HeadingLarge>
-                <PaginationMeta :meta="menuTypes.meta"/>
+                <PaginationMeta :meta="categories.meta"/>
             </div>
 
             <div class="flex items-center gap-2">
                 <PaginationLinks
-                    v-if="menuTypes?.meta?.total > 0"
-                    :links="menuTypes.links"/>
+                    v-if="categories?.meta?.total > 0"
+                    :links="categories.links"/>
 
-                <AppLink :href="route('menu.create')">
+                <AppLink :href="route('category.create')">
                     <PrimaryButtonIcon direction="right">
                         <template #icon>
                             <PhPlus weight="bold" size="16"/>
@@ -54,10 +54,10 @@ const props = defineProps<{
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
-            <MenuCard
-                v-for="menuType in menuTypes.data"
-                :key="menuType.id"
-                :menu-type="menuType"/>
+            <CategoryCard
+                v-for="category in categories.data"
+                :key="category.id"
+                :category="category"/>
         </div>
     </AuthenticatedLayout>
 </template>

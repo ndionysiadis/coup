@@ -4,23 +4,27 @@ namespace App\Data;
 
 use App\Models\Product;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
+use Spatie\LaravelData\Lazy;
+use Spatie\LaravelData\Optional;
 
 /** @typescript */
 class ProductData extends Data
 {
     public function __construct(
-        public int           $id,
-        public int           $categoryId,
-        public string        $name,
+        public int                               $id,
+        public int                               $categoryId,
+        public string                            $name,
 
-        public ?int          $price,
-        public ?string       $image,
-        public ?string       $description,
-        public ?string       $createdAt,
-        public ?string       $updatedAt,
-        public ?string       $deletedAt,
+        public ?int                              $price,
+        public ?string                           $image,
+        public ?string                           $description,
+        public ?string                           $createdAt,
+        public ?string                           $updatedAt,
+        public ?string                           $deletedAt,
 
-        public ?CategoryData $category,
+        /** @var Optional|Lazy|DataCollection<CategoryData> */
+        public Lazy|DataCollection|Optional|null $category,
     )
     {
     }
@@ -37,7 +41,7 @@ class ProductData extends Data
             createdAt: $product->created_at,
             updatedAt: $product->updated_at,
             deletedAt: $product->deleted_at,
-            category: CategoryData::fromModel($product->category),
+            category: Lazy::create(fn() => CategoryData::optional($product->category))
         );
     }
 }

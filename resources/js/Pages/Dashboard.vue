@@ -27,15 +27,15 @@ const title = 'Dashboard'
                             >
                                 <PhFiles size="32"/>
 
-                                <HeadingMedium>Menu's</HeadingMedium>
+                                <HeadingMedium>Μενού</HeadingMedium>
                             </div>
 
                             <div
                                 class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
                             >
                                 <div class="flex gap-2 items-center">
-                                    <HeadingMedium>Menu's</HeadingMedium>
-                                    <AppLink :href="route('menu.create')">
+                                    <HeadingMedium>Μενού</HeadingMedium>
+                                    <AppLink :href="route('menu.create')" title="Δημιουργία μενού">
                                         <PhPlusSquare weight="fill" size="32"/>
                                     </AppLink>
                                 </div>
@@ -49,6 +49,7 @@ const title = 'Dashboard'
                 </AppLink>
             </CardContainer>
             <CardContainer>
+                <AppLink :href="route('category.index')">
                 <div class="group relative block h-64">
                     <span class="absolute inset-0 border-2 border-dashed border-primary-500"></span>
 
@@ -60,15 +61,18 @@ const title = 'Dashboard'
                         >
                             <PhListBullets size="32"/>
 
-                            <HeadingMedium>Categories</HeadingMedium>
+                            <HeadingMedium>Κατηγορίες</HeadingMedium>
                         </div>
 
                         <div
                             class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
                         >
                             <div class="flex gap-2 items-center">
-                                <HeadingMedium>Categories</HeadingMedium>
+                                <HeadingMedium>Κατηγορίες</HeadingMedium>
+
+                                <AppLink :href="route('category.create')" title="Δημιουργία κατηγορίας">
                                 <PhPlusSquare weight="fill" size="32"/>
+                                </AppLink>
                             </div>
 
                             <p class="mt-4 text-sm sm:text-base">
@@ -77,6 +81,7 @@ const title = 'Dashboard'
                         </div>
                     </div>
                 </div>
+                </AppLink>
             </CardContainer>
             <CardContainer>
                 <div class="group relative block h-64">
@@ -90,14 +95,14 @@ const title = 'Dashboard'
                         >
                             <PhForkKnife size="32"/>
 
-                            <HeadingMedium>Products</HeadingMedium>
+                            <HeadingMedium>Προϊόντα</HeadingMedium>
                         </div>
 
                         <div
                             class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
                         >
                             <div class="flex gap-2 items-center">
-                                <HeadingMedium>Products</HeadingMedium>
+                                <HeadingMedium>Προϊόντα</HeadingMedium>
                                 <PhPlusSquare weight="fill" size="32"/>
                             </div>
 

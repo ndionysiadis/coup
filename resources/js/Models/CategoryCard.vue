@@ -2,7 +2,9 @@
 import {formatTitleCase} from "@/Shared/globalFunctions";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
-import {PhForkKnife} from "@phosphor-icons/vue";
+import {PhChefHat, PhForkKnife} from "@phosphor-icons/vue";
+import AppLink from "@/Components/Links/AppLink.vue";
+import TextLink from "@/Components/Links/TextLink.vue";
 
 const props = defineProps<{
     category: App.Data.CategoryData
@@ -10,7 +12,7 @@ const props = defineProps<{
 </script>
 
 <template>
-<!--    <AppLink :href="route('menu.show', menuType)">-->
+    <AppLink :href="route('category.show', category)">
         <CardContainer>
             <div class="flex flex-col gap-1">
                 <HeadingSmall>
@@ -19,10 +21,21 @@ const props = defineProps<{
 
                 <div class="flex items-center gap-1">
                     <PhForkKnife size="16" weight="bold"/>
-                    <div>Products:</div>
+                    <div>Προϊόντα:</div>
                     <div>{{ category.totalProducts }}</div>
+                </div>
+
+                <div v-if="route().current('category.*')"
+                    class="flex items-center gap-1">
+                    <PhChefHat size="16" weight="bold"/>
+                    <div>Μενού:</div>
+                    <div v-if="category.menuType">
+                        <TextLink :href="route('menu.show', category.menuType)">
+                            {{ formatTitleCase(category.menuType.name) }}
+                        </TextLink>
+                    </div>
                 </div>
             </div>
         </CardContainer>
-<!--    </AppLink>-->
+    </AppLink>
 </template>

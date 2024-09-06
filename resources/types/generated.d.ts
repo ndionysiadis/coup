@@ -1,14 +1,15 @@
 declare namespace App.Data {
 export type CategoryData = {
-id: number;
-menuId: number;
-totalProducts: number;
+id: number | null;
+menuId: number | null;
+totalProducts: number | null;
 name: string;
 description: string | null;
 createdAt: string | null;
 updatedAt: string | null;
 deletedAt: string | null;
 products: any | any | Array<App.Data.ProductData> | null;
+menuType: any | any | Array<App.Data.MenuTypeData> | null;
 };
 export type MenuTypeData = {
 id: number | null;
@@ -21,6 +22,9 @@ totalCategories: any | any | number;
 totalProducts: any | any | number;
 categories: any | any | Array<App.Data.CategoryData> | null;
 };
+export type MenuTypePageData = {
+menuTypes: Array<App.Data.MenuTypeData>;
+};
 export type ProductData = {
 id: number;
 categoryId: number;
@@ -31,7 +35,7 @@ description: string | null;
 createdAt: string | null;
 updatedAt: string | null;
 deletedAt: string | null;
-category: App.Data.CategoryData | null;
+category: any | any | Array<App.Data.CategoryData> | null;
 };
 export type ToastData = {
 message: string | null;
