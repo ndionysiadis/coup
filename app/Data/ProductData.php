@@ -12,8 +12,8 @@ use Spatie\LaravelData\Optional;
 class ProductData extends Data
 {
     public function __construct(
-        public int                               $id,
-        public int                               $categoryId,
+        public ?int                              $id,
+        public ?int                              $categoryId,
         public string                            $name,
 
         public ?int                              $price,
@@ -43,5 +43,39 @@ class ProductData extends Data
             deletedAt: $product->deleted_at,
             category: Lazy::create(fn() => CategoryData::optional($product->category))
         );
+    }
+
+    public static function empty(array $extra = []): array
+    {
+        return [
+            'name' => '',
+            'description' => '',
+            'price' => ''
+        ];
+    }
+
+    public static function rules(): array
+    {
+        return [
+            'name' => ['required'],
+            'description' => ['nullable'],
+            'price' => ['nullable'],
+        ];
+    }
+
+    public static function messages(): array
+    {
+        return [
+            'name.required' => 'Το πεδίο Όνομα είναι υποχρεωτικό',
+        ];
+    }
+
+    public function toDatabase(): array
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->price,
+        ];
     }
 }

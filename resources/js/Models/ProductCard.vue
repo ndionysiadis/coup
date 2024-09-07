@@ -2,7 +2,7 @@
 import {formatTitleCase} from "@/Shared/globalFunctions";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
-import {PhChefHat, PhListBullets} from "@phosphor-icons/vue";
+import {PhListBullets} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import TextLink from "@/Components/Links/TextLink.vue";
 
@@ -16,11 +16,11 @@ const props = defineProps<{
         <CardContainer>
             <div class="flex flex-col gap-1">
                 <HeadingSmall>
-                    {{ formatTitleCase(product.name) }} - {{ product.price }} &#8364;
+                    {{ formatTitleCase(product.name) }} <span v-if="product.price">-</span> {{ product.price }}<span v-if="product.price">&#8364;</span>
                 </HeadingSmall>
 
                 <div v-if="route().current('product.*')"
-                    class="flex items-center gap-1">
+                     class="flex items-center gap-1">
                     <PhListBullets size="16" weight="bold"/>
                     <div>Category:</div>
                     <div v-if="product.category">
@@ -30,19 +30,8 @@ const props = defineProps<{
                     </div>
                 </div>
 
-                <div v-if="route().current('product.*')"
-                    class="flex items-center gap-1">
-                    <PhChefHat size="16" weight="bold"/>
-                    <div>Menu:</div>
-                    <div v-if="product.category?.menuType.name">
-                        <TextLink :href="route('menu.show', product.category.menuType)">
-                            {{ formatTitleCase(product.category.menuType.name) }}
-                        </TextLink>
-                    </div>
-                </div>
-
                 <div v-if="product.description">
-                    {{product.description}}
+                    {{ product.description }}
                 </div>
             </div>
         </CardContainer>
