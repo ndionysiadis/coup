@@ -53,7 +53,7 @@ const props = defineProps<{
             </div>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
             <ProductCard
                 v-for="product in products.data"
                 :key="product.id"
