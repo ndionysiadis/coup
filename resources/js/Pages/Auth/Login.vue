@@ -53,7 +53,7 @@ const title = 'Login'
                 </FormInput>
 
                 <FormInput
-                    label="Password"
+                    label="Κωδικός"
                     v-model="form.password"
                     id="password"
                     type="password"
@@ -70,7 +70,7 @@ const title = 'Login'
                 <FormCheckbox
                     v-model="form.remember"
                     name="remember"
-                    label="Remember me"
+                    label="Να με θυμάσαι"
                 />
             </div>
 
@@ -81,15 +81,9 @@ const title = 'Login'
 <!--                </TextLink>-->
 
                 <PrimaryButtonWide :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
+                    Σύνδεση
                 </PrimaryButtonWide>
 
-<!--                <PrimaryButton direction="right" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">-->
-<!--                    <template #icon>-->
-<!--                        <PhSignIn weight="bold"/>-->
-<!--                    </template>-->
-<!--                    Log in-->
-<!--                </PrimaryButton>-->
             </div>
         </form>
 

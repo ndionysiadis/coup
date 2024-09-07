@@ -2,23 +2,23 @@
 
 namespace App\Data;
 
-use App\Models\MenuType;
+use App\Models\Category;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\PaginatedDataCollection;
 
-class MenuTypePageData extends Data
+class CategoryPageData extends Data
 {
-    /** @var PaginatedDataCollection<MenuTypeData> */
-    public PaginatedDataCollection $menuTypes;
+    /** @var PaginatedDataCollection<CategoryData> */
+    public PaginatedDataCollection $categories;
 
     public function __construct()
     {
-        $this->menuTypes = MenuTypeData::collect(
-            MenuType::query()
+        $this->categories = CategoryData::collect(
+            Category::query()
                 ->orderBy('name')
                 ->paginate(20)
                 ->withQueryString(),
             PaginatedDataCollection::class
-        )->include('totalCategories', 'totalProducts');
+        )->include('menuType', 'products');
     }
 }

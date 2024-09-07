@@ -1,20 +1,23 @@
 <script setup lang="ts">
 const props = withDefaults(
     defineProps<{
-        modelValue?: string | null,
+        modelValue?: number | string | null,
         label: string,
         error?: string,
         id: string,
-        type: string,
         autofocus: boolean,
         required: boolean,
         disabled?: boolean,
+        step: string,
+        min?: number,
+        max?: number,
     }>(),
     {
         label: '',
         autofocus: false,
         required: false,
         disabled: false,
+        step: '1'
     }
 )
 
@@ -33,7 +36,10 @@ function updateValue(event: Event) {
 
         <input
             :id="props.id"
-            :type="props.type"
+            type="number"
+            :step="props.step"
+            :min="props.min"
+            :max="props.max"
             :placeholder="props.label"
             :value="props.modelValue"
             @input="updateValue"

@@ -3,28 +3,31 @@
 namespace App\Data;
 
 use App\Models\MenuType;
+use Spatie\LaravelData\Concerns\EmptyData;
 use Spatie\LaravelData\Optional;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Lazy;
+use Spatie\LaravelData\Support\Validation\ValidationContext;
 
 /** @typescript */
 class MenuTypeData extends Data
 {
-    public function __construct(
-        public ?int                            $id,
-        public string                          $name,
-        public ?string                         $description,
-        public ?string                         $createdAt,
-        public ?string                         $updatedAt,
-        public ?string                         $deletedAt,
+    use EmptyData;
 
-        public Lazy|int|Optional               $totalCategories,
-        public Lazy|int|Optional               $totalProducts,
+    public function __construct(
+        public ?int                              $id,
+        public string                            $name,
+        public ?string                           $description,
+        public ?string                           $createdAt,
+        public ?string                           $updatedAt,
+        public ?string                           $deletedAt,
+
+        public Lazy|int|Optional                 $totalCategories,
+        public Lazy|int|Optional                 $totalProducts,
 
         /** @var Optional|Lazy|DataCollection<CategoryData> */
-        public Lazy|CategoryData|Optional|null $categories,
-
+        public Lazy|DataCollection|Optional|null $categories,
 
     )
     {
@@ -44,5 +47,37 @@ class MenuTypeData extends Data
             categories: Lazy::create(fn() => CategoryData::collect($menuType->categories)),
         );
     }
+
+    public static function empty(array $extra = []): array
+    {
+        return [
+            'name' => '',
+            'description' => ''
+        ];
+    }
+
+    public static function rules(): array
+    {
+        return [
+            'name' => ['required'],
+            'description' => ['nullable']
+        ];
+    }
+
+    public static function messages(): array
+    {
+        return [
+            'name.required' => 'Το πεδίο Όνομα είναι υποχρεωτικό',
+        ];
+    }
+
+    public function toDatabase(): array
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description
+        ];
+    }
+
 
 }

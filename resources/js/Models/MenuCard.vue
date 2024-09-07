@@ -21,12 +21,12 @@ const props = defineProps<{
                 <div>
                     <div class="flex items-center gap-1">
                         <PhListBullets size="16" weight="bold"/>
-                        <div>Categories:</div>
+                        <div>Κατηγορίες:</div>
                         <div>{{ menuType.totalCategories }}</div>
                     </div>
                     <div class="flex items-center gap-1">
                         <PhForkKnife size="16" weight="bold"/>
-                        <div>Products:</div>
+                        <div>Προϊόντα:</div>
                         <div>{{ menuType.totalProducts }}</div>
                     </div>
                 </div>

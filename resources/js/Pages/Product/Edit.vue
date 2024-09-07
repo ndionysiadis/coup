@@ -4,9 +4,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
-import {PhArrowUUpLeft, PhFloppyDiskBack, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
+import {PhArrowUUpLeft, PhCurrencyEur, PhFloppyDiskBack, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import {useForm} from 'laravel-precognition-vue-inertia';
 import FormInput from "@/Components/FormElements/FormInput.vue";
@@ -16,23 +15,24 @@ import {ref} from "vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
+import FormNumber from "@/Components/FormElements/FormNumber.vue";
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeData
+    product: App.Data.ProductData
 }>()
 
-const title = 'Επεξεργασία: ' + formatTitleCase(props.menuType.name)
+const title = 'Επεξεργασία: ' + props.product.name
 
 const modalOpen = ref<boolean>(false)
 
-const form = useForm<App.Data.MenuTypeData>(
+const form = useForm<App.Data.ProductData>(
     'put',
-    route('menu.update', props.menuType),
-    props.menuType
+    route('product.update', props.product),
+    props.product
 )
 
 function destroy() {
-    router.delete(route('menu.destroy', props.menuType), {
+    router.delete(route('product.destroy', props.product), {
         preserveState: true,
         preserveScroll: true,
         only: [
@@ -48,15 +48,15 @@ function destroy() {
     <AuthenticatedLayout>
         <template #breadcrumbs>
             <Breadcrumbs>
-                <Breadcrumb first :href="route('menu.index')">
-                    Μενού
+                <Breadcrumb first :href="route('product.index')">
+                    Προϊόντα
                 </Breadcrumb>
 
-                <Breadcrumb :href="route('menu.show', menuType)">
-                    {{ formatTitleCase(menuType.name) }}
+                <Breadcrumb :href="route('product.show', product)">
+                    {{ product.name }}
                 </Breadcrumb>
 
-                <Breadcrumb :href="route('menu.edit', menuType)">
+                <Breadcrumb :href="route('product.edit', product)">
                     Επεξεργασία
                 </Breadcrumb>
             </Breadcrumbs>
@@ -68,7 +68,7 @@ function destroy() {
             </div>
 
             <div class="flex items-center gap-2">
-                <AppLink :href="route('menu.show', menuType)">
+                <AppLink :href="route('product.show', product)">
                     <IconSecondaryButton title="Επιστροφή">
                         <PhArrowUUpLeft weight="bold"/>
                     </IconSecondaryButton>
@@ -88,12 +88,12 @@ function destroy() {
                 </template>
 
                 <template #title>
-                    Διαγραφή μενού: {{ formatTitleCase(menuType.name) }}
+                    Διαγραφή προϊόντος: {{ props.product.name}}
                 </template>
 
                 <template #body>
-                    Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο μενού; Η διαγραφή θα γίνει μόνο στο μενού
-                    και όχι στις συνδεδεμένες κατηγορίες & προϊόντα.
+                    Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο προϊόν; Η διαγραφή θα γίνει μόνο στο προϊόν
+                    και όχι στα συνδεδεμένα μενού & κατηγορίες.
                 </template>
 
                 <template #actions>
@@ -127,6 +127,19 @@ function destroy() {
                     :autofocus="false"
                     :error="form.errors.description"
                     v-model="form.description"/>
+
+                <FormNumber
+                    id="price"
+                    step="0.1"
+                    label="Τιμή"
+                    :required="false"
+                    :autofocus="false"
+                    :error="form.errors.price"
+                    v-model="form.price">
+
+                    <PhCurrencyEur weight="bold"/>
+
+                </FormNumber>
 
                 <div>
                     <PrimaryButtonIcon type="submit" title="Αποθήκευση">

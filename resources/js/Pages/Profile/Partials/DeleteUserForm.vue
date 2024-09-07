@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import DangerButton from '@/Components/DangerButton.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { nextTick, ref } from 'vue';
+import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
+import FormInput from "@/Components/FormElements/FormInput.vue";
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref<HTMLInputElement | null>(null);
@@ -42,45 +41,40 @@ const closeModal = () => {
 <template>
     <section class="space-y-6">
         <header>
-            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">Delete Account</h2>
+            <HeadingSmall>Διαγραφή Λογαριασμού</HeadingSmall>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
-                your account, please download any data or information that you wish to retain.
+                Μόλις διαγραφεί ο λογαριασμός σας, όλοι οι πόροι και τα δεδομένα του θα διαγραφούν οριστικά. Πριν τη διαγραφή
+                τον λογαριασμό σας, πραγματοποιήστε λήψη τυχόν δεδομένων ή πληροφοριών που θέλετε να διατηρήσετε.
             </p>
         </header>
 
-        <DangerButton @click="confirmUserDeletion">Delete Account</DangerButton>
+        <DangerButton @click="confirmUserDeletion">Διαγραφή λογαριασμού</DangerButton>
 
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    Are you sure you want to delete your account?
+                    Είστε βέβαιοι ότι θέλετε να διαγράψετε τον λογαριασμό σας;
                 </h2>
 
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Once your account is deleted, all of its resources and data will be permanently deleted. Please
-                    enter your password to confirm you would like to permanently delete your account.
+                    Μόλις διαγραφεί ο λογαριασμός σας, όλοι οι πόροι και τα δεδομένα του θα διαγραφούν οριστικά. Παρακαλώ
+                    εισάγετε τον κωδικό πρόσβασή σας για να επιβεβαιώσετε ότι θέλετε να διαγράψετε οριστικά τον λογαριασμό σας.
                 </p>
 
                 <div class="mt-6">
-                    <InputLabel for="password" value="Password" class="sr-only" />
-
-                    <TextInput
+                    <FormInput
                         id="password"
+                        type="password"
+                        label="Password"
                         ref="passwordInput"
                         v-model="form.password"
-                        type="password"
-                        class="mt-1 block w-3/4"
-                        placeholder="Password"
-                        @keyup.enter="deleteUser"
-                    />
-
-                    <InputError :message="form.errors.password" class="mt-2" />
+                        :error="form.errors.password"
+                        @keyup.enter="deleteUser"/>
                 </div>
 
                 <div class="mt-6 flex justify-end">
-                    <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+                    <SecondaryButton @click="closeModal"> Άκυρο </SecondaryButton>
 
                     <DangerButton
                         class="ms-3"
@@ -88,7 +82,7 @@ const closeModal = () => {
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
-                        Delete Account
+                        Διαγραφή
                     </DangerButton>
                 </div>
             </div>

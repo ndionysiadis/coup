@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description')->nullable();
             $table->unsignedBigInteger('price')->nullable();
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained('categories')->cascadeOnDelete();
             $table->string('image')->nullable();
             $table->timestamps();
             $table->softDeletes();

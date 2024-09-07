@@ -27,15 +27,17 @@ const title = 'Dashboard'
                             >
                                 <PhFiles size="32"/>
 
-                                <HeadingMedium>Menu's</HeadingMedium>
+                                <HeadingMedium>Μενού</HeadingMedium>
                             </div>
 
                             <div
                                 class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
                             >
                                 <div class="flex gap-2 items-center">
-                                    <HeadingMedium>Menu's</HeadingMedium>
-                                    <PhPlusSquare weight="fill" size="32"/>
+                                    <HeadingMedium>Μενού</HeadingMedium>
+                                    <AppLink :href="route('menu.create')" title="Δημιουργία μενού">
+                                        <PhPlusSquare weight="fill" size="32"/>
+                                    </AppLink>
                                 </div>
 
                                 <p class="mt-4 text-sm sm:text-base">
@@ -47,64 +49,73 @@ const title = 'Dashboard'
                 </AppLink>
             </CardContainer>
             <CardContainer>
-                <div class="group relative block h-64">
-                    <span class="absolute inset-0 border-2 border-dashed border-primary-500"></span>
-
-                    <div
-                        class="relative flex h-full transform items-end bg-gray-900 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2"
-                    >
-                        <div
-                            class="p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8"
-                        >
-                            <PhListBullets size="32"/>
-
-                            <HeadingMedium>Categories</HeadingMedium>
-                        </div>
+                <AppLink :href="route('category.index')">
+                    <div class="group relative block h-64">
+                        <span class="absolute inset-0 border-2 border-dashed border-primary-500"></span>
 
                         <div
-                            class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
+                            class="relative flex h-full transform items-end bg-gray-900 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2"
                         >
-                            <div class="flex gap-2 items-center">
-                                <HeadingMedium>Categories</HeadingMedium>
-                                <PhPlusSquare weight="fill" size="32"/>
+                            <div
+                                class="p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8"
+                            >
+                                <PhListBullets size="32"/>
+
+                                <HeadingMedium>Κατηγορίες</HeadingMedium>
                             </div>
 
-                            <p class="mt-4 text-sm sm:text-base">
-                                Δείτε, επεξεργαστείτε και δημιουργήστε νέες κατηγορίες.
-                            </p>
+                            <div
+                                class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
+                            >
+                                <div class="flex gap-2 items-center">
+                                    <HeadingMedium>Κατηγορίες</HeadingMedium>
+
+                                    <AppLink :href="route('category.create')" title="Δημιουργία κατηγορίας">
+                                        <PhPlusSquare weight="fill" size="32"/>
+                                    </AppLink>
+                                </div>
+
+                                <p class="mt-4 text-sm sm:text-base">
+                                    Δείτε, επεξεργαστείτε και δημιουργήστε νέες κατηγορίες.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </AppLink>
             </CardContainer>
             <CardContainer>
-                <div class="group relative block h-64">
-                    <span class="absolute inset-0 border-2 border-dashed border-primary-500"></span>
-
-                    <div
-                        class="relative flex h-full transform items-end bg-gray-900 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2"
-                    >
-                        <div
-                            class="p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8"
-                        >
-                            <PhForkKnife size="32"/>
-
-                            <HeadingMedium>Products</HeadingMedium>
-                        </div>
+                <AppLink :href="route('product.index')">
+                    <div class="group relative block h-64">
+                        <span class="absolute inset-0 border-2 border-dashed border-primary-500"></span>
 
                         <div
-                            class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
+                            class="relative flex h-full transform items-end bg-gray-900 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2"
                         >
-                            <div class="flex gap-2 items-center">
-                                <HeadingMedium>Products</HeadingMedium>
-                                <PhPlusSquare weight="fill" size="32"/>
+                            <div
+                                class="p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8"
+                            >
+                                <PhForkKnife size="32"/>
+
+                                <HeadingMedium>Προϊόντα</HeadingMedium>
                             </div>
 
-                            <p class="mt-4 text-sm sm:text-base">
-                                Δείτε, επεξεργαστείτε και δημιουργήστε νέα προϊόντα.
-                            </p>
+                            <div
+                                class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
+                            >
+                                <div class="flex gap-2 items-center">
+                                    <HeadingMedium>Προϊόντα</HeadingMedium>
+                                    <AppLink :href="route('product.create')" title="Δημιουργία προϊόντος">
+                                        <PhPlusSquare weight="fill" size="32"/>
+                                    </AppLink>
+                                </div>
+
+                                <p class="mt-4 text-sm sm:text-base">
+                                    Δείτε, επεξεργαστείτε και δημιουργήστε νέα προϊόντα.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </AppLink>
             </CardContainer>
         </div>
     </AuthenticatedLayout>

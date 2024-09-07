@@ -14,6 +14,10 @@ class Category extends Model
 
     public $guarded = [];
 
+    public function menuType(): BelongsTo
+    {
+        return $this->belongsTo(MenuType::class, 'menu_id');
+    }
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'category_id');

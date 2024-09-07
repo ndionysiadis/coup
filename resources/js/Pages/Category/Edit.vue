@@ -4,7 +4,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
 import {PhArrowUUpLeft, PhFloppyDiskBack, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
@@ -18,21 +17,21 @@ import DangerButton from "@/Components/DangerButton.vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeData
+    category: App.Data.CategoryData
 }>()
 
-const title = 'Επεξεργασία: ' + formatTitleCase(props.menuType.name)
+const title = 'Επεξεργασία: ' + props.category.name
 
 const modalOpen = ref<boolean>(false)
 
-const form = useForm<App.Data.MenuTypeData>(
+const form = useForm<App.Data.CategoryData>(
     'put',
-    route('menu.update', props.menuType),
-    props.menuType
+    route('category.update', props.category),
+    props.category
 )
 
 function destroy() {
-    router.delete(route('menu.destroy', props.menuType), {
+    router.delete(route('category.destroy', props.category), {
         preserveState: true,
         preserveScroll: true,
         only: [
@@ -48,15 +47,15 @@ function destroy() {
     <AuthenticatedLayout>
         <template #breadcrumbs>
             <Breadcrumbs>
-                <Breadcrumb first :href="route('menu.index')">
-                    Μενού
+                <Breadcrumb first :href="route('category.index')">
+                    Κατηγορίες
                 </Breadcrumb>
 
-                <Breadcrumb :href="route('menu.show', menuType)">
-                    {{ formatTitleCase(menuType.name) }}
+                <Breadcrumb :href="route('category.show', category)">
+                    {{ category.name }}
                 </Breadcrumb>
 
-                <Breadcrumb :href="route('menu.edit', menuType)">
+                <Breadcrumb :href="route('category.edit', category)">
                     Επεξεργασία
                 </Breadcrumb>
             </Breadcrumbs>
@@ -68,7 +67,7 @@ function destroy() {
             </div>
 
             <div class="flex items-center gap-2">
-                <AppLink :href="route('menu.show', menuType)">
+                <AppLink :href="route('category.show', category)">
                     <IconSecondaryButton title="Επιστροφή">
                         <PhArrowUUpLeft weight="bold"/>
                     </IconSecondaryButton>
@@ -88,12 +87,13 @@ function destroy() {
                 </template>
 
                 <template #title>
-                    Διαγραφή μενού: {{ formatTitleCase(menuType.name) }}
+                    Διαγραφή κατηγορίας: {{ category.name }}
                 </template>
 
                 <template #body>
-                    Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο μενού; Η διαγραφή θα γίνει μόνο στο μενού
-                    και όχι στις συνδεδεμένες κατηγορίες & προϊόντα.
+                    Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη κατηγορία; Η διαγραφή θα γίνει μόνο στη
+                    κατηγορία
+                    και όχι στα συνδεδεμένα μενού & προϊόντα.
                 </template>
 
                 <template #actions>
