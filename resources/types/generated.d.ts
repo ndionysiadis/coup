@@ -11,6 +11,10 @@ deletedAt: string | null;
 products: any | any | Array<App.Data.ProductData> | null;
 menuType: any | any | Array<App.Data.MenuTypeData> | null;
 };
+export type CategoryPageData = {
+categories: Array<App.Data.CategoryData>;
+term: string;
+};
 export type MenuTypeData = {
 id: number | null;
 name: string;
@@ -33,6 +37,10 @@ createdAt: string | null;
 updatedAt: string | null;
 deletedAt: string | null;
 category: any | any | Array<App.Data.CategoryData> | null;
+};
+export type ProductPageData = {
+products: Array<App.Data.ProductData>;
+term: string;
 };
 export type ToastData = {
 message: string | null;

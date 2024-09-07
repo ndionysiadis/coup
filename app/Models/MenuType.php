@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,6 +17,18 @@ class MenuType extends Model
     public function categories(): HasMany
     {
         return $this->hasMany(Category::class, 'menu_id');
+    }
+
+    public function scopeSearch(Builder $query): void
+    {
+        $query
+            ->when(request('term') ?? null, function ($query, $term) {
+                $query->where(function ($query) use ($term) {
+                    $query
+                        ->whereRaw("LOWER(name) like '%" . $term . "%'")
+                        ->orWhereRaw("LOWER(description) like '%" . $term . "%'");
+                });
+            });
     }
 }
 

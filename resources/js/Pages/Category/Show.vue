@@ -51,81 +51,80 @@ function destroy() {
                 </Breadcrumb>
             </Breadcrumbs>
         </template>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col">
+                    <HeadingLarge> {{ title }}</HeadingLarge>
+                </div>
 
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex flex-col">
-                <HeadingLarge> {{ title }}</HeadingLarge>
-            </div>
+                <div class="flex items-center gap-2">
+                    <AppLink :href="route('category.index')">
+                        <IconSecondaryButton title="Επιστροφή">
+                            <PhArrowUUpLeft weight="bold"/>
+                        </IconSecondaryButton>
+                    </AppLink>
 
-            <div class="flex items-center gap-2">
-                <AppLink :href="route('category.index')">
-                    <IconSecondaryButton title="Επιστροφή">
-                        <PhArrowUUpLeft weight="bold"/>
+                    <AppLink :href="route('category.edit', category)">
+                        <IconSecondaryButton title="Επεξεργασία">
+                            <PhPencilSimple weight="fill"/>
+                        </IconSecondaryButton>
+                    </AppLink>
+
+                    <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
+                        <PhTrash weight="fill"/>
                     </IconSecondaryButton>
-                </AppLink>
+                </div>
 
-                <AppLink :href="route('category.edit', category)">
-                    <IconSecondaryButton title="Επεξεργασία">
-                        <PhPencilSimple weight="fill"/>
-                    </IconSecondaryButton>
-                </AppLink>
+                <PrimaryModal
+                    :open="modalOpen"
+                    @closeModal="modalOpen=false"
+                >
+                    <template #icon>
+                        <PhWarningCircle weight="bold" size="24"/>
+                    </template>
 
-                <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
-                    <PhTrash weight="fill"/>
-                </IconSecondaryButton>
+                    <template #title>
+                        Διαγραφή κατηγορίας: {{ category.name }}
+                    </template>
+
+                    <template #body>
+                        Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη κατηγορία; Η διαγραφή θα γίνει μόνο στη
+                        κατηγορία
+                        και όχι στα συνδεδεμένα μενού & προϊόντα.
+                    </template>
+
+                    <template #actions>
+                        <SecondaryButton @click="modalOpen=false">
+                            Άκυρο
+                        </SecondaryButton>
+
+                        <DangerButton @click="destroy">
+                            Διαγραφή
+                        </DangerButton>
+                    </template>
+                </PrimaryModal>
             </div>
 
-            <PrimaryModal
-                :open="modalOpen"
-                @closeModal="modalOpen=false"
-            >
-                <template #icon>
-                    <PhWarningCircle weight="bold" size="24"/>
-                </template>
+            <CardContainer class="mb-4 flex flex-col gap-2">
+                <div v-if="category.menuType" class="flex items-center gap-1">
+                    <PhChefHat size="16" weight="bold"/>
+                    <TextLink :href="route('menu.show', category.menuType)">
+                        {{ category.menuType.name }}
+                    </TextLink>
+                </div>
 
-                <template #title>
-                    Διαγραφή κατηγορίας: {{ category.name }}
-                </template>
+                <div>
+                    {{ category.description }}
+                </div>
+            </CardContainer>
 
-                <template #body>
-                    Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη κατηγορία; Η διαγραφή θα γίνει μόνο στη
-                    κατηγορία
-                    και όχι στα συνδεδεμένα μενού & προϊόντα.
-                </template>
+            <HeadingSmall>Products</HeadingSmall>
 
-                <template #actions>
-                    <SecondaryButton @click="modalOpen=false">
-                        Άκυρο
-                    </SecondaryButton>
-
-                    <DangerButton @click="destroy">
-                        Διαγραφή
-                    </DangerButton>
-                </template>
-            </PrimaryModal>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
+                <ProductCard v-for="product in category.products"
+                             :key="product.id"
+                             :product="product"/>
+            </div>
         </div>
-
-
-        <CardContainer class="mb-4 flex flex-col gap-2">
-            <div v-if="category.menuType" class="flex items-center gap-1">
-                <PhChefHat size="16" weight="bold"/>
-                <TextLink :href="route('menu.show', category.menuType)">
-                    {{ category.menuType.name }}
-                </TextLink>
-            </div>
-
-            <div>
-                {{ category.description }}
-            </div>
-        </CardContainer>
-
-        <HeadingSmall>Products</HeadingSmall>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-            <ProductCard v-for="product in category.products"
-                         :key="product.id"
-                         :product="product"/>
-        </div>
-
     </AuthenticatedLayout>
 </template>

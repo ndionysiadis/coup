@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Head} from "@inertiajs/vue3";
+import {Head, router} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
@@ -10,12 +10,33 @@ import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import {PhPlus} from "@phosphor-icons/vue";
+import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
+import {ref, watch} from "vue";
+import debounce from "lodash/debounce";
+import FormSearch from "@/Components/FormElements/FormSearch.vue";
 
 const title = "Μενού"
 
 const props = defineProps<{
     menuTypes: LaravelPaginator<App.Data.MenuTypeData>
+    term: App.Data.MenuTypePageData
 }>()
+
+const term = ref<string>(props.term!)
+
+watch(term, debounce((value) => {
+    let fullUrl: string = window.location.href
+    let url: URL = new URL(fullUrl);
+    let params: URLSearchParams = new URLSearchParams(url.search);
+
+    params.set('term', value)
+
+    url.search = params.toString();
+    router.get(url.href, {}, {
+        preserveState: true,
+        only: ['menuTypes'],
+    });
+}, 1000))
 </script>
 
 <template>
@@ -29,35 +50,36 @@ const props = defineProps<{
                 </Breadcrumb>
             </Breadcrumbs>
         </template>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col">
+                    <HeadingLarge>{{ title }}</HeadingLarge>
+                    <PaginationMeta :meta="menuTypes.meta"/>
+                </div>
 
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex flex-col">
-                <HeadingLarge>{{ title }}</HeadingLarge>
-                <PaginationMeta :meta="menuTypes.meta"/>
-            </div>
+                <div class="flex items-center gap-2">
+                    <PaginationLinks
+                        v-if="menuTypes?.meta?.total > 0"
+                        :links="menuTypes.links"/>
 
-            <div class="flex items-center gap-2">
-                <PaginationLinks
-                    v-if="menuTypes?.meta?.total > 0"
-                    :links="menuTypes.links"/>
-
-                <AppLink :href="route('menu.create')">
-                    <PrimaryButtonIcon direction="right">
-                        <template #icon>
+                    <AppLink :href="route('menu.create')" title="Δημιουργία">
+                        <IconPrimaryButton>
                             <PhPlus weight="bold" size="16"/>
-                        </template>
-
-                        Δημιουργία
-                    </PrimaryButtonIcon>
-                </AppLink>
+                        </IconPrimaryButton>
+                    </AppLink>
+                </div>
             </div>
-        </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-            <MenuCard
-                v-for="menuType in menuTypes.data"
-                :key="menuType.id"
-                :menu-type="menuType"/>
+            <FormSearch
+                :clear-route="route('menu.index')"
+                v-model="term"/>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
+                <MenuCard
+                    v-for="menuType in menuTypes.data"
+                    :key="menuType.id"
+                    :menu-type="menuType"/>
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>

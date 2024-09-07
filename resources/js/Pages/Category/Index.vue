@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Head} from "@inertiajs/vue3";
+import {Head, router} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
@@ -10,12 +10,33 @@ import AppLink from "@/Components/Links/AppLink.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import {PhPlus} from "@phosphor-icons/vue";
 import CategoryCard from "@/Models/CategoryCard.vue";
+import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
+import {ref, watch} from "vue";
+import debounce from "lodash/debounce";
+import FormSearch from "@/Components/FormElements/FormSearch.vue";
 
 const title = "Κατηγορίες"
 
 const props = defineProps<{
     categories: LaravelPaginator<App.Data.CategoryData>
+    term: App.Data.CategoryPageData
 }>()
+
+const term = ref<string>(props.term!)
+
+watch(term, debounce((value) => {
+    let fullUrl: string = window.location.href
+    let url: URL = new URL(fullUrl);
+    let params: URLSearchParams = new URLSearchParams(url.search);
+
+    params.set('term', value)
+
+    url.search = params.toString();
+    router.get(url.href, {}, {
+        preserveState: true,
+        only: ['categories'],
+    });
+}, 1000))
 </script>
 
 <template>
@@ -29,35 +50,36 @@ const props = defineProps<{
                 </Breadcrumb>
             </Breadcrumbs>
         </template>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col">
+                    <HeadingLarge>{{ title }}</HeadingLarge>
+                    <PaginationMeta :meta="categories.meta"/>
+                </div>
 
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex flex-col">
-                <HeadingLarge>{{ title }}</HeadingLarge>
-                <PaginationMeta :meta="categories.meta"/>
-            </div>
+                <div class="flex items-center gap-2">
+                    <PaginationLinks
+                        v-if="categories?.meta?.total > 0"
+                        :links="categories.links"/>
 
-            <div class="flex items-center gap-2">
-                <PaginationLinks
-                    v-if="categories?.meta?.total > 0"
-                    :links="categories.links"/>
-
-                <AppLink :href="route('category.create')">
-                    <PrimaryButtonIcon direction="right">
-                        <template #icon>
+                    <AppLink :href="route('category.create')" title="Δημιουργία">
+                        <IconPrimaryButton>
                             <PhPlus weight="bold" size="16"/>
-                        </template>
-
-                        Δημιουργία
-                    </PrimaryButtonIcon>
-                </AppLink>
+                        </IconPrimaryButton>
+                    </AppLink>
+                </div>
             </div>
-        </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-            <CategoryCard
-                v-for="category in categories.data"
-                :key="category.id"
-                :category="category"/>
+            <FormSearch
+                :clear-route="route('category.index')"
+                v-model="term"/>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
+                <CategoryCard
+                    v-for="category in categories.data"
+                    :key="category.id"
+                    :category="category"/>
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>

@@ -9,18 +9,18 @@ import {PhArrowUUpLeft, PhPencilSimple, PhTrash, PhWarningCircle} from "@phospho
 import CategoryCard from "@/Models/CategoryCard.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
-
 
 const props = defineProps<{
     menuType: App.Data.MenuTypeData
 }>()
 
 const modalOpen = ref<boolean>(false)
+
 
 const title = props.menuType.name
 
@@ -32,6 +32,7 @@ function destroy() {
             'toast'
         ]
     })
+
 }
 </script>
 
@@ -51,69 +52,71 @@ function destroy() {
             </Breadcrumbs>
         </template>
 
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex flex-col">
-                <HeadingLarge> {{ title }}</HeadingLarge>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col">
+                    <HeadingLarge> {{ title }}</HeadingLarge>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <AppLink :href="route('menu.index')">
+                        <IconSecondaryButton title="Επιστροφή">
+                            <PhArrowUUpLeft weight="bold"/>
+                        </IconSecondaryButton>
+                    </AppLink>
+
+                    <AppLink :href="route('menu.edit', menuType)">
+                        <IconSecondaryButton title="Επεξεργασία">
+                            <PhPencilSimple weight="fill"/>
+                        </IconSecondaryButton>
+                    </AppLink>
+
+                    <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
+                        <PhTrash weight="fill"/>
+                    </IconSecondaryButton>
+                </div>
+
+                <PrimaryModal
+                    :open="modalOpen"
+                    @closeModal="modalOpen=false"
+                >
+                    <template #icon>
+                        <PhWarningCircle weight="bold" size="24"/>
+                    </template>
+
+                    <template #title>
+                        Διαγραφή μενού: {{ menuType.name }}
+                    </template>
+
+                    <template #body>
+                        Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο μενού; Η διαγραφή θα γίνει μόνο στο
+                        μενού
+                        και όχι στις συνδεδεμένες κατηγορίες & προϊόντα.
+                    </template>
+
+                    <template #actions>
+                        <SecondaryButton @click="modalOpen=false">
+                            Άκυρο
+                        </SecondaryButton>
+
+                        <DangerButton @click="destroy">
+                            Διαγραφή
+                        </DangerButton>
+                    </template>
+                </PrimaryModal>
             </div>
 
-            <div class="flex items-center gap-2">
-                <AppLink :href="route('menu.index')">
-                    <IconSecondaryButton title="Επιστροφή">
-                        <PhArrowUUpLeft weight="bold"/>
-                    </IconSecondaryButton>
-                </AppLink>
+            <CardContainer class="mb-4">
+                {{ menuType.description }}
+            </CardContainer>
 
-                <AppLink :href="route('menu.edit', menuType)">
-                    <IconSecondaryButton title="Επεξεργασία">
-                        <PhPencilSimple weight="fill"/>
-                    </IconSecondaryButton>
-                </AppLink>
+            <HeadingSmall>Κατηγορίες</HeadingSmall>
 
-                <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
-                    <PhTrash weight="fill"/>
-                </IconSecondaryButton>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
+                <CategoryCard v-for="category in menuType.categories"
+                              :key="category.id"
+                              :category="category"/>
             </div>
-
-            <PrimaryModal
-                :open="modalOpen"
-                @closeModal="modalOpen=false"
-            >
-                <template #icon>
-                    <PhWarningCircle weight="bold" size="24"/>
-                </template>
-
-                <template #title>
-                    Διαγραφή μενού: {{ menuType.name }}
-                </template>
-
-                <template #body>
-                    Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο μενού; Η διαγραφή θα γίνει μόνο στο μενού
-                    και όχι στις συνδεδεμένες κατηγορίες & προϊόντα.
-                </template>
-
-                <template #actions>
-                    <SecondaryButton @click="modalOpen=false">
-                        Άκυρο
-                    </SecondaryButton>
-
-                    <DangerButton @click="destroy">
-                        Διαγραφή
-                    </DangerButton>
-                </template>
-            </PrimaryModal>
         </div>
-
-        <CardContainer class="mb-4">
-            {{ menuType.description }}
-        </CardContainer>
-
-        <HeadingSmall>Κατηγορίες</HeadingSmall>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-            <CategoryCard v-for="category in menuType.categories"
-                          :key="category.id"
-                          :category="category"/>
-        </div>
-
     </AuthenticatedLayout>
 </template>
