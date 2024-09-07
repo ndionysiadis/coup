@@ -16,7 +16,7 @@ class ProductData extends Data
         public ?int                              $categoryId,
         public string                            $name,
 
-        public ?int                              $price,
+        public ?string                           $price,
         public ?string                           $image,
         public ?string                           $description,
         public ?string                           $createdAt,
