@@ -4,6 +4,7 @@ namespace App\Data;
 
 use App\Enums\ToastPositionEnum;
 use App\Enums\ToastTypeEnum;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -90,7 +91,7 @@ class ToastData extends Data
             DB::commit();
 
             return self::success($successMessage);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
 
             Log::emergency($exception->getMessage());
