@@ -4,7 +4,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
 import {PhArrowUUpLeft, PhFloppyDiskBack, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
@@ -21,7 +20,7 @@ const props = defineProps<{
     menuType: App.Data.MenuTypeData
 }>()
 
-const title = 'Επεξεργασία: ' + formatTitleCase(props.menuType.name)
+const title = 'Επεξεργασία: ' + props.menuType.name
 
 const modalOpen = ref<boolean>(false)
 
@@ -53,7 +52,7 @@ function destroy() {
                 </Breadcrumb>
 
                 <Breadcrumb :href="route('menu.show', menuType)">
-                    {{ formatTitleCase(menuType.name) }}
+                    {{ menuType.name }}
                 </Breadcrumb>
 
                 <Breadcrumb :href="route('menu.edit', menuType)">
@@ -88,7 +87,7 @@ function destroy() {
                 </template>
 
                 <template #title>
-                    Διαγραφή μενού: {{ formatTitleCase(menuType.name) }}
+                    Διαγραφή μενού: {{ menuType.name }}
                 </template>
 
                 <template #body>

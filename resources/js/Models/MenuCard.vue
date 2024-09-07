@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
 import {PhForkKnife, PhListBullets} from "@phosphor-icons/vue";
@@ -15,7 +14,7 @@ const props = defineProps<{
         <CardContainer>
             <div class="flex flex-col gap-1">
                 <HeadingSmall>
-                    {{ formatTitleCase(menuType.name) }}
+                    {{ menuType.name }}
                 </HeadingSmall>
 
                 <div>

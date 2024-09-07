@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
 import {PhChefHat, PhForkKnife} from "@phosphor-icons/vue";
@@ -16,7 +15,7 @@ const props = defineProps<{
         <CardContainer>
             <div class="flex flex-col gap-1">
                 <HeadingSmall>
-                    {{ formatTitleCase(category.name) }}
+                    {{ category.name }}
                 </HeadingSmall>
 
                 <div class="flex items-center gap-1">
@@ -31,7 +30,7 @@ const props = defineProps<{
                     <div>Μενού:</div>
                     <div v-if="category.menuType">
                         <TextLink :href="route('menu.show', category.menuType)">
-                            {{ formatTitleCase(category.menuType.name) }}
+                            {{ category.menuType.name }}
                         </TextLink>
                     </div>
                 </div>

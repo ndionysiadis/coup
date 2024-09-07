@@ -4,7 +4,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
 import {PhArrowUUpLeft, PhChefHat, PhPencilSimple, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
@@ -24,7 +23,7 @@ const props = defineProps<{
 
 const modalOpen = ref<boolean>(false)
 
-const title = formatTitleCase(props.category.name)
+const title = props.category.name
 
 function destroy() {
     router.delete(route('category.destroy', props.category), {
@@ -85,7 +84,7 @@ function destroy() {
                 </template>
 
                 <template #title>
-                    Διαγραφή κατηγορίας: {{ formatTitleCase(category.name) }}
+                    Διαγραφή κατηγορίας: {{ category.name }}
                 </template>
 
                 <template #body>
@@ -111,7 +110,7 @@ function destroy() {
             <div v-if="category.menuType" class="flex items-center gap-1">
                 <PhChefHat size="16" weight="bold"/>
                 <TextLink :href="route('menu.show', category.menuType)">
-                    {{ formatTitleCase(category.menuType.name) }}
+                    {{ category.menuType.name }}
                 </TextLink>
             </div>
 

@@ -4,7 +4,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
 import {PhArrowUUpLeft, PhPencilSimple, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
 import CategoryCard from "@/Models/CategoryCard.vue";
@@ -23,7 +22,7 @@ const props = defineProps<{
 
 const modalOpen = ref<boolean>(false)
 
-const title = formatTitleCase(props.menuType.name)
+const title = props.menuType.name
 
 function destroy() {
     router.delete(route('menu.destroy', props.menuType), {
@@ -84,7 +83,7 @@ function destroy() {
                 </template>
 
                 <template #title>
-                    Διαγραφή μενού: {{ formatTitleCase(menuType.name) }}
+                    Διαγραφή μενού: {{ menuType.name }}
                 </template>
 
                 <template #body>
