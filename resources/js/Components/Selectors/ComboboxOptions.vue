@@ -21,7 +21,9 @@ const selectOption = (option: string) => {
 </script>
 
 <template>
-    <ul class="absolute mt-1 max-h-60 w-full overflow-auto scrollbar bg-gray-800 ring-1 ring-inset ring-gray-600 text-white text-sm p-2">
+    <ul
+        v-motion-fade-visible-once
+        class="absolute mt-1 max-h-60 w-full overflow-auto scrollbar bg-gray-800 ring-1 ring-inset ring-gray-600 text-white text-sm p-2">
         <ComboboxOption
             v-for="option in sortedOptions"
             :key="option"

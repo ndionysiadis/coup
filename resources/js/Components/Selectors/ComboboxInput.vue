@@ -57,7 +57,7 @@ const removeOption = (option: string) => {
                 :required="props.required"
                 :autofocus="props.autofocus"
                 :disabled="props.disabled"
-                class="peer block w-full border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                class="peer block w-full -ml-2 border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
             />
 
             <span

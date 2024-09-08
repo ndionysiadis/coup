@@ -8,6 +8,7 @@ import AppLink from "@/Components/Links/AppLink.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 
 const title = 'Dashboard'
+
 </script>
 
 <template>
