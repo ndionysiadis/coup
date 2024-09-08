@@ -122,5 +122,6 @@ const title = 'Dashboard'
                 </AppLink>
             </CardContainer>
         </div>
+
     </AuthenticatedLayout>
 </template>
