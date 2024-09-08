@@ -8,7 +8,6 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import {PhPlus} from "@phosphor-icons/vue";
 import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
 import {ref, watch} from "vue";
@@ -19,7 +18,7 @@ const title = "Μενού"
 
 const props = defineProps<{
     menuTypes: LaravelPaginator<App.Data.MenuTypeData>
-    term: App.Data.MenuTypePageData
+    term: App.Data.MenuTypeIndexPageData
 }>()
 
 const term = ref<string>(props.term!)

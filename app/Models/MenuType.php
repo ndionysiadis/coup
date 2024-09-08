@@ -19,7 +19,7 @@ class MenuType extends Model
         return $this->hasMany(Category::class, 'menu_id');
     }
 
-    public function scopeSearch(Builder $query): void
+    public function scopeSearchIndex(Builder $query): void
     {
         $query
             ->when(request('term') ?? null, function ($query, $term) {

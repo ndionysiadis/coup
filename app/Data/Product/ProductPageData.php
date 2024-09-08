@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Product;
 
-use App\Models\MenuType;
+use App\Models\Product;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\PaginatedDataCollection;
 
-class MenuTypePageData extends Data
+/** @typescript */
+class ProductPageData extends Data
 {
-    /** @var PaginatedDataCollection<MenuTypeData> */
-    public PaginatedDataCollection $menuTypes;
-
+    /** @var PaginatedDataCollection<ProductData> */
+    public PaginatedDataCollection $products;
     public string $term;
 
     public function __construct()
     {
-        $this->menuTypes = MenuTypeData::collect(
-            MenuType::query()
-                ->search()
+        $this->products = ProductData::collect(
+            Product::query()
+                ->searchIndex()
                 ->orderBy('name')
                 ->paginate(20)
                 ->withQueryString(),
             PaginatedDataCollection::class
-        )->include('totalCategories', 'totalProducts');
+        )->include('category');
 
         $this->term = request('term') ?? '';
     }

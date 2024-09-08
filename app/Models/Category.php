@@ -24,7 +24,7 @@ class Category extends Model
         return $this->hasMany(Product::class, 'category_id');
     }
 
-    public function scopeSearch(Builder $query): void
+    public function scopeSearchIndex(Builder $query): void
     {
         $query
             ->when(request('term') ?? null, function ($query, $term) {
@@ -36,5 +36,11 @@ class Category extends Model
                         });
                 });
             });
+    }
+    public function scopeSearchShow(Builder $query): void
+    {
+        $query->when(request('term') ?? null, function ($query, $term) {
+            $query->whereRaw("LOWER(name) like '%" . strtolower($term) . "%'");
+        });
     }
 }

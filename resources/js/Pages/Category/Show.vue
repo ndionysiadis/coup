@@ -8,22 +8,29 @@ import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
 import {PhArrowUUpLeft, PhChefHat, PhPencilSimple, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import ProductCard from "@/Models/ProductCard.vue";
 import TextLink from "@/Components/Links/TextLink.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
-
+import debounce from "lodash/debounce";
+import FormSearch from "@/Components/FormElements/FormSearch.vue";
+import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
+import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 
 const props = defineProps<{
-    category: App.Data.CategoryData
+    category: App.Data.CategoryShowPageData
+    products: LaravelPaginator<App.Data.ProductData>
+    term: App.Data.CategoryShowPageData
 }>()
 
 const modalOpen = ref<boolean>(false)
 
 const title = props.category.name
+
+const term = ref<string>(props.term!)
 
 function destroy() {
     router.delete(route('category.destroy', props.category), {
@@ -34,6 +41,20 @@ function destroy() {
         ]
     })
 }
+
+watch(term, debounce((value) => {
+    let fullUrl: string = window.location.href
+    let url: URL = new URL(fullUrl);
+    let params: URLSearchParams = new URLSearchParams(url.search);
+
+    params.set('term', value)
+
+    url.search = params.toString();
+    router.get(url.href, {}, {
+        preserveState: true,
+        only: ['products'],
+    });
+}, 1000))
 </script>
 
 <template>
@@ -118,10 +139,23 @@ function destroy() {
                 </div>
             </CardContainer>
 
-            <HeadingSmall>Products</HeadingSmall>
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col">
+                    <HeadingSmall>Products</HeadingSmall>
+                    <PaginationMeta :meta="products.meta"/>
+                </div>
+
+                <PaginationLinks
+                    v-if="products?.meta?.total > 0"
+                    :links="products.links"/>
+            </div>
+
+            <FormSearch
+                :clear-route="route('category.show', category)"
+                v-model="term"/>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
-                <ProductCard v-for="product in category.products"
+                <ProductCard v-for="product in products.data"
                              :key="product.id"
                              :product="product"/>
             </div>

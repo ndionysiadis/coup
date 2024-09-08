@@ -14,17 +14,24 @@ import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
+import FormSearch from "@/Components/FormElements/FormSearch.vue";
+import debounce from "lodash/debounce";
+import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
+import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeData
+    menuType: App.Data.MenuTypeShowPageData
+    categories: LaravelPaginator<App.Data.CategoryData>
+    term: App.Data.MenuTypeShowPageData
 }>()
 
 const modalOpen = ref<boolean>(false)
 
-
 const title = props.menuType.name
 
+const term = ref<string>(props.term!)
 function destroy() {
+
     router.delete(route('menu.destroy', props.menuType), {
         preserveState: true,
         preserveScroll: true,
@@ -34,6 +41,20 @@ function destroy() {
     })
 
 }
+
+watch(term, debounce((value) => {
+    let fullUrl: string = window.location.href
+    let url: URL = new URL(fullUrl);
+    let params: URLSearchParams = new URLSearchParams(url.search);
+
+    params.set('term', value)
+
+    url.search = params.toString();
+    router.get(url.href, {}, {
+        preserveState: true,
+        only: ['categories'],
+    });
+}, 1000))
 </script>
 
 <template>
@@ -110,10 +131,24 @@ function destroy() {
                 {{ menuType.description }}
             </CardContainer>
 
-            <HeadingSmall>Κατηγορίες</HeadingSmall>
+           <div class="flex items-center justify-between">
+               <div class="flex flex-col">
+                   <HeadingSmall>Κατηγορίες</HeadingSmall>
+                   <PaginationMeta :meta="categories.meta"/>
+               </div>
+
+               <PaginationLinks
+                   v-if="categories?.meta?.total > 0"
+                   :links="categories.links"/>
+           </div>
+
+
+            <FormSearch
+                :clear-route="route('menu.show', menuType)"
+                v-model="term"/>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
-                <CategoryCard v-for="category in menuType.categories"
+                <CategoryCard v-for="category in categories.data"
                               :key="category.id"
                               :category="category"/>
             </div>

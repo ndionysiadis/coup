@@ -7,7 +7,6 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import {PhPlus} from "@phosphor-icons/vue";
 import CategoryCard from "@/Models/CategoryCard.vue";
 import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
@@ -19,7 +18,7 @@ const title = "Κατηγορίες"
 
 const props = defineProps<{
     categories: LaravelPaginator<App.Data.CategoryData>
-    term: App.Data.CategoryPageData
+    term: App.Data.CategoryIndexPageData
 }>()
 
 const term = ref<string>(props.term!)
