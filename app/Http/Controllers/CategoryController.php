@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\CategoryData;
-use App\Data\CategoryPageData;
+use App\Data\Category\CategoryData;
+use App\Data\Category\CategoryIndexPageData;
+use App\Data\Category\CategoryShowPageData;
 use App\Data\ToastData;
 use App\Models\Category;
 use Inertia\Inertia;
@@ -14,7 +15,7 @@ class CategoryController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Category/Index', new CategoryPageData());
+        return Inertia::render('Category/Index', new CategoryIndexPageData());
     }
 
     public function create()
@@ -39,13 +40,7 @@ class CategoryController extends Controller
 
     public function show(Category $category): Response
     {
-        return Inertia::render('Category/Show', [
-            'category' => CategoryData::from($category)
-                ->include(
-                    'menuType',
-                    'products'
-                )
-        ]);
+        return Inertia::render('Category/Show', new CategoryShowPageData($category));
     }
 
     public function edit(Category $category): Response

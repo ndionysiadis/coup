@@ -4,28 +4,34 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
 import {PhArrowUUpLeft, PhPencilSimple, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
 import CategoryCard from "@/Models/CategoryCard.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
-
+import FormSearch from "@/Components/FormElements/FormSearch.vue";
+import debounce from "lodash/debounce";
+import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
+import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeData
+    menuType: App.Data.MenuTypeShowPageData
+    categories: LaravelPaginator<App.Data.CategoryData>
+    term: App.Data.MenuTypeShowPageData
 }>()
 
 const modalOpen = ref<boolean>(false)
 
-const title = formatTitleCase(props.menuType.name)
+const title = props.menuType.name
 
+const term = ref<string>(props.term!)
 function destroy() {
+
     router.delete(route('menu.destroy', props.menuType), {
         preserveState: true,
         preserveScroll: true,
@@ -33,7 +39,22 @@ function destroy() {
             'toast'
         ]
     })
+
 }
+
+watch(term, debounce((value) => {
+    let fullUrl: string = window.location.href
+    let url: URL = new URL(fullUrl);
+    let params: URLSearchParams = new URLSearchParams(url.search);
+
+    params.set('term', value)
+
+    url.search = params.toString();
+    router.get(url.href, {}, {
+        preserveState: true,
+        only: ['categories'],
+    });
+}, 1000))
 </script>
 
 <template>
@@ -52,69 +73,85 @@ function destroy() {
             </Breadcrumbs>
         </template>
 
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex flex-col">
-                <HeadingLarge> {{ title }}</HeadingLarge>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col">
+                    <HeadingLarge> {{ title }}</HeadingLarge>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <AppLink :href="route('menu.index')">
+                        <IconSecondaryButton title="Επιστροφή">
+                            <PhArrowUUpLeft weight="bold"/>
+                        </IconSecondaryButton>
+                    </AppLink>
+
+                    <AppLink :href="route('menu.edit', menuType)">
+                        <IconSecondaryButton title="Επεξεργασία">
+                            <PhPencilSimple weight="fill"/>
+                        </IconSecondaryButton>
+                    </AppLink>
+
+                    <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
+                        <PhTrash weight="fill"/>
+                    </IconSecondaryButton>
+                </div>
+
+                <PrimaryModal
+                    :open="modalOpen"
+                    @closeModal="modalOpen=false"
+                >
+                    <template #icon>
+                        <PhWarningCircle weight="bold" size="24"/>
+                    </template>
+
+                    <template #title>
+                        Διαγραφή μενού: {{ menuType.name }}
+                    </template>
+
+                    <template #body>
+                        Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο μενού; Η διαγραφή θα γίνει μόνο στο
+                        μενού
+                        και όχι στις συνδεδεμένες κατηγορίες & προϊόντα.
+                    </template>
+
+                    <template #actions>
+                        <SecondaryButton @click="modalOpen=false">
+                            Άκυρο
+                        </SecondaryButton>
+
+                        <DangerButton @click="destroy">
+                            Διαγραφή
+                        </DangerButton>
+                    </template>
+                </PrimaryModal>
             </div>
 
-            <div class="flex items-center gap-2">
-                <AppLink :href="route('menu.index')">
-                    <IconSecondaryButton title="Επιστροφή">
-                        <PhArrowUUpLeft weight="bold"/>
-                    </IconSecondaryButton>
-                </AppLink>
+            <CardContainer class="mb-4">
+                {{ menuType.description }}
+            </CardContainer>
 
-                <AppLink :href="route('menu.edit', menuType)">
-                    <IconSecondaryButton title="Επεξεργασία">
-                        <PhPencilSimple weight="fill"/>
-                    </IconSecondaryButton>
-                </AppLink>
+           <div class="flex items-center justify-between">
+               <div class="flex flex-col">
+                   <HeadingSmall>Κατηγορίες</HeadingSmall>
+                   <PaginationMeta :meta="categories.meta"/>
+               </div>
 
-                <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
-                    <PhTrash weight="fill"/>
-                </IconSecondaryButton>
+               <PaginationLinks
+                   v-if="categories?.meta?.total > 0"
+                   :links="categories.links"/>
+           </div>
+
+
+            <FormSearch
+                :clear-route="route('menu.show', menuType)"
+                v-model="term"/>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
+                <CategoryCard v-for="category in categories.data"
+                              :key="category.id"
+                              :category="category"/>
             </div>
-
-            <PrimaryModal
-                :open="modalOpen"
-                @closeModal="modalOpen=false"
-            >
-                <template #icon>
-                    <PhWarningCircle weight="bold" size="24"/>
-                </template>
-
-                <template #title>
-                    Διαγραφή μενού: {{ formatTitleCase(menuType.name) }}
-                </template>
-
-                <template #body>
-                    Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο μενού; Η διαγραφή θα γίνει μόνο στο μενού
-                    και όχι στις συνδεδεμένες κατηγορίες & προϊόντα.
-                </template>
-
-                <template #actions>
-                    <SecondaryButton @click="modalOpen=false">
-                        Άκυρο
-                    </SecondaryButton>
-
-                    <DangerButton @click="destroy">
-                        Διαγραφή
-                    </DangerButton>
-                </template>
-            </PrimaryModal>
         </div>
-
-        <CardContainer class="mb-4">
-            {{ menuType.description }}
-        </CardContainer>
-
-        <HeadingSmall>Κατηγορίες</HeadingSmall>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-            <CategoryCard v-for="category in menuType.categories"
-                          :key="category.id"
-                          :category="category"/>
-        </div>
-
     </AuthenticatedLayout>
 </template>

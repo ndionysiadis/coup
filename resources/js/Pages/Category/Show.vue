@@ -4,27 +4,33 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
 import {PhArrowUUpLeft, PhChefHat, PhPencilSimple, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import ProductCard from "@/Models/ProductCard.vue";
 import TextLink from "@/Components/Links/TextLink.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
-
+import debounce from "lodash/debounce";
+import FormSearch from "@/Components/FormElements/FormSearch.vue";
+import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
+import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 
 const props = defineProps<{
-    category: App.Data.CategoryData
+    category: App.Data.CategoryShowPageData
+    products: LaravelPaginator<App.Data.ProductData>
+    term: App.Data.CategoryShowPageData
 }>()
 
 const modalOpen = ref<boolean>(false)
 
-const title = formatTitleCase(props.category.name)
+const title = props.category.name
+
+const term = ref<string>(props.term!)
 
 function destroy() {
     router.delete(route('category.destroy', props.category), {
@@ -35,6 +41,20 @@ function destroy() {
         ]
     })
 }
+
+watch(term, debounce((value) => {
+    let fullUrl: string = window.location.href
+    let url: URL = new URL(fullUrl);
+    let params: URLSearchParams = new URLSearchParams(url.search);
+
+    params.set('term', value)
+
+    url.search = params.toString();
+    router.get(url.href, {}, {
+        preserveState: true,
+        only: ['products'],
+    });
+}, 1000))
 </script>
 
 <template>
@@ -52,81 +72,93 @@ function destroy() {
                 </Breadcrumb>
             </Breadcrumbs>
         </template>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col">
+                    <HeadingLarge> {{ title }}</HeadingLarge>
+                </div>
 
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex flex-col">
-                <HeadingLarge> {{ title }}</HeadingLarge>
-            </div>
+                <div class="flex items-center gap-2">
+                    <AppLink :href="route('category.index')">
+                        <IconSecondaryButton title="Επιστροφή">
+                            <PhArrowUUpLeft weight="bold"/>
+                        </IconSecondaryButton>
+                    </AppLink>
 
-            <div class="flex items-center gap-2">
-                <AppLink :href="route('category.index')">
-                    <IconSecondaryButton title="Επιστροφή">
-                        <PhArrowUUpLeft weight="bold"/>
+                    <AppLink :href="route('category.edit', category)">
+                        <IconSecondaryButton title="Επεξεργασία">
+                            <PhPencilSimple weight="fill"/>
+                        </IconSecondaryButton>
+                    </AppLink>
+
+                    <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
+                        <PhTrash weight="fill"/>
                     </IconSecondaryButton>
-                </AppLink>
+                </div>
 
-                <AppLink :href="route('category.edit', category)">
-                    <IconSecondaryButton title="Επεξεργασία">
-                        <PhPencilSimple weight="fill"/>
-                    </IconSecondaryButton>
-                </AppLink>
+                <PrimaryModal
+                    :open="modalOpen"
+                    @closeModal="modalOpen=false"
+                >
+                    <template #icon>
+                        <PhWarningCircle weight="bold" size="24"/>
+                    </template>
 
-                <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
-                    <PhTrash weight="fill"/>
-                </IconSecondaryButton>
+                    <template #title>
+                        Διαγραφή κατηγορίας: {{ category.name }}
+                    </template>
+
+                    <template #body>
+                        Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη κατηγορία; Η διαγραφή θα γίνει μόνο στη
+                        κατηγορία
+                        και όχι στα συνδεδεμένα μενού & προϊόντα.
+                    </template>
+
+                    <template #actions>
+                        <SecondaryButton @click="modalOpen=false">
+                            Άκυρο
+                        </SecondaryButton>
+
+                        <DangerButton @click="destroy">
+                            Διαγραφή
+                        </DangerButton>
+                    </template>
+                </PrimaryModal>
             </div>
 
-            <PrimaryModal
-                :open="modalOpen"
-                @closeModal="modalOpen=false"
-            >
-                <template #icon>
-                    <PhWarningCircle weight="bold" size="24"/>
-                </template>
+            <CardContainer class="mb-4 flex flex-col gap-2">
+                <div v-if="category.menuType" class="flex items-center gap-1">
+                    <PhChefHat size="16" weight="bold"/>
+                    <TextLink :href="route('menu.show', category.menuType)">
+                        {{ category.menuType.name }}
+                    </TextLink>
+                </div>
 
-                <template #title>
-                    Διαγραφή κατηγορίας: {{ formatTitleCase(category.name) }}
-                </template>
+                <div>
+                    {{ category.description }}
+                </div>
+            </CardContainer>
 
-                <template #body>
-                    Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη κατηγορία; Η διαγραφή θα γίνει μόνο στη
-                    κατηγορία
-                    και όχι στα συνδεδεμένα μενού & προϊόντα.
-                </template>
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col">
+                    <HeadingSmall>Products</HeadingSmall>
+                    <PaginationMeta :meta="products.meta"/>
+                </div>
 
-                <template #actions>
-                    <SecondaryButton @click="modalOpen=false">
-                        Άκυρο
-                    </SecondaryButton>
+                <PaginationLinks
+                    v-if="products?.meta?.total > 0"
+                    :links="products.links"/>
+            </div>
 
-                    <DangerButton @click="destroy">
-                        Διαγραφή
-                    </DangerButton>
-                </template>
-            </PrimaryModal>
+            <FormSearch
+                :clear-route="route('category.show', category)"
+                v-model="term"/>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
+                <ProductCard v-for="product in products.data"
+                             :key="product.id"
+                             :product="product"/>
+            </div>
         </div>
-
-
-        <CardContainer class="mb-4 flex flex-col gap-2">
-            <div v-if="category.menuType" class="flex items-center gap-1">
-                <PhChefHat size="16" weight="bold"/>
-                <TextLink :href="route('menu.show', category.menuType)">
-                    {{ formatTitleCase(category.menuType.name) }}
-                </TextLink>
-            </div>
-
-            <div>
-                {{ category.description }}
-            </div>
-        </CardContainer>
-
-        <HeadingSmall>Products</HeadingSmall>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2 mt-2">
-            <ProductCard v-for="product in category.products"
-                         :key="product.id"
-                         :product="product"/>
-        </div>
-
     </AuthenticatedLayout>
 </template>

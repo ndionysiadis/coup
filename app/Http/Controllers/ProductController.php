@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\ProductData;
-use App\Data\ProductPageData;
+use App\Data\Product\ProductData;
+use App\Data\Product\ProductPageData;
 use App\Data\ToastData;
 use App\Models\Product;
 use Inertia\Inertia;

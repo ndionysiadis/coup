@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {formatTitleCase} from "@/Shared/globalFunctions";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
 import {PhListBullets} from "@phosphor-icons/vue";
@@ -16,7 +15,7 @@ const props = defineProps<{
         <CardContainer>
             <div class="flex flex-col gap-1">
                 <HeadingSmall>
-                    {{ formatTitleCase(product.name) }} <span v-if="product.price">-</span> {{ product.price }}<span v-if="product.price">&#8364;</span>
+                    {{ product.name }} <span v-if="product.price">-</span> {{ product.price }}<span v-if="product.price">&#8364;</span>
                 </HeadingSmall>
 
                 <div v-if="route().current('product.*')"

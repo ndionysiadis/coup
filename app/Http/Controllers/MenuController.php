@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\MenuTypeData;
-use App\Data\MenuTypePageData;
-use App\Data\ProductData;
+use App\Data\Menu\MenuTypeData;
+use App\Data\Menu\MenuTypeIndexPageData;
+use App\Data\Menu\MenuTypeShowPageData;
 use App\Data\ToastData;
 use App\Models\MenuType;
 use Inertia\Inertia;
@@ -16,7 +16,7 @@ class MenuController extends Controller
 
     public function index(): Response
     {
-        return Inertia::render('Menu/Index', new MenuTypePageData());
+        return Inertia::render('Menu/Index', new MenuTypeIndexPageData());
     }
 
     public function create()
@@ -41,13 +41,7 @@ class MenuController extends Controller
 
     public function show(MenuType $menuType): Response
     {
-        return Inertia::render('Menu/Show', [
-            'menuType' => MenuTypeData::from($menuType)
-                ->include(
-                    'categories',
-                    'totalProducts'
-                )
-        ]);
+        return Inertia::render('Menu/Show', new MenuTypeShowPageData($menuType));
     }
 
     public function edit(MenuType $menuType): Response

@@ -49,71 +49,73 @@ function destroy() {
                 </Breadcrumb>
             </Breadcrumbs>
         </template>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col">
+                    <HeadingLarge> {{ title }} <span v-if="product.price">-</span> {{ product.price }}<span
+                        v-if="product.price">&#8364;</span></HeadingLarge>
+                </div>
 
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex flex-col">
-                <HeadingLarge> {{ title }} <span v-if="product.price">-</span> {{product.price}}<span v-if="product.price">&#8364;</span></HeadingLarge>
+                <div class="flex items-center gap-2">
+                    <AppLink :href="route('product.index')">
+                        <IconSecondaryButton title="Επιστροφή">
+                            <PhArrowUUpLeft weight="bold"/>
+                        </IconSecondaryButton>
+                    </AppLink>
+
+                    <AppLink :href="route('product.edit', product)">
+                        <IconSecondaryButton title="Επεξεργασία">
+                            <PhPencilSimple weight="fill"/>
+                        </IconSecondaryButton>
+                    </AppLink>
+
+                    <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
+                        <PhTrash weight="fill"/>
+                    </IconSecondaryButton>
+                </div>
+
+                <PrimaryModal
+                    :open="modalOpen"
+                    @closeModal="modalOpen=false"
+                >
+                    <template #icon>
+                        <PhWarningCircle weight="bold" size="24"/>
+                    </template>
+
+                    <template #title>
+                        Διαγραφή προϊόντος: {{ props.product.name }}
+                    </template>
+
+                    <template #body>
+                        Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο προϊόν; Η διαγραφή θα γίνει μόνο στο
+                        προϊόν
+                        και όχι στα συνδεδεμένα μενού & κατηγορίες.
+                    </template>
+
+                    <template #actions>
+                        <SecondaryButton @click="modalOpen=false">
+                            Άκυρο
+                        </SecondaryButton>
+
+                        <DangerButton @click="destroy">
+                            Διαγραφή
+                        </DangerButton>
+                    </template>
+                </PrimaryModal>
             </div>
 
-            <div class="flex items-center gap-2">
-                <AppLink :href="route('product.index')">
-                    <IconSecondaryButton title="Επιστροφή">
-                        <PhArrowUUpLeft weight="bold"/>
-                    </IconSecondaryButton>
-                </AppLink>
+            <CardContainer class="mb-4 flex flex-col gap-2">
+                <div v-if="product.category" class="flex items-center gap-1">
+                    <PhListBullets size="16" weight="bold"/>
+                    <TextLink :href="route('category.show', product.category)">
+                        {{ product.category.name }}
+                    </TextLink>
+                </div>
 
-                <AppLink :href="route('product.edit', product)">
-                    <IconSecondaryButton title="Επεξεργασία">
-                        <PhPencilSimple weight="fill"/>
-                    </IconSecondaryButton>
-                </AppLink>
-
-                <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
-                    <PhTrash weight="fill"/>
-                </IconSecondaryButton>
-            </div>
-
-            <PrimaryModal
-                :open="modalOpen"
-                @closeModal="modalOpen=false"
-            >
-                <template #icon>
-                    <PhWarningCircle weight="bold" size="24"/>
-                </template>
-
-                <template #title>
-                    Διαγραφή προϊόντος: {{ props.product.name}}
-                </template>
-
-                <template #body>
-                    Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο προϊόν; Η διαγραφή θα γίνει μόνο στο προϊόν
-                    και όχι στα συνδεδεμένα μενού & κατηγορίες.
-                </template>
-
-                <template #actions>
-                    <SecondaryButton @click="modalOpen=false">
-                        Άκυρο
-                    </SecondaryButton>
-
-                    <DangerButton @click="destroy">
-                        Διαγραφή
-                    </DangerButton>
-                </template>
-            </PrimaryModal>
+                <div>
+                    {{ product.description }}
+                </div>
+            </CardContainer>
         </div>
-
-
-        <CardContainer class="mb-4 flex flex-col gap-2">
-            <div v-if="product.category" class="flex items-center gap-1">
-                <PhListBullets size="16" weight="bold"/>
-                <TextLink :href="route('category.show', product.category)">
-                    {{ product.category.name }}
-                </TextLink>
-            </div>
-
-            <div>
-                {{ product.description }}
-            </div>
-        </CardContainer>
     </AuthenticatedLayout>
 </template>

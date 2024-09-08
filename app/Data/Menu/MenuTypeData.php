@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Menu;
 
+use App\Data\Category\CategoryData;
 use App\Models\MenuType;
 use Spatie\LaravelData\Concerns\EmptyData;
-use Spatie\LaravelData\Optional;
-use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
-use Spatie\LaravelData\Support\Validation\ValidationContext;
+use Spatie\LaravelData\Optional;
 
 /** @typescript */
 class MenuTypeData extends Data
@@ -26,7 +26,7 @@ class MenuTypeData extends Data
         public Lazy|int|Optional                 $totalCategories,
         public Lazy|int|Optional                 $totalProducts,
 
-        /** @var Optional|Lazy|DataCollection<CategoryData> */
+        /** @var Optional|Lazy|DataCollection<\App\Data\Category\CategoryData> */
         public Lazy|DataCollection|Optional|null $categories,
 
     )

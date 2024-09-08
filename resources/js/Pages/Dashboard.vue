@@ -5,6 +5,7 @@ import CardContainer from "@/Components/Cards/CardContainer.vue";
 import HeadingMedium from "@/Components/Texts/HeadingMedium.vue";
 import {PhFiles, PhForkKnife, PhListBullets, PhPlusSquare} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
+import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 
 const title = 'Dashboard'
 </script>
@@ -13,7 +14,10 @@ const title = 'Dashboard'
     <Head :title="title"/>
 
     <AuthenticatedLayout with-greeting>
-        <div class="grid lg:grid-cols-3 gap-2">
+
+        <HeadingLarge>{{ title }}</HeadingLarge>
+
+        <div class="grid lg:grid-cols-3 gap-2 mt-2">
             <CardContainer>
                 <AppLink :href="route('menu.index')">
                     <div class="group relative block h-64">

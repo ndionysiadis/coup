@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,5 +22,25 @@ class Category extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'category_id');
+    }
+
+    public function scopeSearchIndex(Builder $query): void
+    {
+        $query
+            ->when(request('term') ?? null, function ($query, $term) {
+                $query->where(function ($query) use ($term) {
+                    $query
+                        ->whereRaw("LOWER(name) like '%" . $term . "%'")
+                        ->orWhereHas('menuType', function ($menuTypeQuery) use ($term) {
+                            $menuTypeQuery->whereRaw("LOWER(name) like '%" . $term . "%'");
+                        });
+                });
+            });
+    }
+    public function scopeSearchShow(Builder $query): void
+    {
+        $query->when(request('term') ?? null, function ($query, $term) {
+            $query->whereRaw("LOWER(name) like '%" . strtolower($term) . "%'");
+        });
     }
 }

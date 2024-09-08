@@ -1,49 +1,48 @@
 <?php
 
-namespace App\Data;
+namespace App\Data\Product;
 
-use App\Models\Category;
+use App\Data\Category\CategoryData;
+use App\Models\Product;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
 use Spatie\LaravelData\Optional;
 
 /** @typescript */
-class CategoryData extends Data
+class ProductData extends Data
 {
     public function __construct(
         public ?int                              $id,
-        public ?int                              $menuId,
-        public ?int                              $totalProducts,
+        public ?int                              $categoryId,
         public string                            $name,
 
+        public ?string                           $price,
+        public ?string                           $image,
         public ?string                           $description,
         public ?string                           $createdAt,
         public ?string                           $updatedAt,
         public ?string                           $deletedAt,
 
-        /** @var Optional|Lazy|DataCollection<ProductData> */
-        public Lazy|DataCollection|Optional|null $products,
-
-        /** @var Optional|Lazy|DataCollection<MenuTypeData> */
-        public Lazy|DataCollection|Optional|null $menuType,
+        /** @var Optional|Lazy|DataCollection<CategoryData> */
+        public Lazy|DataCollection|Optional|null $category,
     )
     {
     }
 
-    public static function fromModel(Category $category): self
+    public static function fromModel(Product $product): self
     {
         return new self(
-            id: $category->id,
-            menuId: $category->menu_id,
-            totalProducts: $category->products()->count(),
-            name: $category->name,
-            description: $category->description,
-            createdAt: $category->created_at,
-            updatedAt: $category->updated_at,
-            deletedAt: $category->deleted_at,
-            products: Lazy::create(fn() => ProductData::collect($category->products)),
-            menuType: Lazy::create(fn() => MenuTypeData::optional($category->menuType))
+            id: $product->id,
+            categoryId: $product->category_id,
+            name: $product->name,
+            price: $product->price,
+            image: $product->image,
+            description: $product->description,
+            createdAt: $product->created_at,
+            updatedAt: $product->updated_at,
+            deletedAt: $product->deleted_at,
+            category: Lazy::create(fn() => CategoryData::optional($product->category))
         );
     }
 
@@ -51,7 +50,8 @@ class CategoryData extends Data
     {
         return [
             'name' => '',
-            'description' => ''
+            'description' => '',
+            'price' => ''
         ];
     }
 
@@ -59,7 +59,8 @@ class CategoryData extends Data
     {
         return [
             'name' => ['required'],
-            'description' => ['nullable']
+            'description' => ['nullable'],
+            'price' => ['nullable'],
         ];
     }
 
@@ -74,7 +75,8 @@ class CategoryData extends Data
     {
         return [
             'name' => $this->name,
-            'description' => $this->description
+            'description' => $this->description,
+            'price' => $this->price,
         ];
     }
 }
