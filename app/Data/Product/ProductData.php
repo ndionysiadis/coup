@@ -17,7 +17,7 @@ class ProductData extends Data
         public ?int                              $categoryId,
         public string                            $name,
 
-        public ?string                           $price,
+        public string                            $price,
         public ?string                           $image,
         public ?string                           $description,
         public ?string                           $createdAt,
@@ -61,7 +61,7 @@ class ProductData extends Data
         return [
             'name' => ['required'],
             'description' => ['nullable'],
-            'price' => ['nullable'],
+            'price' => ['required'],
             'category_id' => ['nullable'],
         ];
     }
@@ -70,6 +70,7 @@ class ProductData extends Data
     {
         return [
             'name.required' => 'Το πεδίο Όνομα είναι υποχρεωτικό',
+            'name.price' => 'Το πεδίο Τιμή είναι υποχρεωτικό'
         ];
     }
 
