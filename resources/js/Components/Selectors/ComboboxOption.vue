@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-    option: string;
+    option: any;
     isSelected: boolean;
 }>();
 
@@ -16,6 +16,6 @@ const handleClick = () => {
         @click="handleClick"
         :class="['px-4 py-2 cursor-pointer', isSelected ? 'bg-gray-900 text-white' : 'hover:bg-gray-900 transition duration-150 ease-in-out']"
     >
-        {{ option }}
+        <slot />
     </li>
 </template>

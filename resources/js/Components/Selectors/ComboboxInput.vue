@@ -15,16 +15,12 @@ const props = defineProps<{
     placeholder: string;
 }>();
 
-const emit = defineEmits(['update:modelValue', 'focus', 'blur', 'removeOption', 'clearSelections']);
+const emit = defineEmits(['update:modelValue', 'focus', 'blur', 'clearSelections']);
 const inputValue = ref(props.modelValue);
 
 watch(inputValue, (newVal) => {
     emit('update:modelValue', newVal);
 });
-
-const removeOption = (option: string) => {
-    emit('removeOption', option);
-};
 </script>
 
 <template>
@@ -39,12 +35,6 @@ const removeOption = (option: string) => {
                 class="bg-gray-800 flex items-center gap-1 pl-2 py-1 pr-1 text-xs"
             >
                 <span>{{ option }}</span>
-                <span
-                    class="text-red-500 focus:outline-none cursor-pointer"
-                    @click="removeOption(option)"
-                >
-                  <PhX weight="bold" size="12"/>
-                </span>
             </div>
 
             <input
@@ -57,7 +47,7 @@ const removeOption = (option: string) => {
                 :required="props.required"
                 :autofocus="props.autofocus"
                 :disabled="props.disabled"
-                class="peer block w-full -ml-2 border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
+                class="peer block w-full h-10 border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0"
             />
 
             <span

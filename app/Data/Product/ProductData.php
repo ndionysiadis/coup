@@ -51,7 +51,8 @@ class ProductData extends Data
         return [
             'name' => '',
             'description' => '',
-            'price' => ''
+            'price' => '',
+            'category_id' => '',
         ];
     }
 
@@ -61,6 +62,7 @@ class ProductData extends Data
             'name' => ['required'],
             'description' => ['nullable'],
             'price' => ['nullable'],
+            'category_id' => ['nullable'],
         ];
     }
 
@@ -77,6 +79,7 @@ class ProductData extends Data
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
+            'category_id' => $this->categoryId,
         ];
     }
 }

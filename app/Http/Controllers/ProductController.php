@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\Category\CategoryData;
 use App\Data\Product\ProductData;
 use App\Data\Product\ProductPageData;
 use App\Data\ToastData;
+use App\Models\Category;
 use App\Models\Product;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\LaravelData\PaginatedDataCollection;
 use Throwable;
 
 class ProductController extends Controller
@@ -20,7 +23,7 @@ class ProductController extends Controller
     public function create()
     {
         return Inertia::render('Product/Create', [
-            'product' => ProductData::empty()
+            'product' => ProductData::empty(),
         ]);
     }
 
