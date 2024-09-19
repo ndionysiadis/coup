@@ -8,23 +8,28 @@ const props = defineProps<{
     displayField: string;
 }>();
 
-const emit = defineEmits(['select']);
+const emit = defineEmits(["select"]);
 
 const sortedOptions = computed(() => {
-    const selected = props.options.filter(option => props.selectedOptions.includes(option[props.displayField]));
-    const unselected = props.options.filter(option => !props.selectedOptions.includes(option[props.displayField]));
+    const selected = props.options.filter((option) =>
+        props.selectedOptions.includes(option[props.displayField]),
+    );
+    const unselected = props.options.filter(
+        (option) => !props.selectedOptions.includes(option[props.displayField]),
+    );
     return [...selected, ...unselected];
 });
 
 const selectOption = (option: any) => {
-    emit('select', option);
+    emit("select", option);
 };
 </script>
 
 <template>
     <ul
         v-motion-fade-visible-once
-        class="absolute mt-1 z-10 max-h-60 w-full overflow-auto scrollbar bg-gray-800 ring-1 ring-inset ring-gray-600 text-white text-sm p-2">
+        class="absolute z-10 mt-1 max-h-60 w-full overflow-auto bg-gray-800 p-2 text-sm text-white ring-1 ring-inset ring-gray-600 scrollbar"
+    >
         <ComboboxOption
             v-for="option in sortedOptions"
             :key="option.id || option[props.displayField]"

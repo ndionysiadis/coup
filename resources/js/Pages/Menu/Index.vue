@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Head, router} from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
@@ -8,38 +8,45 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import {PhPlus} from "@phosphor-icons/vue";
+import { PhPlus } from "@phosphor-icons/vue";
 import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
-import {ref, watch} from "vue";
+import { ref, watch } from "vue";
 import debounce from "lodash/debounce";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
 
-const title = "Μενού"
+const title = "Μενού";
 
 const props = defineProps<{
-    menuTypes: LaravelPaginator<App.Data.MenuTypeData>
-    term: App.Data.MenuTypeIndexPageData
-}>()
+    menuTypes: LaravelPaginator<App.Data.MenuTypeData>;
+    term: App.Data.MenuTypeIndexPageData;
+}>();
 
-const term = ref<string>(props.term!)
+const term = ref<string>(props.term!);
 
-watch(term, debounce((value) => {
-    let fullUrl: string = window.location.href
-    let url: URL = new URL(fullUrl);
-    let params: URLSearchParams = new URLSearchParams(url.search);
+watch(
+    term,
+    debounce((value) => {
+        let fullUrl: string = window.location.href;
+        let url: URL = new URL(fullUrl);
+        let params: URLSearchParams = new URLSearchParams(url.search);
 
-    params.set('term', value)
+        params.set("term", value);
 
-    url.search = params.toString();
-    router.get(url.href, {}, {
-        preserveState: true,
-        only: ['menuTypes'],
-    });
-}, 1000))
+        url.search = params.toString();
+        router.get(
+            url.href,
+            {},
+            {
+                preserveState: true,
+                only: ["menuTypes"],
+            },
+        );
+    }, 1000),
+);
 </script>
 
 <template>
-    <Head :title="title"/>
+    <Head :title="title" />
 
     <AuthenticatedLayout>
         <template #breadcrumbs>
@@ -53,31 +60,33 @@ watch(term, debounce((value) => {
             <div class="flex items-center justify-between">
                 <div class="flex flex-col">
                     <HeadingLarge>{{ title }}</HeadingLarge>
-                    <PaginationMeta :meta="menuTypes.meta"/>
+                    <PaginationMeta :meta="menuTypes.meta" />
                 </div>
 
                 <div class="flex items-center gap-2">
                     <PaginationLinks
                         v-if="menuTypes?.meta?.total > 0"
-                        :links="menuTypes.links"/>
+                        :links="menuTypes.links"
+                    />
 
                     <AppLink :href="route('menu.create')" title="Δημιουργία">
                         <IconPrimaryButton>
-                            <PhPlus weight="bold" size="16"/>
+                            <PhPlus weight="bold" size="16" />
                         </IconPrimaryButton>
                     </AppLink>
                 </div>
             </div>
 
-            <FormSearch
-                :clear-route="route('menu.index')"
-                v-model="term"/>
+            <FormSearch :clear-route="route('menu.index')" v-model="term" />
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
+            <div
+                class="grid gap-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+            >
                 <MenuCard
                     v-for="menuType in menuTypes.data"
                     :key="menuType.id"
-                    :menu-type="menuType"/>
+                    :menu-type="menuType"
+                />
             </div>
         </div>
     </AuthenticatedLayout>
