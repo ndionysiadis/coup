@@ -17,8 +17,8 @@ import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
 import Combobox from "@/Components/Selectors/Combobox.vue";
-import { ref } from "vue";
-import axios from "axios";
+import { onMounted, ref } from "vue";
+import axios, { AxiosResponse } from "axios";
 
 const props = defineProps<{
     product: App.Data.ProductData;
@@ -26,38 +26,13 @@ const props = defineProps<{
 
 const title = "Δημιουργία προϊόντος";
 
-const categories = ref<Array<any>>([]);
 const loading = ref<boolean>(true);
-
-const fetchCategories = async () => {
-    try {
-        if (categories.value.length === 0) {
-            const response = await axios.get("/api/categories");
-            categories.value = response.data;
-        }
-    } finally {
-        loading.value = false;
-    }
-};
 
 const form = useForm<App.Data.ProductData>(
     "post",
     route("product.store"),
     props.product,
 );
-const handleSelectedCategories = (selectedCategories: any[]) => {
-    if (selectedCategories.length > 0) {
-        const selectedCategory = categories.value.find(
-            (category) => category.name === selectedCategories[0],
-        );
-        if (selectedCategory) {
-            form.categoryId = selectedCategory.id;
-            console.log("Selected category ID:", selectedCategory.id);
-        }
-    } else {
-        form.categoryId = null;
-    }
-};
 </script>
 
 <template>
@@ -125,13 +100,14 @@ const handleSelectedCategories = (selectedCategories: any[]) => {
                 </FormNumber>
 
                 <Combobox
-                    id="selectCategories"
-                    type="string"
-                    displayField="name"
-                    :options="categories"
+                    :route="route('api.category.index')"
+                    :min-chars-to-search="2"
+                    display-field="name"
+                    :multiple="false"
+                    v-model="form.category_id"
+                    id="Category Selector"
                     label="Κατηγορία"
-                    @click="fetchCategories"
-                    @update:selectedOptions="handleSelectedCategories"
+                    placeholder="Πληκτρολογήστε τουλάχιστον 2 χαρακτήρες για αναζήτηση κατηγορίας..."
                 />
 
                 <div>

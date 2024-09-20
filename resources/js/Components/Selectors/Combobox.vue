@@ -1,58 +1,82 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import ComboboxInput from "@/Components/Selectors/ComboboxInput.vue";
 import ComboboxOptions from "@/Components/Selectors/ComboboxOptions.vue";
+import axios, { AxiosResponse } from "axios";
+import { ref, watch, computed, onBeforeUnmount } from "vue";
 
-const props = defineProps<{
-    options: Array<any>;
-    displayField: string;
-    id: string;
-    label: string;
-    type: string;
-    required?: boolean;
-    autofocus?: boolean;
-    disabled?: boolean;
-    error?: string;
-}>();
-
-const emit = defineEmits(["update:selectedOptions"]);
+const props = withDefaults(
+    defineProps<{
+        displayField: string;
+        label: string;
+        id: string;
+        type?: string;
+        placeholder: string;
+        route: string;
+        multiple?: boolean;
+        required?: boolean;
+        autofocus?: boolean;
+        error?: string;
+        minCharsToSearch?: number;
+    }>(),
+    {
+        multiple: false,
+        minCharsToSearch: 2,
+    },
+);
 
 const selectedOptions = ref<any[]>([]);
 const searchTerm = ref<string>("");
+const apiOptions = ref<any[]>([]);
 const isOpen = ref<boolean>(false);
-
+watch(searchTerm, (newTerm) => {
+    if (newTerm.length >= props.minCharsToSearch) {
+        fetchOptions(newTerm);
+    }
+});
+const fetchOptions = (term: string) => {
+    axios
+        .get(props.route, { params: { term } })
+        .then((response: AxiosResponse) => {
+            apiOptions.value = response.data?.data || response.data;
+            isOpen.value = true;
+        })
+        .catch(() => {
+            apiOptions.value = [];
+        });
+};
 const filteredOptions = computed(() => {
-    return props.options.filter((option) => {
-        const value = option[props.displayField]?.toLowerCase();
-        return value.includes(searchTerm.value.toLowerCase());
+    return apiOptions.value.filter((option) => {
+        return props.multiple
+            ? !selectedOptions.value.includes(option)
+            : selectedOptions.value !== option;
     });
 });
-
 const selectOption = (option: any) => {
-    if (!selectedOptions.value.includes(option)) {
-        selectedOptions.value.push(option);
+    if (props.multiple) {
+        if (!selectedOptions.value.includes(option)) {
+            selectedOptions.value.push(option);
+        } else {
+            selectedOptions.value = selectedOptions.value.filter(
+                (selected) => selected !== option,
+            );
+        }
     } else {
-        selectedOptions.value = selectedOptions.value.filter(
-            (opt) => opt !== option,
-        );
+        selectedOptions.value = [option];
+        isOpen.value = false;
     }
-    emit("update:selectedOptions", selectedOptions.value);
 };
 
 const clearSelections = () => {
     selectedOptions.value = [];
-    emit("update:selectedOptions", selectedOptions.value);
 };
-const handleClickOutside = (event: Event) => {
+const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
     if (!target.closest(".combobox")) {
         isOpen.value = false;
     }
 };
 
-onMounted(() => {
-    document.addEventListener("click", handleClickOutside);
-});
+document.addEventListener("click", handleClickOutside);
 
 onBeforeUnmount(() => {
     document.removeEventListener("click", handleClickOutside);
@@ -64,21 +88,21 @@ onBeforeUnmount(() => {
         <ComboboxInput
             v-model="searchTerm"
             @focus="isOpen = true"
-            placeholder="Επιλέξτε ή πληκτρολογήστε για αναζήτηση..."
             :selectedOptions="
                 selectedOptions.map((option) => option[props.displayField])
             "
             :id="props.id"
-            :label="props.label"
             :type="props.type"
-            :required="props.required"
+            :label="props.label"
+            :placeholder="props.placeholder"
             :autofocus="props.autofocus"
-            :disabled="props.disabled"
+            :required="props.required"
             :error="props.error"
             @clearSelections="clearSelections"
         />
+
         <ComboboxOptions
-            v-if="isOpen"
+            v-if="isOpen && filteredOptions.length"
             :options="filteredOptions"
             :displayField="props.displayField"
             :selectedOptions="

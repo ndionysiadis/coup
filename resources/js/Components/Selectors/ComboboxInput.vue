@@ -5,11 +5,11 @@ import { PhX } from "@phosphor-icons/vue";
 const props = defineProps<{
     modelValue: string;
     selectedOptions: string[];
-    id: string;
+    id?: string;
     label: string;
-    type: string;
-    required: boolean;
-    autofocus: boolean;
+    type?: string;
+    required?: boolean;
+    autofocus?: boolean;
     disabled?: boolean;
     error?: string;
     placeholder: string;
