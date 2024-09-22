@@ -17,8 +17,7 @@ import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
 import Combobox from "@/Components/Selectors/Combobox.vue";
-import { onMounted, ref } from "vue";
-import axios, { AxiosResponse } from "axios";
+import { ref } from "vue";
 
 const props = defineProps<{
     product: App.Data.ProductData;
@@ -103,7 +102,6 @@ const form = useForm<App.Data.ProductData>(
                     :route="route('api.category.index')"
                     :min-chars-to-search="2"
                     display-field="name"
-                    :multiple="false"
                     v-model="form.category_id"
                     id="Category Selector"
                     label="Κατηγορία"

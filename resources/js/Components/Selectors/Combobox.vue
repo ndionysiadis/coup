@@ -2,7 +2,7 @@
 import ComboboxInput from "@/Components/Selectors/ComboboxInput.vue";
 import ComboboxOptions from "@/Components/Selectors/ComboboxOptions.vue";
 import axios, { AxiosResponse } from "axios";
-import { ref, watch, computed, onBeforeUnmount } from "vue";
+import { ref, watch, onBeforeUnmount } from "vue";
 
 const props = withDefaults(
     defineProps<{
@@ -12,63 +12,50 @@ const props = withDefaults(
         type?: string;
         placeholder: string;
         route: string;
-        multiple?: boolean;
         required?: boolean;
         autofocus?: boolean;
         error?: string;
         minCharsToSearch?: number;
     }>(),
     {
-        multiple: false,
         minCharsToSearch: 2,
     },
 );
 
-const selectedOptions = ref<any[]>([]);
-const searchTerm = ref<string>("");
-const apiOptions = ref<any[]>([]);
-const isOpen = ref<boolean>(false);
+const emit = defineEmits(["update:modelValue"]); // Emit event to update the v-model binding
+const searchTerm = ref<string>(""); // Current search term
+const apiOptions = ref<any[]>([]); // API-fetched options (categories)
+const selectedOption = ref<any>(null); // The selected category
+const isOpen = ref<boolean>(false); // Controls the visibility of the dropdown
+
+// Watch search term changes and fetch options from the API if enough characters are typed
 watch(searchTerm, (newTerm) => {
     if (newTerm.length >= props.minCharsToSearch) {
-        fetchOptions(newTerm);
+        fetchOptions(newTerm); // Fetch from API
     }
 });
+
+// Fetch categories from the API based on the search term
 const fetchOptions = (term: string) => {
     axios
         .get(props.route, { params: { term } })
         .then((response: AxiosResponse) => {
-            apiOptions.value = response.data?.data || response.data;
-            isOpen.value = true;
+            apiOptions.value = response.data?.data || response.data; // Store API results
+            isOpen.value = true; // Open the dropdown after fetching options
         })
         .catch(() => {
-            apiOptions.value = [];
+            apiOptions.value = []; // Reset options on error
         });
 };
-const filteredOptions = computed(() => {
-    return apiOptions.value.filter((option) => {
-        return props.multiple
-            ? !selectedOptions.value.includes(option)
-            : selectedOptions.value !== option;
-    });
-});
+
+// Handle selecting a category
 const selectOption = (option: any) => {
-    if (props.multiple) {
-        if (!selectedOptions.value.includes(option)) {
-            selectedOptions.value.push(option);
-        } else {
-            selectedOptions.value = selectedOptions.value.filter(
-                (selected) => selected !== option,
-            );
-        }
-    } else {
-        selectedOptions.value = [option];
-        isOpen.value = false;
-    }
+    selectedOption.value = option; // Set the selected option
+    emit("update:modelValue", option.id); // Emit the selected category_id to the parent
+    isOpen.value = false; // Close dropdown after selection
 };
 
-const clearSelections = () => {
-    selectedOptions.value = [];
-};
+// Close dropdown when clicking outside
 const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
     if (!target.closest(".combobox")) {
@@ -76,8 +63,10 @@ const handleClickOutside = (event: MouseEvent) => {
     }
 };
 
+// Attach click listener for closing dropdown
 document.addEventListener("click", handleClickOutside);
 
+// Cleanup listener when component is destroyed
 onBeforeUnmount(() => {
     document.removeEventListener("click", handleClickOutside);
 });
@@ -89,25 +78,21 @@ onBeforeUnmount(() => {
             v-model="searchTerm"
             @focus="isOpen = true"
             :selectedOptions="
-                selectedOptions.map((option) => option[props.displayField])
+                selectedOption ? [selectedOption[props.displayField]] : []
             "
-            :id="props.id"
-            :type="props.type"
             :label="props.label"
             :placeholder="props.placeholder"
-            :autofocus="props.autofocus"
             :required="props.required"
             :error="props.error"
-            @clearSelections="clearSelections"
         />
 
         <ComboboxOptions
-            v-if="isOpen && filteredOptions.length"
-            :options="filteredOptions"
+            v-if="isOpen && apiOptions.length"
+            :options="apiOptions"
             :displayField="props.displayField"
-            :selectedOptions="
-                selectedOptions.map((option) => option[props.displayField])
-            "
+            :selectedOptions="[
+                selectedOption ? selectedOption[props.displayField] : '',
+            ]"
             @select="selectOption"
         />
     </div>
