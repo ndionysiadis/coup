@@ -16,8 +16,8 @@ import FormInput from "@/Components/FormElements/FormInput.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
-import Combobox from "@/Components/Selectors/Combobox.vue";
 import { ref } from "vue";
+import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
     product: App.Data.ProductData;
@@ -98,14 +98,15 @@ const form = useForm<App.Data.ProductData>(
                     <PhCurrencyEur weight="bold" />
                 </FormNumber>
 
-                <Combobox
-                    :route="route('api.category.index')"
-                    :min-chars-to-search="2"
-                    display-field="name"
-                    v-model="form.category_id"
-                    id="Category Selector"
+                <ComboboxSelector
+                    api
+                    v-model="form.category"
                     label="Κατηγορία"
-                    placeholder="Πληκτρολογήστε τουλάχιστον 2 χαρακτήρες για αναζήτηση κατηγορίας..."
+                    :display-value-function="
+                        (x: App.Data.CategoryData) => x?.name
+                    "
+                    :route="route('api.category.index')"
+                    :error="form.errors.category"
                 />
 
                 <div>

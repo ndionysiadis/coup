@@ -13,19 +13,21 @@ use Spatie\LaravelData\Optional;
 class ProductData extends Data
 {
     public function __construct(
-        public ?int                              $id,
-        public ?int                              $categoryId,
-        public string                            $name,
+        public ?int                   $id,
+        public ?int                   $categoryId,
+        public string                 $name,
 
-        public string                            $price,
-        public ?string                           $image,
-        public ?string                           $description,
-        public ?string                           $createdAt,
-        public ?string                           $updatedAt,
-        public ?string                           $deletedAt,
+        public string                 $price,
+        public ?string                $image,
+        public ?string                $description,
+        public ?string                $createdAt,
+        public ?string                $updatedAt,
+        public ?string                $deletedAt,
 
-        /** @var Optional|Lazy|DataCollection<CategoryData> */
-        public Lazy|DataCollection|Optional|null $category,
+//        /** @var Optional|Lazy|DataCollection<CategoryData> */
+//        public Lazy|DataCollection|Optional|null $category,
+
+        public Lazy|CategoryData|null $category,
     )
     {
     }
@@ -52,7 +54,7 @@ class ProductData extends Data
             'name' => '',
             'description' => '',
             'price' => '',
-            'category_id' => '',
+            'category' => '',
         ];
     }
 
@@ -62,7 +64,7 @@ class ProductData extends Data
             'name' => ['required'],
             'description' => ['nullable'],
             'price' => ['required'],
-            'category_id' => ['nullable'],
+            'category' => ['nullable'],
         ];
     }
 
@@ -80,7 +82,7 @@ class ProductData extends Data
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
-            'category_id' => $this->categoryId,
+            'category_id' => $this->category->id,
         ];
     }
 }
