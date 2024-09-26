@@ -108,7 +108,6 @@ const form = useForm<App.Data.ProductData>(
                     :route="route('api.category.index')"
                     :error="form.errors.category"
                 />
-
                 <div>
                     <PrimaryButtonIcon type="submit" title="Αποθήκευση">
                         <template #icon>

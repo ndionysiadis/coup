@@ -54,6 +54,9 @@ class ProductController extends Controller
     {
         return Inertia::render('Product/Edit', [
             'product' => ProductData::from($product)
+                ->include(
+                    'category'
+                )
         ]);
     }
 

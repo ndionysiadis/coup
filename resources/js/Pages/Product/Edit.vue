@@ -22,6 +22,7 @@ import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
+import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
     product: App.Data.ProductData;
@@ -144,6 +145,17 @@ function destroy() {
                 >
                     <PhCurrencyEur weight="bold" />
                 </FormNumber>
+
+                <ComboboxSelector
+                    api
+                    v-model="form.category"
+                    label="Κατηγορία"
+                    :display-value-function="
+                        (x: App.Data.CategoryData) => x?.name
+                    "
+                    :route="route('api.category.index')"
+                    :error="form.errors.category"
+                />
 
                 <div>
                     <PrimaryButtonIcon type="submit" title="Αποθήκευση">
