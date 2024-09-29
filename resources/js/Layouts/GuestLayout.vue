@@ -1,39 +1,45 @@
 <script setup lang="ts">
-import ApplicationLogo from '@/Components/ApplicationLogoFull.vue';
-import { Link } from '@inertiajs/vue3';
+import ApplicationLogo from "@/Components/ApplicationLogoFull.vue";
+import { Link } from "@inertiajs/vue3";
 </script>
 
 <template>
-    <div class="min-h-screen flex flex-col justify-center items-center pb-20 bg-gray-900 relative overflow-hidden">
+    <div
+        class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gray-900 pb-20"
+    >
         <div class="lines absolute inset-0">
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
         </div>
 
-        <div class="w-full flex justify-center mb-6">
+        <div class="mb-6 flex w-full justify-center">
             <Link href="/">
-                <ApplicationLogo class="w-32 sm:w-44 fill-current text-primary-500" />
+                <ApplicationLogo
+                    class="w-32 fill-current text-primary-500 sm:w-44"
+                />
             </Link>
         </div>
 
-        <div class="w-full z-10 sm:max-w-md mt-6 px-4 sm:px-6 py-6 bg-gray-800 shadow-2xl shadow-gray-950/50 overflow-hidden">
+        <div
+            class="z-10 mt-6 w-full overflow-hidden bg-gray-800 px-4 py-6 shadow-2xl shadow-gray-950/50 sm:max-w-md sm:px-6"
+        >
             <slot />
         </div>
 
         <div class="absolute inset-x-0 bottom-3 px-4 sm:px-0">
-            <slot name="bottom"/>
+            <slot name="bottom" />
         </div>
     </div>
 </template>
-
 
 <style scoped>
 * {
     box-sizing: border-box !important;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -68,14 +74,19 @@ body {
 }
 
 .line::after {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     height: 15vh;
     width: 100%;
     top: -50%;
     left: 0;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        #ffffff 75%,
+        #ffffff 100%
+    );
     animation: drop 7s 0s infinite;
     animation-fill-mode: forwards;
     animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);

@@ -35,10 +35,14 @@ class Product extends Model
                 });
             });
     }
+
     public function scopeSearchShow(Builder $query): void
     {
         $query->when(request('term') ?? null, function ($query, $term) {
-            $query->whereRaw("LOWER(name) like '%" . strtolower($term) . "%'");
+            $query
+                ->whereRaw("LOWER(name) like '%" . strtolower($term) . "%'")
+                ->orWhereRaw("LOWER(description) like '%" . $term . "%'")
+                ->orWhere('price', 'like', '%' . $term . '%');
         });
     }
 }

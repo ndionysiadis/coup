@@ -4,6 +4,7 @@ namespace App\Data\Product;
 
 use App\Data\Category\CategoryData;
 use App\Models\Product;
+use Spatie\LaravelData\Attributes\WithoutValidation;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
@@ -13,19 +14,21 @@ use Spatie\LaravelData\Optional;
 class ProductData extends Data
 {
     public function __construct(
-        public ?int                              $id,
-        public ?int                              $categoryId,
-        public string                            $name,
+        public ?int                   $id,
 
-        public ?string                           $price,
-        public ?string                           $image,
-        public ?string                           $description,
-        public ?string                           $createdAt,
-        public ?string                           $updatedAt,
-        public ?string                           $deletedAt,
+        #[WithoutValidation]
+        public Optional|int|null      $categoryId,
 
-        /** @var Optional|Lazy|DataCollection<CategoryData> */
-        public Lazy|DataCollection|Optional|null $category,
+        public string                 $name,
+
+        public string                 $price,
+        public ?string                $image,
+        public ?string                $description,
+        public ?string                $createdAt,
+        public ?string                $updatedAt,
+        public ?string                $deletedAt,
+
+        public Lazy|CategoryData|null $category,
     )
     {
     }
@@ -51,16 +54,18 @@ class ProductData extends Data
         return [
             'name' => '',
             'description' => '',
-            'price' => ''
+            'price' => '',
+            'category' => '',
         ];
     }
 
     public static function rules(): array
     {
         return [
-            'name' => ['required'],
-            'description' => ['nullable'],
-            'price' => ['nullable'],
+            'name' => 'required',
+            'description' => 'nullable',
+            'price' => 'required',
+            'category' => 'nullable',
         ];
     }
 
@@ -68,6 +73,7 @@ class ProductData extends Data
     {
         return [
             'name.required' => 'Το πεδίο Όνομα είναι υποχρεωτικό',
+            'name.price' => 'Το πεδίο Τιμή είναι υποχρεωτικό'
         ];
     }
 
@@ -77,6 +83,7 @@ class ProductData extends Data
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
+            'category_id' => $this->category?->id,
         ];
     }
 }

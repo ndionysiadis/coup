@@ -3,6 +3,7 @@
 namespace App\Data\Menu;
 
 use App\Data\Category\CategoryData;
+use App\Data\Product\ProductData;
 use App\Models\MenuType;
 use Spatie\LaravelData\Concerns\EmptyData;
 use Spatie\LaravelData\Data;
@@ -26,7 +27,7 @@ class MenuTypeData extends Data
         public Lazy|int|Optional                 $totalCategories,
         public Lazy|int|Optional                 $totalProducts,
 
-        /** @var Optional|Lazy|DataCollection<\App\Data\Category\CategoryData> */
+        /** @var Optional|Lazy|DataCollection<CategoryData> */
         public Lazy|DataCollection|Optional|null $categories,
 
     )
@@ -52,15 +53,17 @@ class MenuTypeData extends Data
     {
         return [
             'name' => '',
-            'description' => ''
+            'description' => '',
+            'categories' => []
         ];
     }
 
     public static function rules(): array
     {
         return [
-            'name' => ['required'],
-            'description' => ['nullable']
+            'name' => 'required',
+            'description' => 'nullable',
+            'categories' => 'nullable',
         ];
     }
 
@@ -68,14 +71,6 @@ class MenuTypeData extends Data
     {
         return [
             'name.required' => 'Το πεδίο Όνομα είναι υποχρεωτικό',
-        ];
-    }
-
-    public function toDatabase(): array
-    {
-        return [
-            'name' => $this->name,
-            'description' => $this->description
         ];
     }
 

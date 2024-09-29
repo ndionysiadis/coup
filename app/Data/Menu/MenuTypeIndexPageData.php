@@ -6,7 +6,6 @@ use App\Models\MenuType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\PaginatedDataCollection;
 
-/** @typescript */
 class MenuTypeIndexPageData extends Data
 {
     /** @var PaginatedDataCollection<MenuTypeData> */

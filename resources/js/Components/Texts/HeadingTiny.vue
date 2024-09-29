@@ -1,19 +1,19 @@
 <script setup lang="ts">
 defineProps<{
-    id?: string,
-}>()
+    id?: string;
+}>();
 </script>
 
 <template>
-    <div class="text-lg font-heading text-primary-300">
+    <div class="font-heading text-lg text-primary-300">
         <a v-if="id" :href="'#' + id">
-            <h3  :id="id">
-                <slot/>
+            <h3 :id="id">
+                <slot />
             </h3>
         </a>
 
         <h3 v-else>
-            <slot/>
+            <slot />
         </h3>
     </div>
 </template>

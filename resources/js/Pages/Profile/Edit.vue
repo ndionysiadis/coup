@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import DeleteUserForm from './Partials/DeleteUserForm.vue';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
-import { Head } from '@inertiajs/vue3';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import DeleteUserForm from "./Partials/DeleteUserForm.vue";
+import UpdatePasswordForm from "./Partials/UpdatePasswordForm.vue";
+import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm.vue";
+import { Head } from "@inertiajs/vue3";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 
 defineProps<{
@@ -17,14 +17,18 @@ defineProps<{
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Profile</h2>
+            <h2
+                class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
+            >
+                Profile
+            </h2>
         </template>
 
         <HeadingLarge>Λογαριασμός</HeadingLarge>
 
         <div class="py-6">
-            <div class="max-w-7xl mx-auto space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow">
+            <div class="mx-auto max-w-7xl space-y-6">
+                <div class="bg-white p-4 shadow sm:p-8 dark:bg-gray-800">
                     <UpdateProfileInformationForm
                         :must-verify-email="mustVerifyEmail"
                         :status="status"
@@ -32,11 +36,11 @@ defineProps<{
                     />
                 </div>
 
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow">
+                <div class="bg-white p-4 shadow sm:p-8 dark:bg-gray-800">
                     <UpdatePasswordForm class="max-w-xl" />
                 </div>
 
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow">
+                <div class="bg-white p-4 shadow sm:p-8 dark:bg-gray-800">
                     <DeleteUserForm class="max-w-xl" />
                 </div>
             </div>

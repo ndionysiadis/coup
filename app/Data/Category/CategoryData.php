@@ -27,8 +27,7 @@ class CategoryData extends Data
         /** @var Optional|Lazy|DataCollection<ProductData> */
         public Lazy|DataCollection|Optional|null $products,
 
-        /** @var Optional|Lazy|DataCollection<MenuTypeData> */
-        public Lazy|DataCollection|Optional|null $menuType,
+        public Lazy|MenuTypeData|null            $menuType,
     )
     {
     }
@@ -53,15 +52,19 @@ class CategoryData extends Data
     {
         return [
             'name' => '',
-            'description' => ''
+            'description' => '',
+            'products' => [],
+            'menuType' => ''
         ];
     }
 
     public static function rules(): array
     {
         return [
-            'name' => ['required'],
-            'description' => ['nullable']
+            'name' => 'required',
+            'description' => 'nullable',
+            'products' => 'nullable',
+            'menuType' => 'nullable'
         ];
     }
 
@@ -69,14 +72,6 @@ class CategoryData extends Data
     {
         return [
             'name.required' => 'Το πεδίο Όνομα είναι υποχρεωτικό',
-        ];
-    }
-
-    public function toDatabase(): array
-    {
-        return [
-            'name' => $this->name,
-            'description' => $this->description
         ];
     }
 }

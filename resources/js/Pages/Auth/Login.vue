@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import {Head, useForm} from '@inertiajs/vue3';
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import { Head, useForm } from "@inertiajs/vue3";
 import FormInput from "@/Components/FormElements/FormInput.vue";
-import {PhAt, PhPassword} from "@phosphor-icons/vue";
+import { PhAt, PhPassword } from "@phosphor-icons/vue";
 import FormCheckbox from "@/Components/FormElements/FormCheckbox.vue";
 import Copyrights from "@/Components/Copyrights.vue";
 import PrimaryButtonWide from "@/Components/Buttons/PrimaryButtonWide.vue";
@@ -13,27 +13,27 @@ defineProps<{
 }>();
 
 const form = useForm({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     remember: false,
 });
 
 const submit = () => {
-    form.post(route('login'), {
+    form.post(route("login"), {
         onFinish: () => {
-            form.reset('password');
+            form.reset("password");
         },
     });
 };
 
-const title = 'Login'
+const title = "Login";
 </script>
 
 <template>
     <GuestLayout>
-        <Head :title="title"/>
+        <Head :title="title" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
         </div>
 
@@ -46,10 +46,9 @@ const title = 'Login'
                     type="email"
                     :required="true"
                     :autofocus="true"
-                    :error="form.errors.email">
-
-                    <PhAt weight="bold"/>
-
+                    :error="form.errors.email"
+                >
+                    <PhAt weight="bold" />
                 </FormInput>
 
                 <FormInput
@@ -59,14 +58,13 @@ const title = 'Login'
                     type="password"
                     :required="true"
                     :autofocus="true"
-                    :error="form.errors.password">
-
-                    <PhPassword weight="bold"/>
-
+                    :error="form.errors.password"
+                >
+                    <PhPassword weight="bold" />
                 </FormInput>
             </div>
 
-            <div class="block mt-4">
+            <div class="mt-4 block">
                 <FormCheckbox
                     v-model="form.remember"
                     name="remember"
@@ -74,21 +72,23 @@ const title = 'Login'
                 />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-<!--                <TextLink v-if="canResetPassword"-->
-<!--                          :href="route('password.request')">-->
-<!--                    Forgot your password?-->
-<!--                </TextLink>-->
+            <div class="mt-4 flex items-center justify-end">
+                <!--                <TextLink v-if="canResetPassword"-->
+                <!--                          :href="route('password.request')">-->
+                <!--                    Forgot your password?-->
+                <!--                </TextLink>-->
 
-                <PrimaryButtonWide :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButtonWide
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
                     Σύνδεση
                 </PrimaryButtonWide>
-
             </div>
         </form>
 
-       <template #bottom>
-           <Copyrights/>
-       </template>
+        <template #bottom>
+            <Copyrights />
+        </template>
     </GuestLayout>
 </template>

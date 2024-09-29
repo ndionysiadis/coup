@@ -7,7 +7,6 @@ use App\Models\MenuType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\PaginatedDataCollection;
 
-/** @typescript */
 class MenuTypeShowPageData extends Data
 {
     public MenuTypeData $menuType;

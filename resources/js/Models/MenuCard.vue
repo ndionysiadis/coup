@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import HeadingSmall from "@/Components/Texts/HeadingSmall.vue";
-import {PhForkKnife, PhListBullets} from "@phosphor-icons/vue";
+import { PhForkKnife, PhListBullets } from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeData
-}>()
+    menuType: App.Data.Menu.MenuTypeData;
+}>();
 </script>
 
 <template>
@@ -19,12 +19,12 @@ const props = defineProps<{
 
                 <div>
                     <div class="flex items-center gap-1">
-                        <PhListBullets size="16" weight="bold"/>
+                        <PhListBullets size="16" weight="bold" />
                         <div>Κατηγορίες:</div>
                         <div>{{ menuType.totalCategories }}</div>
                     </div>
                     <div class="flex items-center gap-1">
-                        <PhForkKnife size="16" weight="bold"/>
+                        <PhForkKnife size="16" weight="bold" />
                         <div>Προϊόντα:</div>
                         <div>{{ menuType.totalProducts }}</div>
                     </div>

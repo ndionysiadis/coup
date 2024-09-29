@@ -1,33 +1,38 @@
 <script setup lang="ts">
-import {Head} from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
-import {PhArrowUUpLeft, PhCurrencyEur, PhFloppyDiskBack} from "@phosphor-icons/vue";
+import {
+    PhArrowUUpLeft,
+    PhCurrencyEur,
+    PhFloppyDiskBack,
+} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import {useForm} from 'laravel-precognition-vue-inertia';
+import { useForm } from "laravel-precognition-vue-inertia";
 import FormInput from "@/Components/FormElements/FormInput.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
+import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
-    product: App.Data.ProductData
-}>()
+    product: App.Data.Product.ProductData;
+}>();
 
-const title = 'Δημιουργία προϊόντος'
+const title = "Δημιουργία προϊόντος";
 
-const form = useForm<App.Data.ProductData>(
-    'post',
-    route('product.store'),
-    props.product
-)
+const form = useForm<App.Data.Product.ProductData>(
+    "post",
+    route("product.store"),
+    props.product,
+);
 </script>
 
 <template>
-    <Head :title="title"/>
+    <Head :title="title" />
 
     <AuthenticatedLayout>
         <template #breadcrumbs>
@@ -42,7 +47,7 @@ const form = useForm<App.Data.ProductData>(
             </Breadcrumbs>
         </template>
 
-        <div class="flex items-center justify-between mb-4">
+        <div class="mb-4 flex items-center justify-between">
             <div class="flex flex-col">
                 <HeadingLarge> {{ title }}</HeadingLarge>
             </div>
@@ -50,7 +55,7 @@ const form = useForm<App.Data.ProductData>(
             <div class="flex items-center gap-2">
                 <AppLink :href="route('product.index')">
                     <IconSecondaryButton title="Επιστροφή">
-                        <PhArrowUUpLeft weight="bold"/>
+                        <PhArrowUUpLeft weight="bold" />
                     </IconSecondaryButton>
                 </AppLink>
             </div>
@@ -65,7 +70,8 @@ const form = useForm<App.Data.ProductData>(
                     :required="true"
                     :autofocus="false"
                     :error="form.errors.name"
-                    v-model="form.name"/>
+                    v-model="form.name"
+                />
 
                 <FormInput
                     id="description"
@@ -74,7 +80,8 @@ const form = useForm<App.Data.ProductData>(
                     :required="false"
                     :autofocus="false"
                     :error="form.errors.description"
-                    v-model="form.description"/>
+                    v-model="form.description"
+                />
 
                 <FormNumber
                     id="price"
@@ -83,16 +90,26 @@ const form = useForm<App.Data.ProductData>(
                     :required="false"
                     :autofocus="false"
                     :error="form.errors.price"
-                    v-model="form.price">
-
-                    <PhCurrencyEur weight="bold"/>
-
+                    v-model="form.price"
+                >
+                    <PhCurrencyEur weight="bold" />
                 </FormNumber>
 
+                <ComboboxSelector
+                    api
+                    id="category"
+                    v-model="form.category"
+                    label="Κατηγορία"
+                    :display-value-function="
+                        (x: App.Data.Category.CategoryData) => x?.name
+                    "
+                    :route="route('api.category.index')"
+                    :error="form.errors.category"
+                />
                 <div>
                     <PrimaryButtonIcon type="submit" title="Αποθήκευση">
                         <template #icon>
-                            <PhFloppyDiskBack weight="fill" size="16"/>
+                            <PhFloppyDiskBack weight="fill" size="16" />
                         </template>
                         Αποθήκευση
                     </PrimaryButtonIcon>

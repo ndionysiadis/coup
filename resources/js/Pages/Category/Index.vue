@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {Head, router} from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
@@ -7,39 +7,46 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import {PhPlus} from "@phosphor-icons/vue";
+import { PhPlus } from "@phosphor-icons/vue";
 import CategoryCard from "@/Models/CategoryCard.vue";
 import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
-import {ref, watch} from "vue";
+import { ref, watch } from "vue";
 import debounce from "lodash/debounce";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
 
-const title = "Κατηγορίες"
+const title = "Κατηγορίες";
 
 const props = defineProps<{
-    categories: LaravelPaginator<App.Data.CategoryData>
-    term: App.Data.CategoryIndexPageData
-}>()
+    categories: LaravelPaginator<App.Data.Category.CategoryData>;
+    term: App.Data.Category.CategoryIndexPageData;
+}>();
 
-const term = ref<string>(props.term!)
+const term = ref<string>(props.term!);
 
-watch(term, debounce((value) => {
-    let fullUrl: string = window.location.href
-    let url: URL = new URL(fullUrl);
-    let params: URLSearchParams = new URLSearchParams(url.search);
+watch(
+    term,
+    debounce((value) => {
+        let fullUrl: string = window.location.href;
+        let url: URL = new URL(fullUrl);
+        let params: URLSearchParams = new URLSearchParams(url.search);
 
-    params.set('term', value)
+        params.set("term", value);
 
-    url.search = params.toString();
-    router.get(url.href, {}, {
-        preserveState: true,
-        only: ['categories'],
-    });
-}, 1000))
+        url.search = params.toString();
+        router.get(
+            url.href,
+            {},
+            {
+                preserveState: true,
+                only: ["categories"],
+            },
+        );
+    }, 1000),
+);
 </script>
 
 <template>
-    <Head :title="title"/>
+    <Head :title="title" />
 
     <AuthenticatedLayout>
         <template #breadcrumbs>
@@ -53,31 +60,34 @@ watch(term, debounce((value) => {
             <div class="flex items-center justify-between">
                 <div class="flex flex-col">
                     <HeadingLarge>{{ title }}</HeadingLarge>
-                    <PaginationMeta :meta="categories.meta"/>
+                    <PaginationMeta :meta="categories.meta" />
                 </div>
 
                 <div class="flex items-center gap-2">
                     <PaginationLinks
                         v-if="categories?.meta?.total > 0"
-                        :links="categories.links"/>
+                        :links="categories.links"
+                    />
 
-                    <AppLink :href="route('category.create')" title="Δημιουργία">
+                    <AppLink
+                        :href="route('category.create')"
+                        title="Δημιουργία"
+                    >
                         <IconPrimaryButton>
-                            <PhPlus weight="bold" size="16"/>
+                            <PhPlus weight="bold" size="16" />
                         </IconPrimaryButton>
                     </AppLink>
                 </div>
             </div>
 
-            <FormSearch
-                :clear-route="route('category.index')"
-                v-model="term"/>
+            <FormSearch :clear-route="route('category.index')" v-model="term" />
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-2">
+            <div class="flex flex-col gap-2">
                 <CategoryCard
                     v-for="category in categories.data"
                     :key="category.id"
-                    :category="category"/>
+                    :category="category"
+                />
             </div>
         </div>
     </AuthenticatedLayout>

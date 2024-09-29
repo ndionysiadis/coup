@@ -1,32 +1,36 @@
 <script setup lang="ts">
-import {Link} from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 
-const props = withDefaults(defineProps<{
-    href: string,
-    blank?: boolean
-}>(), {
-    blank: false
-})
+const props = withDefaults(
+    defineProps<{
+        href: string;
+        blank?: boolean;
+    }>(),
+    {
+        blank: false,
+    },
+);
 </script>
 
 <template>
-<span class="text-sm underline text-primary-50 underline-offset-4 decoration-primary-50 hover:decoration-2 cursor-pointer">
-  <Link
-      v-if="!blank"
-      :href="href"
-      class="focus:outline-none focus:ring-2 focus:ring-primary-400 rounded-md"
-  >
-    <slot/>
-  </Link>
+    <span
+        class="cursor-pointer text-sm text-primary-50 underline decoration-primary-50 underline-offset-4 hover:decoration-2"
+    >
+        <Link
+            v-if="!blank"
+            :href="href"
+            class="rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
+        >
+            <slot />
+        </Link>
 
-  <a
-      v-else
-      :href="href"
-      target="_blank"
-      class="focus:outline-none focus:ring-2 focus:ring-primary-400 rounded-md"
-  >
-    <slot/>
-  </a>
-</span>
-
+        <a
+            v-else
+            :href="href"
+            target="_blank"
+            class="rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400"
+        >
+            <slot />
+        </a>
+    </span>
 </template>

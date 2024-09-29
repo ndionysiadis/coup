@@ -1,34 +1,35 @@
 <script setup lang="ts">
 const props = withDefaults(
     defineProps<{
-        modelValue?: string | null,
-        label: string,
-        error?: string,
-        id: string,
-        type: string,
-        autofocus: boolean,
-        required: boolean,
-        disabled?: boolean,
+        modelValue?: string | null;
+        label: string;
+        error?: string;
+        id: string;
+        type: string;
+        autofocus: boolean;
+        required: boolean;
+        disabled?: boolean;
     }>(),
     {
-        label: '',
+        label: "",
         autofocus: false,
         required: false,
         disabled: false,
-    }
-)
+    },
+);
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(["update:modelValue"]);
 
 function updateValue(event: Event) {
-    const input = event.target as HTMLInputElement
-    emit('update:modelValue', input.value)
+    const input = event.target as HTMLInputElement;
+    emit("update:modelValue", input.value);
 }
 </script>
 
 <template>
     <div
-        class="relative block text-white border border-primary-500 shadow-sm focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500">
+        class="relative block border border-primary-500 text-white shadow-sm focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500"
+    >
         <label :for="props.id" class="sr-only">{{ props.label }}</label>
 
         <input
@@ -44,15 +45,16 @@ function updateValue(event: Event) {
         />
 
         <span
-            class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-800 py-0.5 px-2 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+            class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-800 px-2 py-0.5 text-xs text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
         >
             {{ props.label }}
         </span>
 
         <span
             v-if="$slots.default"
-            class="absolute inset-y-0 right-0 flex items-center text-gray-400 bg-gray-800 px-3">
-            <slot/>
+            class="absolute inset-y-0 right-0 flex items-center bg-gray-800 px-3 text-gray-400"
+        >
+            <slot />
         </span>
     </div>
 

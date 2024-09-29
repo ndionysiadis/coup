@@ -1,48 +1,52 @@
 <script setup lang="ts">
-import {Head, router} from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
-import {PhArrowUUpLeft, PhFloppyDiskBack, PhTrash, PhWarningCircle} from "@phosphor-icons/vue";
+import {
+    PhArrowUUpLeft,
+    PhFloppyDiskBack,
+    PhTrash,
+    PhWarningCircle,
+} from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import {useForm} from 'laravel-precognition-vue-inertia';
+import { useForm } from "laravel-precognition-vue-inertia";
 import FormInput from "@/Components/FormElements/FormInput.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
-import {ref} from "vue";
+import { ref } from "vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
+import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
-    category: App.Data.CategoryData
-}>()
+    category: App.Data.Category.CategoryData;
+}>();
 
-const title = 'Επεξεργασία: ' + props.category.name
+const title = "Επεξεργασία: " + props.category.name;
 
-const modalOpen = ref<boolean>(false)
+const modalOpen = ref<boolean>(false);
 
-const form = useForm<App.Data.CategoryData>(
-    'put',
-    route('category.update', props.category),
-    props.category
-)
+const form = useForm<App.Data.Category.CategoryData>(
+    "put",
+    route("category.update", props.category),
+    props.category,
+);
 
 function destroy() {
-    router.delete(route('category.destroy', props.category), {
+    router.delete(route("category.destroy", props.category), {
         preserveState: true,
         preserveScroll: true,
-        only: [
-            'toast'
-        ]
-    })
+        only: ["toast"],
+    });
 }
 </script>
 
 <template>
-    <Head :title="title"/>
+    <Head :title="title" />
 
     <AuthenticatedLayout>
         <template #breadcrumbs>
@@ -61,7 +65,7 @@ function destroy() {
             </Breadcrumbs>
         </template>
 
-        <div class="flex items-center justify-between mb-4">
+        <div class="mb-4 flex items-center justify-between">
             <div class="flex flex-col">
                 <HeadingLarge> {{ title }}</HeadingLarge>
             </div>
@@ -69,21 +73,21 @@ function destroy() {
             <div class="flex items-center gap-2">
                 <AppLink :href="route('category.show', category)">
                     <IconSecondaryButton title="Επιστροφή">
-                        <PhArrowUUpLeft weight="bold"/>
+                        <PhArrowUUpLeft weight="bold" />
                     </IconSecondaryButton>
                 </AppLink>
 
-                <IconSecondaryButton title="Διαγραφή" @click="modalOpen=!modalOpen">
-                    <PhTrash weight="fill"/>
+                <IconSecondaryButton
+                    title="Διαγραφή"
+                    @click="modalOpen = !modalOpen"
+                >
+                    <PhTrash weight="fill" />
                 </IconSecondaryButton>
             </div>
 
-            <PrimaryModal
-                :open="modalOpen"
-                @closeModal="modalOpen=false"
-            >
+            <PrimaryModal :open="modalOpen" @closeModal="modalOpen = false">
                 <template #icon>
-                    <PhWarningCircle weight="bold" size="24"/>
+                    <PhWarningCircle weight="bold" size="24" />
                 </template>
 
                 <template #title>
@@ -91,19 +95,17 @@ function destroy() {
                 </template>
 
                 <template #body>
-                    Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη κατηγορία; Η διαγραφή θα γίνει μόνο στη
-                    κατηγορία
-                    και όχι στα συνδεδεμένα μενού & προϊόντα.
+                    Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη
+                    κατηγορία; Η διαγραφή θα γίνει μόνο στη κατηγορία και όχι
+                    στα συνδεδεμένα μενού & προϊόντα.
                 </template>
 
                 <template #actions>
-                    <SecondaryButton @click="modalOpen=false">
+                    <SecondaryButton @click="modalOpen = false">
                         Άκυρο
                     </SecondaryButton>
 
-                    <DangerButton @click="destroy">
-                        Διαγραφή
-                    </DangerButton>
+                    <DangerButton @click="destroy"> Διαγραφή </DangerButton>
                 </template>
             </PrimaryModal>
         </div>
@@ -117,7 +119,8 @@ function destroy() {
                     :required="true"
                     :autofocus="false"
                     :error="form.errors.name"
-                    v-model="form.name"/>
+                    v-model="form.name"
+                />
 
                 <FormInput
                     id="description"
@@ -126,12 +129,39 @@ function destroy() {
                     :required="false"
                     :autofocus="false"
                     :error="form.errors.description"
-                    v-model="form.description"/>
+                    v-model="form.description"
+                />
+
+                <ComboboxSelector
+                    api
+                    id="products"
+                    v-model="form.products"
+                    multiple
+                    zautofocus="false"
+                    label="Προϊόντα"
+                    :display-value-function="
+                        (x: App.Data.Product.ProductData) => x?.name
+                    "
+                    :route="route('api.product.index')"
+                    :error="form.errors.products"
+                />
+
+                <ComboboxSelector
+                    api
+                    id="menu"
+                    v-model="form.menuType"
+                    label="Μενού"
+                    :display-value-function="
+                        (x: App.Data.Menu.MenuTypeData) => x?.name
+                    "
+                    :route="route('api.menu.index')"
+                    :error="form.errors.menuType"
+                />
 
                 <div>
                     <PrimaryButtonIcon type="submit" title="Αποθήκευση">
                         <template #icon>
-                            <PhFloppyDiskBack weight="fill" size="16"/>
+                            <PhFloppyDiskBack weight="fill" size="16" />
                         </template>
                         Αποθήκευση
                     </PrimaryButtonIcon>

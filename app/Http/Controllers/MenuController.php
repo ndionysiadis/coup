@@ -7,6 +7,7 @@ use App\Data\Menu\MenuTypeIndexPageData;
 use App\Data\Menu\MenuTypeShowPageData;
 use App\Data\ToastData;
 use App\Models\MenuType;
+use App\Repositories\MenuRepository;
 use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
@@ -26,12 +27,15 @@ class MenuController extends Controller
         ]);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function store(MenuTypeData $request)
     {
-        $menuType = MenuType::create($request->toDatabase());
+        MenuRepository::store($request);
 
         return redirect()
-            ->route('menu.show', $menuType)
+            ->route('menu.index')
             ->with([
                 'toast' => ToastData::success(
                     'Το μενού δημιουργήθηκε με επιτυχία.'
@@ -48,6 +52,7 @@ class MenuController extends Controller
     {
         return Inertia::render('Menu/Edit', [
             'menuType' => MenuTypeData::from($menuType)
+                ->include('categories')
         ]);
     }
 
@@ -56,7 +61,7 @@ class MenuController extends Controller
      */
     public function update(MenuTypeData $request, MenuType $menuType)
     {
-        $menuType->update($request->toDatabase());
+        MenuRepository::update($request, $menuType);
 
         return redirect()
             ->route('menu.show', $menuType)
