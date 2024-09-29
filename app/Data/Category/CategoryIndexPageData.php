@@ -6,7 +6,6 @@ use App\Models\Category;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\PaginatedDataCollection;
 
-/** @typescript */
 class CategoryIndexPageData extends Data
 {
     /** @var PaginatedDataCollection<CategoryData> */

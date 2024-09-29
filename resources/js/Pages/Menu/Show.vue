@@ -25,9 +25,9 @@ import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
 import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeShowPageData;
-    categories: LaravelPaginator<App.Data.CategoryData>;
-    term: App.Data.MenuTypeShowPageData;
+    menuType: App.Data.Menu.MenuTypeShowPageData;
+    categories: LaravelPaginator<App.Data.Category.CategoryData>;
+    term: App.Data.Menu.MenuTypeShowPageData;
 }>();
 
 const modalOpen = ref<boolean>(false);
@@ -154,9 +154,7 @@ watch(
                 v-model="term"
             />
 
-            <div
-                class="grid gap-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
-            >
+            <div class="flex flex-col gap-2">
                 <CategoryCard
                     v-for="category in categories.data"
                     :key="category.id"

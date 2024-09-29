@@ -17,8 +17,8 @@ import FormSearch from "@/Components/FormElements/FormSearch.vue";
 const title = "Μενού";
 
 const props = defineProps<{
-    menuTypes: LaravelPaginator<App.Data.MenuTypeData>;
-    term: App.Data.MenuTypeIndexPageData;
+    menuTypes: LaravelPaginator<App.Data.Menu.MenuTypeData>;
+    term: App.Data.Menu.MenuTypeIndexPageData;
 }>();
 
 const term = ref<string>(props.term!);
@@ -79,9 +79,7 @@ watch(
 
             <FormSearch :clear-route="route('menu.index')" v-model="term" />
 
-            <div
-                class="grid gap-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
-            >
+            <div class="flex flex-col gap-2">
                 <MenuCard
                     v-for="menuType in menuTypes.data"
                     :key="menuType.id"

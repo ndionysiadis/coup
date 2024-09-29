@@ -23,14 +23,14 @@ import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
-    category: App.Data.CategoryData;
+    category: App.Data.Category.CategoryData;
 }>();
 
 const title = "Επεξεργασία: " + props.category.name;
 
 const modalOpen = ref<boolean>(false);
 
-const form = useForm<App.Data.CategoryData>(
+const form = useForm<App.Data.Category.CategoryData>(
     "put",
     route("category.update", props.category),
     props.category,
@@ -140,7 +140,7 @@ function destroy() {
                     zautofocus="false"
                     label="Προϊόντα"
                     :display-value-function="
-                        (x: App.Data.ProductData) => x?.name
+                        (x: App.Data.Product.ProductData) => x?.name
                     "
                     :route="route('api.product.index')"
                     :error="form.errors.products"
@@ -152,7 +152,7 @@ function destroy() {
                     v-model="form.menuType"
                     label="Μενού"
                     :display-value-function="
-                        (x: App.Data.MenuTypeData) => x?.name
+                        (x: App.Data.Menu.MenuTypeData) => x?.name
                     "
                     :route="route('api.menu.index')"
                     :error="form.errors.menuType"

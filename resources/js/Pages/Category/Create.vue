@@ -14,12 +14,12 @@ import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
-    category: App.Data.CategoryData;
+    category: App.Data.Category.CategoryData;
 }>();
 
 const title = "Δημιουργία κατηγορίας";
 
-const form = useForm<App.Data.CategoryData>(
+const form = useForm<App.Data.Category.CategoryData>(
     "post",
     route("category.store"),
     props.category,
@@ -83,10 +83,9 @@ const form = useForm<App.Data.CategoryData>(
                     id="products"
                     v-model="form.products"
                     multiple
-                    zautofocus="false"
                     label="Προϊόντα"
                     :display-value-function="
-                        (x: App.Data.ProductData) => x?.name
+                        (x: App.Data.Product.ProductData) => x?.name
                     "
                     :route="route('api.product.index')"
                     :error="form.errors.products"
@@ -98,7 +97,7 @@ const form = useForm<App.Data.CategoryData>(
                     v-model="form.menuType"
                     label="Μενού"
                     :display-value-function="
-                        (x: App.Data.MenuTypeData) => x?.name
+                        (x: App.Data.Menu.MenuTypeData) => x?.name
                     "
                     :route="route('api.menu.index')"
                     :error="form.errors.menuType"

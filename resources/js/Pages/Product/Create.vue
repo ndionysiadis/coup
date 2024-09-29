@@ -16,18 +16,15 @@ import FormInput from "@/Components/FormElements/FormInput.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
-import { ref } from "vue";
 import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
-    product: App.Data.ProductData;
+    product: App.Data.Product.ProductData;
 }>();
 
 const title = "Δημιουργία προϊόντος";
 
-const loading = ref<boolean>(true);
-
-const form = useForm<App.Data.ProductData>(
+const form = useForm<App.Data.Product.ProductData>(
     "post",
     route("product.store"),
     props.product,
@@ -104,7 +101,7 @@ const form = useForm<App.Data.ProductData>(
                     v-model="form.category"
                     label="Κατηγορία"
                     :display-value-function="
-                        (x: App.Data.CategoryData) => x?.name
+                        (x: App.Data.Category.CategoryData) => x?.name
                     "
                     :route="route('api.category.index')"
                     :error="form.errors.category"

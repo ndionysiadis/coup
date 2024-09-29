@@ -5,7 +5,7 @@ import { PhForkKnife, PhListBullets } from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeData;
+    menuType: App.Data.Menu.MenuTypeData;
 }>();
 </script>
 

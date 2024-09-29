@@ -20,16 +20,17 @@ import { ref } from "vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
+import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeData;
+    menuType: App.Data.Menu.MenuTypeData;
 }>();
 
 const title = "Επεξεργασία: " + props.menuType.name;
 
 const modalOpen = ref<boolean>(false);
 
-const form = useForm<App.Data.MenuTypeData>(
+const form = useForm<App.Data.Menu.MenuTypeData>(
     "put",
     route("menu.update", props.menuType),
     props.menuType,
@@ -129,6 +130,19 @@ function destroy() {
                     :autofocus="false"
                     :error="form.errors.description"
                     v-model="form.description"
+                />
+
+                <ComboboxSelector
+                    api
+                    id="categories"
+                    v-model="form.categories"
+                    multiple
+                    label="Κατηγορίες"
+                    :display-value-function="
+                        (x: App.Data.Category.CategoryData) => x?.name
+                    "
+                    :route="route('api.category.index')"
+                    :error="form.errors.categories"
                 />
 
                 <div>

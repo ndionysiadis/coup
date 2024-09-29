@@ -21,7 +21,7 @@ import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import TextLink from "@/Components/Links/TextLink.vue";
 
 const props = defineProps<{
-    product: App.Data.ProductData;
+    product: App.Data.Product.ProductData;
 }>();
 
 const modalOpen = ref<boolean>(false);

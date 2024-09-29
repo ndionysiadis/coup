@@ -21,11 +21,7 @@ createdAt: string | null;
 updatedAt: string | null;
 deletedAt: string | null;
 products: any | any | Array<App.Data.Product.ProductData> | null;
-menuType: any | any | Array<App.Data.Menu.MenuTypeData> | null;
-};
-export type CategoryIndexPageData = {
-categories: Array<App.Data.Category.CategoryData>;
-term: string;
+menuType: any | App.Data.Menu.MenuTypeData | null;
 };
 }
 declare namespace App.Data.Menu {
@@ -40,15 +36,6 @@ totalCategories: any | any | number;
 totalProducts: any | any | number;
 categories: any | any | Array<App.Data.Category.CategoryData> | null;
 };
-export type MenuTypeIndexPageData = {
-menuTypes: Array<App.Data.Menu.MenuTypeData>;
-term: string;
-};
-export type MenuTypeShowPageData = {
-menuType: App.Data.Menu.MenuTypeData;
-categories: Array<App.Data.Category.CategoryData>;
-term: string;
-};
 }
 declare namespace App.Data.Product {
 export type ProductData = {
@@ -62,9 +49,5 @@ createdAt: string | null;
 updatedAt: string | null;
 deletedAt: string | null;
 category: any | App.Data.Category.CategoryData | null;
-};
-export type ProductPageData = {
-products: Array<App.Data.Product.ProductData>;
-term: string;
 };
 }

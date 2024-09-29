@@ -17,8 +17,8 @@ import FormSearch from "@/Components/FormElements/FormSearch.vue";
 const title = "Κατηγορίες";
 
 const props = defineProps<{
-    categories: LaravelPaginator<App.Data.CategoryData>;
-    term: App.Data.CategoryIndexPageData;
+    categories: LaravelPaginator<App.Data.Category.CategoryData>;
+    term: App.Data.Category.CategoryIndexPageData;
 }>();
 
 const term = ref<string>(props.term!);
@@ -82,9 +82,7 @@ watch(
 
             <FormSearch :clear-route="route('category.index')" v-model="term" />
 
-            <div
-                class="grid gap-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
-            >
+            <div class="flex flex-col gap-2">
                 <CategoryCard
                     v-for="category in categories.data"
                     :key="category.id"

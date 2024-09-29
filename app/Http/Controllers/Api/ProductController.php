@@ -15,9 +15,10 @@ class ProductController extends Controller
 
         $products = ProductData::collect(
             Product::query()
-            ->orderBy('name')
-            ->searchIndex(request('term'))
-            ->paginate(request('perPage'))
+                ->whereNull('category_id')
+                ->orderBy('name')
+                ->searchIndex(request('term'))
+                ->paginate(request('perPage'))
         );
 
         foreach ($lazyProperties as $property) {

@@ -11,14 +11,15 @@ import { useForm } from "laravel-precognition-vue-inertia";
 import FormInput from "@/Components/FormElements/FormInput.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
+import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
-    menuType: App.Data.MenuTypeData;
+    menuType: App.Data.Menu.MenuTypeData;
 }>();
 
 const title = "Δημιουργία";
 
-const form = useForm<App.Data.MenuTypeData>(
+const form = useForm<App.Data.Menu.MenuTypeData>(
     "post",
     route("menu.store"),
     props.menuType,
@@ -75,6 +76,19 @@ const form = useForm<App.Data.MenuTypeData>(
                     :autofocus="false"
                     :error="form.errors.description"
                     v-model="form.description"
+                />
+
+                <ComboboxSelector
+                    api
+                    id="categories"
+                    v-model="form.categories"
+                    multiple
+                    label="Κατηγορίες"
+                    :display-value-function="
+                        (x: App.Data.Category.CategoryData) => x?.name
+                    "
+                    :route="route('api.category.index')"
+                    :error="form.errors.categories"
                 />
 
                 <div>

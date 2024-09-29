@@ -17,8 +17,8 @@ import FormSearch from "@/Components/FormElements/FormSearch.vue";
 const title = "Προϊόντα";
 
 const props = defineProps<{
-    products: LaravelPaginator<App.Data.ProductData>;
-    term: App.Data.ProductPageData;
+    products: LaravelPaginator<App.Data.Product.ProductData>;
+    term: App.Data.Product.ProductPageData;
 }>();
 
 const term = ref<string>(props.term!);
@@ -80,9 +80,7 @@ watch(
 
             <FormSearch :clear-route="route('product.index')" v-model="term" />
 
-            <div
-                class="grid gap-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
-            >
+            <div class="flex flex-col gap-2">
                 <ProductCard
                     v-for="product in products.data"
                     :key="product.id"

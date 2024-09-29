@@ -15,9 +15,10 @@ class CategoryController extends Controller
 
         $categories = CategoryData::collect(
             Category::query()
-            ->orderBy('name')
-            ->searchIndex(request('term'))
-            ->paginate(request('perPage'))
+                ->whereNull('menu_id')
+                ->orderBy('name')
+                ->searchIndex(request('term'))
+                ->paginate(request('perPage'))
         );
 
         foreach ($lazyProperties as $property) {

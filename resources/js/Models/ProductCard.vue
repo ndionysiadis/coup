@@ -6,7 +6,7 @@ import AppLink from "@/Components/Links/AppLink.vue";
 import TextLink from "@/Components/Links/TextLink.vue";
 
 const props = defineProps<{
-    product: App.Data.ProductData;
+    product: App.Data.Product.ProductData;
 }>();
 </script>
 
