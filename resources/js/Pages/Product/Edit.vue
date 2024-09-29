@@ -148,6 +148,7 @@ function destroy() {
 
                 <ComboboxSelector
                     api
+                    id="category"
                     v-model="form.category"
                     label="Κατηγορία"
                     :display-value-function="

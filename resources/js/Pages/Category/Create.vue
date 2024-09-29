@@ -11,6 +11,7 @@ import { useForm } from "laravel-precognition-vue-inertia";
 import FormInput from "@/Components/FormElements/FormInput.vue";
 import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
+import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
     category: App.Data.CategoryData;
@@ -75,6 +76,32 @@ const form = useForm<App.Data.CategoryData>(
                     :autofocus="false"
                     :error="form.errors.description"
                     v-model="form.description"
+                />
+
+                <ComboboxSelector
+                    api
+                    id="products"
+                    v-model="form.products"
+                    multiple
+                    zautofocus="false"
+                    label="Προϊόντα"
+                    :display-value-function="
+                        (x: App.Data.ProductData) => x?.name
+                    "
+                    :route="route('api.product.index')"
+                    :error="form.errors.products"
+                />
+
+                <ComboboxSelector
+                    api
+                    id="menu"
+                    v-model="form.menuType"
+                    label="Μενού"
+                    :display-value-function="
+                        (x: App.Data.MenuTypeData) => x?.name
+                    "
+                    :route="route('api.menu.index')"
+                    :error="form.errors.menuType"
                 />
 
                 <div>

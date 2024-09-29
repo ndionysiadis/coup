@@ -100,6 +100,7 @@ const form = useForm<App.Data.ProductData>(
 
                 <ComboboxSelector
                     api
+                    id="category"
                     v-model="form.category"
                     label="Κατηγορία"
                     :display-value-function="

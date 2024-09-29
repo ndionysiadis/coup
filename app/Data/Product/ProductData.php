@@ -4,6 +4,7 @@ namespace App\Data\Product;
 
 use App\Data\Category\CategoryData;
 use App\Models\Product;
+use Spatie\LaravelData\Attributes\WithoutValidation;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Lazy;
@@ -14,7 +15,10 @@ class ProductData extends Data
 {
     public function __construct(
         public ?int                   $id,
-        public ?int                   $categoryId,
+
+        #[WithoutValidation]
+        public Optional|int|null      $categoryId,
+
         public string                 $name,
 
         public string                 $price,
@@ -23,9 +27,6 @@ class ProductData extends Data
         public ?string                $createdAt,
         public ?string                $updatedAt,
         public ?string                $deletedAt,
-
-//        /** @var Optional|Lazy|DataCollection<CategoryData> */
-//        public Lazy|DataCollection|Optional|null $category,
 
         public Lazy|CategoryData|null $category,
     )
@@ -61,10 +62,10 @@ class ProductData extends Data
     public static function rules(): array
     {
         return [
-            'name' => ['required'],
-            'description' => ['nullable'],
-            'price' => ['required'],
-            'category' => ['nullable'],
+            'name' => 'required',
+            'description' => 'nullable',
+            'price' => 'required',
+            'category' => 'nullable',
         ];
     }
 
@@ -82,7 +83,7 @@ class ProductData extends Data
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
-            'category_id' => $this->category->id,
+            'category_id' => $this->category?->id,
         ];
     }
 }

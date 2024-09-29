@@ -17,7 +17,7 @@ const props = withDefaults(
         error?: string;
         minCharsToSearch?: number;
         id?: string;
-        autofocus: boolean;
+        autofocus?: boolean;
         disabled?: boolean;
         multiple?: boolean;
     }>(),

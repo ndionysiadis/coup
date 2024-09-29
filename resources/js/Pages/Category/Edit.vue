@@ -20,6 +20,7 @@ import { ref } from "vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
+import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 
 const props = defineProps<{
     category: App.Data.CategoryData;
@@ -129,6 +130,32 @@ function destroy() {
                     :autofocus="false"
                     :error="form.errors.description"
                     v-model="form.description"
+                />
+
+                <ComboboxSelector
+                    api
+                    id="products"
+                    v-model="form.products"
+                    multiple
+                    zautofocus="false"
+                    label="Προϊόντα"
+                    :display-value-function="
+                        (x: App.Data.ProductData) => x?.name
+                    "
+                    :route="route('api.product.index')"
+                    :error="form.errors.products"
+                />
+
+                <ComboboxSelector
+                    api
+                    id="menu"
+                    v-model="form.menuType"
+                    label="Μενού"
+                    :display-value-function="
+                        (x: App.Data.MenuTypeData) => x?.name
+                    "
+                    :route="route('api.menu.index')"
+                    :error="form.errors.menuType"
                 />
 
                 <div>

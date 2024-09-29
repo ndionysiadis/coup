@@ -7,6 +7,7 @@ use App\Data\Category\CategoryIndexPageData;
 use App\Data\Category\CategoryShowPageData;
 use App\Data\ToastData;
 use App\Models\Category;
+use App\Repositories\CategoryRepository;
 use Inertia\Inertia;
 use Inertia\Response;
 use Throwable;
@@ -25,12 +26,15 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * @throws Throwable
+     */
     public function store(CategoryData $request)
     {
-        $category = Category::create($request->toDatabase());
+        CategoryRepository::store($request);
 
         return redirect()
-            ->route('category.show', $category)
+            ->route('category.index')
             ->with([
                 'toast' => ToastData::success(
                     'Η κατηγορία δημιουργήθηκε με επιτυχία.'
@@ -47,6 +51,7 @@ class CategoryController extends Controller
     {
         return Inertia::render('Category/Edit', [
             'category' => CategoryData::from($category)
+            ->include('products', 'menuType')
         ]);
     }
 
@@ -55,7 +60,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryData $request, Category $category)
     {
-        $category->update($request->toDatabase());
+       CategoryRepository::update($request, $category);
 
         return redirect()
             ->route('category.show', $category)

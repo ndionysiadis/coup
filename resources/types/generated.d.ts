@@ -23,7 +23,7 @@ deletedAt: string | null;
 products: any | any | Array<App.Data.Product.ProductData> | null;
 menuType: any | any | Array<App.Data.Menu.MenuTypeData> | null;
 };
-export type CategoryPageData = {
+export type CategoryIndexPageData = {
 categories: Array<App.Data.Category.CategoryData>;
 term: string;
 };
@@ -53,15 +53,15 @@ term: string;
 declare namespace App.Data.Product {
 export type ProductData = {
 id: number | null;
-categoryId: number | null;
+categoryId: any | number | null;
 name: string;
-price: string | null;
+price: string;
 image: string | null;
 description: string | null;
 createdAt: string | null;
 updatedAt: string | null;
 deletedAt: string | null;
-category: any | any | Array<App.Data.Category.CategoryData> | null;
+category: any | App.Data.Category.CategoryData | null;
 };
 export type ProductPageData = {
 products: Array<App.Data.Product.ProductData>;
