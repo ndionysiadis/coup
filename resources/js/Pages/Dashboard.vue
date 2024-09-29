@@ -12,7 +12,7 @@ import {
 import AppLink from "@/Components/Links/AppLink.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 
-const title = "Dashboard";
+const title = "Πίνακας ελέγχου";
 </script>
 
 <template>

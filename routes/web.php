@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])
             ->group(function () {
                 Route::get('/', 'edit')->name('edit');
                 Route::patch('/', 'update')->name('update');
-                Route::delete('/', 'destroy')->name('destroy');
+//                Route::delete('/', 'destroy')->name('destroy');
             });
 
         Route::resource('menu', MenuController::class)->parameters(['menu' => 'menuType']);
