@@ -4,7 +4,7 @@ import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
-import { PhSignOut } from "@phosphor-icons/vue";
+import { PhArchive, PhSignOut } from "@phosphor-icons/vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
 
@@ -47,6 +47,16 @@ const props = defineProps<{
                         <PrimaryButton direction="right" title="Προφίλ">
                             Λογαριασμός
                         </PrimaryButton>
+                    </AppLink>
+
+                    <AppLink
+                        :href="route('archive.index')"
+                        method="get"
+                        as="button"
+                    >
+                        <IconSecondaryButton title="Αρχείο">
+                            <PhArchive weight="bold" size="16" />
+                        </IconSecondaryButton>
                     </AppLink>
 
                     <AppLink :href="route('logout')" method="post" as="button">
@@ -129,8 +139,8 @@ const props = defineProps<{
 
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile</ResponsiveNavLink
-                            >
+                                Profile
+                            </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"

@@ -10,6 +10,19 @@ name: string;
 email: string;
 };
 }
+declare namespace App.Data.Archive {
+export type ArchiveData = {
+archivedMenus: Array<App.Data.Menu.MenuTypeData> | null;
+archivedCategories: Array<App.Data.Category.CategoryData> | null;
+archivedProducts: Array<App.Data.Product.ProductData> | null;
+};
+export type ArchiveIndexPageData = {
+archivedMenus: Array<App.Data.Menu.MenuTypeData>;
+archivedCategories: Array<App.Data.Category.CategoryData>;
+archivedProducts: Array<App.Data.Product.ProductData>;
+term: string;
+};
+}
 declare namespace App.Data.Category {
 export type CategoryData = {
 id: number | null;

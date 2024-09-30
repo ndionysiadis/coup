@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
@@ -35,6 +36,7 @@ Route::middleware(['auth', 'verified'])
         Route::resource('menu', MenuController::class)->parameters(['menu' => 'menuType']);
         Route::resource('category', CategoryController::class);
         Route::resource('product', ProductController::class);
+        Route::resource('archive', ArchiveController::class);
     });
 
 require __DIR__ . '/auth.php';
