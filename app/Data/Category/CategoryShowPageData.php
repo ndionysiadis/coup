@@ -7,6 +7,7 @@ use App\Models\Category;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\PaginatedDataCollection;
 
+/** @typescript */
 class CategoryShowPageData extends Data
 {
     public CategoryData $category;

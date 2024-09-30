@@ -25,7 +25,7 @@ import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
 import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 
 const props = defineProps<{
-    menuType: App.Data.Menu.MenuTypeShowPageData;
+    menuType: App.Data.Menu.MenuTypeData;
     categories: LaravelPaginator<App.Data.Category.CategoryData>;
     term: App.Data.Menu.MenuTypeShowPageData;
 }>();
@@ -34,6 +34,7 @@ const modalOpen = ref<boolean>(false);
 
 const title = props.menuType.name;
 
+//@ts-ignore
 const term = ref<string>(props.term!);
 function destroy() {
     router.delete(route("menu.destroy", props.menuType), {
@@ -157,7 +158,7 @@ watch(
             <div class="flex flex-col gap-2">
                 <CategoryCard
                     v-for="category in categories.data"
-                    :key="category.id"
+                    :key="category.id!"
                     :category="category"
                 />
             </div>

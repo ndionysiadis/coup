@@ -34,7 +34,7 @@ return [
     ],
 
     /*
-     * In your classes, you sometimes have types that should always be replaced
+     * In your classes, you sometimes have Types that should always be replaced
      * by the same TypeScript representations. For example, you can replace a
      * Datetime always with a string. You define these replacements here.
      */
@@ -51,10 +51,10 @@ return [
      * The package will write the generated TypeScript to this file.
      */
 
-    'output_file' => resource_path('types/generated.d.ts'),
+    'output_file' => resource_path('js/Types/generated.d.ts'),
 
     /*
-     * When the package is writing types to the output file, a writer is used to
+     * When the package is writing Types to the output file, a writer is used to
      * determine the format. By default, this is the `TypeDefinitionWriter`.
      * But you can also use the `ModuleWriter` or implement your own.
      */
@@ -70,8 +70,8 @@ return [
     'formatter' => null,
 
     /*
-     * Enums can be transformed into types or native TypeScript enums, by default
-     * the package will transform them to types.
+     * Enums can be transformed into Types or native TypeScript enums, by default
+     * the package will transform them to Types.
      */
 
     'transform_to_native_enums' => false,

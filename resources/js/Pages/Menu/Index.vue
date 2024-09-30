@@ -21,6 +21,7 @@ const props = defineProps<{
     term: App.Data.Menu.MenuTypeIndexPageData;
 }>();
 
+//@ts-ignore
 const term = ref<string>(props.term!);
 
 watch(
@@ -82,7 +83,7 @@ watch(
             <div class="flex flex-col gap-2">
                 <MenuCard
                     v-for="menuType in menuTypes.data"
-                    :key="menuType.id"
+                    :key="menuType.id!"
                     :menu-type="menuType"
                 />
             </div>

@@ -21,6 +21,7 @@ const props = defineProps<{
     term: App.Data.Product.ProductPageData;
 }>();
 
+//@ts-ignore
 const term = ref<string>(props.term!);
 
 watch(
@@ -83,7 +84,7 @@ watch(
             <div class="flex flex-col gap-2">
                 <ProductCard
                     v-for="product in products.data"
-                    :key="product.id"
+                    :key="product.id!"
                     :product="product"
                 />
             </div>

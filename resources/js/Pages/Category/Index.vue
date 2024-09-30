@@ -21,6 +21,7 @@ const props = defineProps<{
     term: App.Data.Category.CategoryIndexPageData;
 }>();
 
+//@ts-ignore
 const term = ref<string>(props.term!);
 
 watch(
@@ -85,7 +86,7 @@ watch(
             <div class="flex flex-col gap-2">
                 <CategoryCard
                     v-for="category in categories.data"
-                    :key="category.id"
+                    :key="category.id!"
                     :category="category"
                 />
             </div>
