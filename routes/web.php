@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MenuController;
@@ -33,10 +32,16 @@ Route::middleware(['auth', 'verified'])
 //                Route::delete('/', 'destroy')->name('destroy');
             });
 
+        Route::get('menu/archived', [MenuController::class, 'archived'])->name('menu.archived');
+        Route::post('menu/{menuType}/restore', [MenuController::class, 'restore'])->name('menu.restore');
+//        Route::get('category/archived', [CategoryController::class, 'archived'])->name('category.archived');
+//        Route::get('product/archived', [ProductController::class, 'archived'])->name('product.archived');
+
         Route::resource('menu', MenuController::class)->parameters(['menu' => 'menuType']);
         Route::resource('category', CategoryController::class);
         Route::resource('product', ProductController::class);
-        Route::resource('archive', ArchiveController::class);
+
+
     });
 
 require __DIR__ . '/auth.php';

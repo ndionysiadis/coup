@@ -29,7 +29,7 @@ const props = defineProps<{
                     class="flex items-center gap-1"
                 >
                     <PhChefHat size="16" weight="bold" />
-                    <div>Μενού:</div>
+                    <div>Κατάλογος:</div>
                     <div v-if="category.menuType">
                         <TextLink :href="route('menu.show', category.menuType)">
                             {{ category.menuType.name }}

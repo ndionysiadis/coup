@@ -95,7 +95,7 @@ const form = useForm<App.Data.Category.CategoryData>(
                     api
                     id="menu"
                     v-model="form.menuType"
-                    label="Μενού"
+                    label="Κατάλογος"
                     :display-value-function="
                         (x: App.Data.Menu.MenuTypeData) => x?.name
                     "

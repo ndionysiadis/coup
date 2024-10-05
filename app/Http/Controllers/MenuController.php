@@ -14,12 +14,15 @@ use Throwable;
 
 class MenuController extends Controller
 {
-
     public function index(): Response
     {
         return Inertia::render('Menu/Index', new MenuTypeIndexPageData());
     }
 
+    public function archived(): Response
+    {
+        return Inertia::render('Menu/Archived', new MenuTypeIndexPageData(true));
+    }
     public function create()
     {
         return Inertia::render('Menu/Create', [
@@ -38,7 +41,7 @@ class MenuController extends Controller
             ->route('menu.index')
             ->with([
                 'toast' => ToastData::success(
-                    'Το μενού δημιουργήθηκε με επιτυχία.'
+                    'Ο κατάλογος δημιουργήθηκε με επιτυχία.'
                 )
             ]);
     }
@@ -67,7 +70,7 @@ class MenuController extends Controller
             ->route('menu.show', $menuType)
             ->with([
                 'toast' => ToastData::success(
-                    'Το μενού ενημερώθηκε με επιτυχία.'
+                    'Ο κατάλογος ενημερώθηκε με επιτυχία.'
                 )
             ]);
     }
@@ -84,7 +87,27 @@ class MenuController extends Controller
             ->route('menu.index')
             ->with([
                 'toast' => ToastData::success(
-                    'Το μενού διαγράφτηκε με επιτυχία.'
+                    'Ο κατάλογος διαγράφτηκε με επιτυχία.'
+                )
+            ]);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function restore($id)
+    {
+        $menuType = MenuType::onlyTrashed()->findOrFail($id);
+
+        if ($menuType->trashed()) {
+            $menuType->restore();
+        }
+
+        return redirect()
+            ->route('menu.archived')
+            ->with([
+                'toast' => ToastData::success(
+                    'Ο κατάλογος έχει αποκατασταθεί με επιτυχία.'
                 )
             ]);
     }

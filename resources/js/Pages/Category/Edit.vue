@@ -97,7 +97,7 @@ function destroy() {
                 <template #body>
                     Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη
                     κατηγορία; Η διαγραφή θα γίνει μόνο στη κατηγορία και όχι
-                    στα συνδεδεμένα μενού & προϊόντα.
+                    στους συνδεδεμένους καταλόγους & προϊόντα.
                 </template>
 
                 <template #actions>
@@ -150,7 +150,7 @@ function destroy() {
                     api
                     id="menu"
                     v-model="form.menuType"
-                    label="Μενού"
+                    label="Κατάλογος"
                     :display-value-function="
                         (x: App.Data.Menu.MenuTypeData) => x?.name
                     "
