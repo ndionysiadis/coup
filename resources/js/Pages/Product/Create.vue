@@ -17,6 +17,7 @@ import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
 import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
+import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
 
 const props = defineProps<{
     product: App.Data.Product.ProductData;
@@ -24,7 +25,7 @@ const props = defineProps<{
 
 const title = "Δημιουργία προϊόντος";
 
-const form = useForm<App.Data.Product.ProductData>(
+const form = useForm<App.Data.Product.ProductData & { createNew?: boolean }>(
     "post",
     route("product.store"),
     props.product,
@@ -106,13 +107,29 @@ const form = useForm<App.Data.Product.ProductData>(
                     :route="route('api.category.index')"
                     :error="form.errors.category"
                 />
-                <div>
-                    <PrimaryButtonIcon type="submit" title="Αποθήκευση">
+
+                <div class="flex items-center gap-2">
+                    <PrimaryButtonIcon
+                        type="submit"
+                        title="Αποθήκευση & δημιουργία νέου"
+                        @click="form.createNew = true"
+                    >
+                        <template #icon>
+                            <PhFloppyDiskBack weight="fill" size="16" />
+                        </template>
+                        Αποθήκευση & δημιουργία νέου
+                    </PrimaryButtonIcon>
+
+                    <SecondaryButtonIcon
+                        type="submit"
+                        title="Αποθήκευση"
+                        @click="form.createNew = false"
+                    >
                         <template #icon>
                             <PhFloppyDiskBack weight="fill" size="16" />
                         </template>
                         Αποθήκευση
-                    </PrimaryButtonIcon>
+                    </SecondaryButtonIcon>
                 </div>
             </CardContainer>
         </form>

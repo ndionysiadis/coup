@@ -30,17 +30,27 @@ class ProductController extends Controller
         ]);
     }
 
-    public function store(ProductData $request)
+    public function store(ProductData $productData, Request $request)
     {
-        $product = Product::create($request->toDatabase());
+        $product = Product::create($productData->toDatabase());
 
-        return redirect()
-            ->route('product.show', $product)
-            ->with([
-                'toast' => ToastData::success(
-                    'Το προϊόν δημιουργήθηκε με επιτυχία.'
-                )
-            ]);
+        if ($request->input('create_new')) {
+            return redirect()
+                ->route('product.create')
+                ->with([
+                    'toast' => ToastData::success(
+                        'Το προϊόν δημιουργήθηκε με επιτυχία και μπορείτε να δημιουργήσετε νέο.'
+                    )
+                ]);
+        } else {
+            return redirect()
+                ->route('product.show', $product)
+                ->with([
+                    'toast' => ToastData::success(
+                        'Το προϊόν δημιουργήθηκε με επιτυχία.'
+                    )
+                ]);
+        }
     }
 
     public function show(Product $product): Response
