@@ -7,12 +7,13 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import { PhPlus } from "@phosphor-icons/vue";
+import { PhArchive, PhPlus } from "@phosphor-icons/vue";
 import ProductCard from "@/Models/ProductCard.vue";
 import { ref, watch } from "vue";
 import debounce from "lodash/debounce";
 import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
+import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
 
 const title = "Προϊόντα";
 
@@ -21,6 +22,7 @@ const props = defineProps<{
     term: App.Data.Product.ProductPageData;
 }>();
 
+//@ts-ignore
 const term = ref<string>(props.term!);
 
 watch(
@@ -75,6 +77,16 @@ watch(
                             <PhPlus weight="bold" size="16" />
                         </IconPrimaryButton>
                     </AppLink>
+
+                    <AppLink :href="route('product.archived')" title="Αρχείο">
+                        <SecondaryButtonIcon>
+                            <template #icon>
+                                <PhArchive weight="fill" size="16" />
+                            </template>
+
+                            Αρχείο
+                        </SecondaryButtonIcon>
+                    </AppLink>
                 </div>
             </div>
 
@@ -83,7 +95,7 @@ watch(
             <div class="flex flex-col gap-2">
                 <ProductCard
                     v-for="product in products.data"
-                    :key="product.id"
+                    :key="product.id!"
                     :product="product"
                 />
             </div>

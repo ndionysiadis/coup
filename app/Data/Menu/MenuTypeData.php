@@ -3,7 +3,6 @@
 namespace App\Data\Menu;
 
 use App\Data\Category\CategoryData;
-use App\Data\Product\ProductData;
 use App\Models\MenuType;
 use Spatie\LaravelData\Concerns\EmptyData;
 use Spatie\LaravelData\Data;

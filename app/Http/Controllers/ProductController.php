@@ -20,6 +20,11 @@ class ProductController extends Controller
         return Inertia::render('Product/Index', new ProductPageData());
     }
 
+    public function archived(): Response
+    {
+        return Inertia::render('Product/Archived', new ProductPageData(true));
+    }
+
     public function create()
     {
         return Inertia::render('Product/Create', [
@@ -89,6 +94,26 @@ class ProductController extends Controller
             ->with([
                 'toast' => ToastData::success(
                     'Το προϊόν διαγράφτηκε με επιτυχία.'
+                )
+            ]);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function restore($id)
+    {
+        $product = Product::onlyTrashed()->findOrFail($id);
+
+        if ($product->trashed()) {
+            $product->restore();
+        }
+
+        return redirect()
+            ->route('product.archived')
+            ->with([
+                'toast' => ToastData::success(
+                    'Το προϊόν έχει αποκατασταθεί με επιτυχία.'
                 )
             ]);
     }

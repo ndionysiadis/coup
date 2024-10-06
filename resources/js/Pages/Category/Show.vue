@@ -27,7 +27,7 @@ import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
 import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 
 const props = defineProps<{
-    category: App.Data.Category.CategoryShowPageData;
+    category: App.Data.Category.CategoryData;
     products: LaravelPaginator<App.Data.Product.ProductData>;
     term: App.Data.Category.CategoryShowPageData;
 }>();
@@ -36,6 +36,7 @@ const modalOpen = ref<boolean>(false);
 
 const title = props.category.name;
 
+//@ts-ignore
 const term = ref<string>(props.term!);
 
 function destroy() {
@@ -122,7 +123,7 @@ watch(
                     <template #body>
                         Είστε σίγουροι ότι θέλετε να διαγράψετε τη συγκεκριμένη
                         κατηγορία; Η διαγραφή θα γίνει μόνο στη κατηγορία και
-                        όχι στα συνδεδεμένα μενού & προϊόντα.
+                        όχι στους συνδεδεμένους καταλόγους & προϊόντα.
                     </template>
 
                     <template #actions>
@@ -168,7 +169,7 @@ watch(
             <div class="flex flex-col gap-2">
                 <ProductCard
                     v-for="product in products.data"
-                    :key="product.id"
+                    :key="product.id!"
                     :product="product"
                 />
             </div>

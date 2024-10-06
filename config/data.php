@@ -38,8 +38,8 @@ return [
     ],
 
     /**
-     * Global transformers will take complex types and transform them into simple
-     * types.
+     * Global transformers will take complex Types and transform them into simple
+     * Types.
      */
     'transformers' => [
         DateTimeInterface::class => DateTimeInterfaceTransformer::class,
@@ -48,8 +48,8 @@ return [
     ],
 
     /**
-     * Global casts will cast values into complex types when creating a data
-     * object from simple types.
+     * Global casts will cast values into complex Types when creating a data
+     * object from simple Types.
      */
     'casts' => [
         DateTimeInterface::class => Spatie\LaravelData\Casts\DateTimeInterfaceCast::class,

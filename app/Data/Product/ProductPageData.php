@@ -5,18 +5,24 @@ namespace App\Data\Product;
 use App\Models\Product;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\PaginatedDataCollection;
+
+/** @typescript */
 class ProductPageData extends Data
 {
     /** @var PaginatedDataCollection<ProductData> */
     public PaginatedDataCollection $products;
     public string $term;
 
-    public function __construct()
+    public function __construct(bool $withTrashed = false)
     {
+        $query = Product::query()->searchIndex()->orderBy('name');
+
+        if ($withTrashed) {
+            $query->onlyTrashed();
+        }
+
         $this->products = ProductData::collect(
-            Product::query()
-                ->searchIndex()
-                ->orderBy('name')
+               $query
                 ->paginate(20)
                 ->withQueryString(),
             PaginatedDataCollection::class

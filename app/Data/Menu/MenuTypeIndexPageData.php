@@ -6,6 +6,7 @@ use App\Models\MenuType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\PaginatedDataCollection;
 
+/** @typescript */
 class MenuTypeIndexPageData extends Data
 {
     /** @var PaginatedDataCollection<MenuTypeData> */
@@ -13,12 +14,16 @@ class MenuTypeIndexPageData extends Data
 
     public string $term;
 
-    public function __construct()
+    public function __construct(bool $withTrashed = false)
     {
+        $query = MenuType::query()->searchIndex()->orderBy('name');
+
+        if ($withTrashed) {
+            $query->onlyTrashed();
+        }
+
         $this->menuTypes = MenuTypeData::collect(
-            MenuType::query()
-                ->searchIndex()
-                ->orderBy('name')
+            $query
                 ->paginate(20)
                 ->withQueryString(),
             PaginatedDataCollection::class

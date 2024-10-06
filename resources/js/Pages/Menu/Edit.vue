@@ -52,7 +52,7 @@ function destroy() {
         <template #breadcrumbs>
             <Breadcrumbs>
                 <Breadcrumb first :href="route('menu.index')">
-                    Μενού
+                    Κατάλογοι
                 </Breadcrumb>
 
                 <Breadcrumb :href="route('menu.show', menuType)">
@@ -91,12 +91,12 @@ function destroy() {
                 </template>
 
                 <template #title>
-                    Διαγραφή μενού: {{ menuType.name }}
+                    Διαγραφή καταλόγου: {{ menuType.name }}
                 </template>
 
                 <template #body>
                     Είστε σίγουροι ότι θέλετε να διαγράψετε το συγκεκριμένο
-                    μενού; Η διαγραφή θα γίνει μόνο στο μενού και όχι στις
+                    κατάλογο; Η διαγραφή θα γίνει μόνο στο κατάλογο και όχι στις
                     συνδεδεμένες κατηγορίες & προϊόντα.
                 </template>
 

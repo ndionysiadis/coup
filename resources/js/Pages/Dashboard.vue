@@ -12,7 +12,7 @@ import {
 import AppLink from "@/Components/Links/AppLink.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 
-const title = "Dashboard";
+const title = "Πίνακας ελέγχου";
 </script>
 
 <template>
@@ -37,25 +37,25 @@ const title = "Dashboard";
                             >
                                 <PhFiles size="32" />
 
-                                <HeadingMedium>Μενού</HeadingMedium>
+                                <HeadingMedium>Κατάλογος</HeadingMedium>
                             </div>
 
                             <div
                                 class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
                             >
                                 <div class="flex items-center gap-2">
-                                    <HeadingMedium>Μενού</HeadingMedium>
+                                    <HeadingMedium>Κατάλογος</HeadingMedium>
                                     <AppLink
                                         :href="route('menu.create')"
-                                        title="Δημιουργία μενού"
+                                        title="Δημιουργία καταλόγου"
                                     >
                                         <PhPlusSquare weight="fill" size="32" />
                                     </AppLink>
                                 </div>
 
                                 <p class="mt-4 text-sm sm:text-base">
-                                    Δείτε, επεξεργαστείτε και δημιουργήστε νέα
-                                    μενού.
+                                    Δείτε, επεξεργαστείτε και δημιουργήστε νέους
+                                    καταλόγους.
                                 </p>
                             </div>
                         </div>

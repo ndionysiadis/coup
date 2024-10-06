@@ -7,12 +7,13 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import { PhPlus } from "@phosphor-icons/vue";
+import { PhArchive, PhPlus } from "@phosphor-icons/vue";
 import CategoryCard from "@/Models/CategoryCard.vue";
 import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
 import { ref, watch } from "vue";
 import debounce from "lodash/debounce";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
+import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
 
 const title = "Κατηγορίες";
 
@@ -21,6 +22,7 @@ const props = defineProps<{
     term: App.Data.Category.CategoryIndexPageData;
 }>();
 
+//@ts-ignore
 const term = ref<string>(props.term!);
 
 watch(
@@ -77,6 +79,16 @@ watch(
                             <PhPlus weight="bold" size="16" />
                         </IconPrimaryButton>
                     </AppLink>
+
+                    <AppLink :href="route('category.archived')" title="Αρχείο">
+                        <SecondaryButtonIcon>
+                            <template #icon>
+                                <PhArchive weight="fill" size="16" />
+                            </template>
+
+                            Αρχείο
+                        </SecondaryButtonIcon>
+                    </AppLink>
                 </div>
             </div>
 
@@ -85,7 +97,7 @@ watch(
             <div class="flex flex-col gap-2">
                 <CategoryCard
                     v-for="category in categories.data"
-                    :key="category.id"
+                    :key="category.id!"
                     :category="category"
                 />
             </div>
