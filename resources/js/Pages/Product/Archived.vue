@@ -7,19 +7,19 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import { PhArrowLeft, PhFiles } from "@phosphor-icons/vue";
+import { PhArrowLeft, PhForkKnife } from "@phosphor-icons/vue";
 import { ref, watch } from "vue";
 import debounce from "lodash/debounce";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
-import ArchiveMenuCard from "@/Models/ArchiveMenuCard.vue";
 import EmptyState from "@/Components/EmptyStates/EmptyState.vue";
+import ArchiveProductCard from "@/Models/ArchiveProductCard.vue";
 
 const title = "Αρχείο";
 
 const props = defineProps<{
-    menuTypes: LaravelPaginator<App.Data.Menu.MenuTypeData>;
-    term: App.Data.Menu.MenuTypeIndexPageData;
+    products: LaravelPaginator<App.Data.Product.ProductData>;
+    term: App.Data.Product.ProductPageData;
 }>();
 
 //@ts-ignore
@@ -53,27 +53,29 @@ watch(
     <AuthenticatedLayout>
         <template #breadcrumbs>
             <Breadcrumbs>
-                <Breadcrumb first :href="route('menu.index')">
-                    Κατάλογοι
+                <Breadcrumb first :href="route('product.index')">
+                    Προϊόντα
                 </Breadcrumb>
 
-                <Breadcrumb :href="route('menu.archived')"> Αρχείο </Breadcrumb>
+                <Breadcrumb :href="route('product.archived')">
+                    Αρχείο
+                </Breadcrumb>
             </Breadcrumbs>
         </template>
         <div class="space-y-4">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col">
                     <HeadingLarge>{{ title }}</HeadingLarge>
-                    <PaginationMeta :meta="menuTypes.meta" />
+                    <PaginationMeta :meta="products.meta" />
                 </div>
 
                 <div class="flex items-center gap-2">
                     <PaginationLinks
-                        v-if="menuTypes?.meta?.total > 0"
-                        :links="menuTypes.links"
+                        v-if="products?.meta?.total > 0"
+                        :links="products.links"
                     />
 
-                    <AppLink :href="route('menu.index')" title="Επιστροφή">
+                    <AppLink :href="route('product.index')" title="Επιστροφή">
                         <IconSecondaryButton>
                             <PhArrowLeft weight="bold" size="16" />
                         </IconSecondaryButton>
@@ -81,27 +83,27 @@ watch(
                 </div>
             </div>
 
-            <template v-if="menuTypes.meta.total > 0">
+            <template v-if="products.meta.total > 0">
                 <FormSearch
-                    :clear-route="route('menu.archived')"
+                    :clear-route="route('product.archived')"
                     v-model="term"
                 />
 
                 <div class="flex flex-col gap-2">
-                    <ArchiveMenuCard
-                        v-for="menuType in menuTypes.data"
-                        :key="menuType.id!"
-                        :menu-type="menuType"
+                    <ArchiveProductCard
+                        v-for="product in products.data"
+                        :key="product.id!"
+                        :product="product"
                     />
                 </div>
             </template>
 
             <EmptyState v-else>
                 <template #icon>
-                    <PhFiles size="44" />
+                    <PhForkKnife size="44" />
                 </template>
                 <template #content>
-                    Φαίνεται πως δεν υπάρχουν αρχειοθετημένοι κατάλογοι
+                    Φαίνεται πως δεν υπάρχουν αρχειοθετημένα προϊόντα
                 </template>
             </EmptyState>
         </div>

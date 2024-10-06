@@ -19,6 +19,11 @@ class CategoryController extends Controller
         return Inertia::render('Category/Index', new CategoryIndexPageData());
     }
 
+    public function archived(): Response
+    {
+        return Inertia::render('Category/Archived', new CategoryIndexPageData(true));
+    }
+
     public function create()
     {
         return Inertia::render('Category/Create', [
@@ -51,7 +56,7 @@ class CategoryController extends Controller
     {
         return Inertia::render('Category/Edit', [
             'category' => CategoryData::from($category)
-            ->include('products', 'menuType')
+                ->include('products', 'menuType')
         ]);
     }
 
@@ -60,7 +65,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryData $request, Category $category)
     {
-       CategoryRepository::update($request, $category);
+        CategoryRepository::update($request, $category);
 
         return redirect()
             ->route('category.show', $category)
@@ -84,6 +89,26 @@ class CategoryController extends Controller
             ->with([
                 'toast' => ToastData::success(
                     'Η κατηγορία διαγράφτηκε με επιτυχία.'
+                )
+            ]);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function restore($id)
+    {
+        $category = Category::onlyTrashed()->findOrFail($id);
+
+        if ($category->trashed()) {
+            $category->restore();
+        }
+
+        return redirect()
+            ->route('category.archived')
+            ->with([
+                'toast' => ToastData::success(
+                    'Η κατηγορία έχει αποκατασταθεί με επιτυχία.'
                 )
             ]);
     }

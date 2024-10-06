@@ -7,19 +7,19 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import { PhArrowLeft, PhFiles } from "@phosphor-icons/vue";
+import { PhArrowLeft, PhListBullets } from "@phosphor-icons/vue";
 import { ref, watch } from "vue";
 import debounce from "lodash/debounce";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
-import ArchiveMenuCard from "@/Models/ArchiveMenuCard.vue";
 import EmptyState from "@/Components/EmptyStates/EmptyState.vue";
+import ArchiveCategoryCard from "@/Models/ArchiveCategoryCard.vue";
 
 const title = "Αρχείο";
 
 const props = defineProps<{
-    menuTypes: LaravelPaginator<App.Data.Menu.MenuTypeData>;
-    term: App.Data.Menu.MenuTypeIndexPageData;
+    categories: LaravelPaginator<App.Data.Category.CategoryData>;
+    term: App.Data.Category.CategoryIndexPageData;
 }>();
 
 //@ts-ignore
@@ -53,27 +53,29 @@ watch(
     <AuthenticatedLayout>
         <template #breadcrumbs>
             <Breadcrumbs>
-                <Breadcrumb first :href="route('menu.index')">
-                    Κατάλογοι
+                <Breadcrumb first :href="route('category.index')">
+                    Κατηγορίες
                 </Breadcrumb>
 
-                <Breadcrumb :href="route('menu.archived')"> Αρχείο </Breadcrumb>
+                <Breadcrumb :href="route('category.archived')">
+                    Αρχείο
+                </Breadcrumb>
             </Breadcrumbs>
         </template>
         <div class="space-y-4">
             <div class="flex items-center justify-between">
                 <div class="flex flex-col">
                     <HeadingLarge>{{ title }}</HeadingLarge>
-                    <PaginationMeta :meta="menuTypes.meta" />
+                    <PaginationMeta :meta="categories.meta" />
                 </div>
 
                 <div class="flex items-center gap-2">
                     <PaginationLinks
-                        v-if="menuTypes?.meta?.total > 0"
-                        :links="menuTypes.links"
+                        v-if="categories?.meta?.total > 0"
+                        :links="categories.links"
                     />
 
-                    <AppLink :href="route('menu.index')" title="Επιστροφή">
+                    <AppLink :href="route('category.index')" title="Επιστροφή">
                         <IconSecondaryButton>
                             <PhArrowLeft weight="bold" size="16" />
                         </IconSecondaryButton>
@@ -81,24 +83,27 @@ watch(
                 </div>
             </div>
 
-            <template v-if="menuTypes.meta.total > 0">
-                <FormSearch :clear-route="route('menu.index')" v-model="term" />
+            <template v-if="categories.meta.total > 0">
+                <FormSearch
+                    :clear-route="route('category.archived')"
+                    v-model="term"
+                />
 
                 <div class="flex flex-col gap-2">
-                    <ArchiveMenuCard
-                        v-for="menuType in menuTypes.data"
-                        :key="menuType.id!"
-                        :menu-type="menuType"
+                    <ArchiveCategoryCard
+                        v-for="category in categories.data"
+                        :key="category.id!"
+                        :category="category"
                     />
                 </div>
             </template>
 
             <EmptyState v-else>
                 <template #icon>
-                    <PhFiles size="44" />
+                    <PhListBullets size="44" />
                 </template>
                 <template #content>
-                    Φαίνεται πως δεν υπάρχουν αρχειοθετημένοι κατάλογοι
+                    Φαίνεται πως δεν υπάρχουν αρχειοθετημένες κατηγορίες
                 </template>
             </EmptyState>
         </div>

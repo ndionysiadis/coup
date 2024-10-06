@@ -13,12 +13,16 @@ class ProductPageData extends Data
     public PaginatedDataCollection $products;
     public string $term;
 
-    public function __construct()
+    public function __construct(bool $withTrashed = false)
     {
+        $query = Product::query()->searchIndex()->orderBy('name');
+
+        if ($withTrashed) {
+            $query->onlyTrashed();
+        }
+
         $this->products = ProductData::collect(
-            Product::query()
-                ->searchIndex()
-                ->orderBy('name')
+               $query
                 ->paginate(20)
                 ->withQueryString(),
             PaginatedDataCollection::class

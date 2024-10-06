@@ -13,12 +13,18 @@ class CategoryIndexPageData extends Data
     public PaginatedDataCollection $categories;
 
     public string $term;
-    public function __construct()
+
+    public function __construct(bool $withTrashed = false)
     {
+
+        $query = Category::query()->searchIndex()->orderBy('name');
+
+        if ($withTrashed) {
+            $query->onlyTrashed();
+        }
+
         $this->categories = CategoryData::collect(
-            Category::query()
-                ->searchIndex()
-                ->orderBy('name')
+            $query
                 ->paginate(20)
                 ->withQueryString(),
             PaginatedDataCollection::class
