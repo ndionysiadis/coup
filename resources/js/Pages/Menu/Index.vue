@@ -8,12 +8,15 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import { PhArchive, PhPlus } from "@phosphor-icons/vue";
+import { PhArchive, PhFiles, PhPlus } from "@phosphor-icons/vue";
 import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
 import { ref, watch } from "vue";
 import debounce from "lodash/debounce";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
 import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
+import Draggable from "vuedraggable";
+import EmptyState from "@/Components/EmptyStates/EmptyState.vue";
+import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 
 const title = "Κατάλογοι";
 
@@ -24,6 +27,7 @@ const props = defineProps<{
 
 //@ts-ignore
 const term = ref<string>(props.term!);
+const items = ref(props.menuTypes.data);
 
 watch(
     term,
@@ -45,6 +49,15 @@ watch(
         );
     }, 1000),
 );
+
+function reorder() {
+    router.post(
+        route("menu.reorder", { menuType: props.menuTypes.data[0].id }),
+        {
+            options: items.value.map((item) => ({ id: item.id })),
+        },
+    );
+}
 </script>
 
 <template>
@@ -89,15 +102,62 @@ watch(
                 </div>
             </div>
 
-            <FormSearch :clear-route="route('menu.index')" v-model="term" />
+            <template v-if="menuTypes.meta.total > 0">
+                <FormSearch :clear-route="route('menu.index')" v-model="term" />
 
-            <div class="flex flex-col gap-2">
-                <MenuCard
-                    v-for="menuType in menuTypes.data"
-                    :key="menuType.id!"
-                    :menu-type="menuType"
-                />
-            </div>
+                <Draggable
+                    v-if="items.length > 0"
+                    v-model="items"
+                    item-key="id"
+                    @change="reorder"
+                    :animation="200"
+                    ghost-class="ghost"
+                    drag-class="drag"
+                    class="flex flex-col gap-2"
+                >
+                    <template #item="{ element }">
+                        <MenuCard
+                            is-draggable
+                            :key="element.id!"
+                            :menu-type="element"
+                            class="transition-all duration-300 ease-in-out"
+                        />
+                    </template>
+                </Draggable>
+            </template>
+
+            <EmptyState v-else>
+                <template #icon>
+                    <PhFiles size="44" />
+                </template>
+                <template #content>
+                    Φαίνεται πως δεν υπάρχουν ενεργοί κατάλογοι
+                </template>
+                <template #action>
+                    <AppLink :href="route('menu.create')" title="Δημιουργία">
+                        <PrimaryButtonIcon>
+                            <template #icon>
+                                <PhPlus weight="bold" size="16" />
+                            </template>
+
+                            Προσθήκη
+                        </PrimaryButtonIcon>
+                    </AppLink>
+                </template>
+            </EmptyState>
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+.ghost {
+    opacity: 0.5;
+    background: #c8ebfb;
+}
+
+.drag {
+    opacity: 0.8;
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+</style>

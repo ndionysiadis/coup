@@ -23,6 +23,7 @@ import FormSearch from "@/Components/FormElements/FormSearch.vue";
 import debounce from "lodash/debounce";
 import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
 import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
+import Draggable from "vuedraggable";
 
 const props = defineProps<{
     menuType: App.Data.Menu.MenuTypeData;
@@ -36,6 +37,8 @@ const title = props.menuType.name;
 
 //@ts-ignore
 const term = ref<string>(props.term!);
+const items = ref(props.categories.data);
+
 function destroy() {
     router.delete(route("menu.destroy", props.menuType), {
         preserveState: true,
@@ -64,6 +67,15 @@ watch(
         );
     }, 1000),
 );
+
+function reorder() {
+    router.post(
+        route("category.reorder", { category: props.categories.data[0].id }),
+        {
+            options: items.value.map((item) => ({ id: item.id })),
+        },
+    );
+}
 </script>
 
 <template>
@@ -155,13 +167,38 @@ watch(
                 v-model="term"
             />
 
-            <div class="flex flex-col gap-2">
-                <CategoryCard
-                    v-for="category in categories.data"
-                    :key="category.id!"
-                    :category="category"
-                />
-            </div>
+            <Draggable
+                v-if="items.length > 0"
+                v-model="items"
+                item-key="id"
+                @change="reorder"
+                :animation="200"
+                ghost-class="ghost"
+                drag-class="drag"
+                class="flex flex-col gap-2"
+            >
+                <template #item="{ element }">
+                    <CategoryCard
+                        is-draggable
+                        :key="element.id!"
+                        :category="element"
+                        class="transition-all duration-300 ease-in-out"
+                    />
+                </template>
+            </Draggable>
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+.ghost {
+    opacity: 0.5;
+    background: #c8ebfb;
+}
+
+.drag {
+    opacity: 0.8;
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+</style>

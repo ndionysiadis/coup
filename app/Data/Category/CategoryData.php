@@ -17,6 +17,7 @@ class CategoryData extends Data
         public ?int                              $id,
         public ?int                              $menuId,
         public ?int                              $totalProducts,
+        public ?int                              $order,
         public string                            $name,
 
         public ?string                           $description,
@@ -38,6 +39,7 @@ class CategoryData extends Data
             id: $category->id,
             menuId: $category->menu_id,
             totalProducts: $category->products()->count(),
+            order: $category->order,
             name: $category->name,
             description: $category->description,
             createdAt: $category->created_at,

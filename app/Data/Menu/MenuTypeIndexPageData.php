@@ -16,7 +16,7 @@ class MenuTypeIndexPageData extends Data
 
     public function __construct(bool $withTrashed = false)
     {
-        $query = MenuType::query()->searchIndex()->orderBy('name');
+        $query = MenuType::query()->searchIndex()->orderBy('order');
 
         if ($withTrashed) {
             $query->onlyTrashed();

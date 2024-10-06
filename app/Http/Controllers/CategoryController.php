@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
 use Throwable;
 
 class CategoryController extends Controller
@@ -111,5 +112,17 @@ class CategoryController extends Controller
                     'Η κατηγορία έχει αποκατασταθεί με επιτυχία.'
                 )
             ]);
+    }
+
+    public function reorder(Category $category, Request $request)
+    {
+        foreach ($request->options as $index => $option) {
+            Category::find($option['id'])
+                ->update([
+                    'order' => $index + 1
+                ]);
+        }
+
+        return redirect()->back();
     }
 }

@@ -16,7 +16,7 @@ class ProductController extends Controller
         $products = ProductData::collect(
             Product::query()
                 ->whereNull('category_id')
-                ->orderBy('name')
+                ->orderBy('order')
                 ->searchIndex(request('term'))
                 ->paginate(request('perPage'))
         );

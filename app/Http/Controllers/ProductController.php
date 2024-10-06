@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\Category\CategoryData;
 use App\Data\Product\ProductData;
 use App\Data\Product\ProductPageData;
 use App\Data\ToastData;
-use App\Models\Category;
 use App\Models\Product;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\LaravelData\PaginatedDataCollection;
+use Illuminate\Http\Request;
 use Throwable;
 
 class ProductController extends Controller
@@ -116,5 +114,17 @@ class ProductController extends Controller
                     'Το προϊόν έχει αποκατασταθεί με επιτυχία.'
                 )
             ]);
+    }
+
+    public function reorder(Product $product, Request $request)
+    {
+        foreach ($request->options as $index => $option) {
+            Product::find($option['id'])
+                ->update([
+                    'order' => $index + 1
+                ]);
+        }
+
+        return redirect()->back();
     }
 }

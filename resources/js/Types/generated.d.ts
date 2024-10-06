@@ -15,6 +15,7 @@ export type CategoryData = {
 id: number | null;
 menuId: number | null;
 totalProducts: number | null;
+order: number | null;
 name: string;
 description: string | null;
 createdAt: string | null;
@@ -36,6 +37,7 @@ term: string;
 declare namespace App.Data.Menu {
 export type MenuTypeData = {
 id: number | null;
+order: number | null;
 name: string;
 description: string | null;
 createdAt: string | null;
@@ -58,6 +60,7 @@ term: string;
 declare namespace App.Data.Product {
 export type ProductData = {
 id: number | null;
+order: number | null;
 categoryId: any | number | null;
 name: string;
 price: string;

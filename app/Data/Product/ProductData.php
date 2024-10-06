@@ -15,6 +15,7 @@ class ProductData extends Data
 {
     public function __construct(
         public ?int                   $id,
+        public ?int                   $order,
 
         #[WithoutValidation]
         public Optional|int|null      $categoryId,
@@ -37,6 +38,7 @@ class ProductData extends Data
     {
         return new self(
             id: $product->id,
+            order: $product->order,
             categoryId: $product->category_id,
             name: $product->name,
             price: $product->price,

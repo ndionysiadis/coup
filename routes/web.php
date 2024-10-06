@@ -34,12 +34,15 @@ Route::middleware(['auth', 'verified'])
 
         Route::get('menu/archived', [MenuController::class, 'archived'])->name('menu.archived');
         Route::post('menu/{menuType}/restore', [MenuController::class, 'restore'])->name('menu.restore');
+        Route::post('menu/{menuType}/reorder', [MenuController::class, 'reorder'])->name('menu.reorder');
 
         Route::get('category/archived', [CategoryController::class, 'archived'])->name('category.archived');
         Route::post('category/{category}/restore', [CategoryController::class, 'restore'])->name('category.restore');
+        Route::post('category/{category}/reorder', [CategoryController::class, 'reorder'])->name('category.reorder');
 
         Route::get('product/archived', [ProductController::class, 'archived'])->name('product.archived');
         Route::post('product/{product}/restore', [ProductController::class, 'restore'])->name('product.restore');
+        Route::post('product/{product}/reorder', [ProductController::class, 'reorder'])->name('product.reorder');
 
         Route::resource('menu', MenuController::class)->parameters(['menu' => 'menuType']);
         Route::resource('category', CategoryController::class);

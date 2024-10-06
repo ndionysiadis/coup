@@ -25,6 +25,7 @@ import debounce from "lodash/debounce";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
 import PaginationMeta from "@/Components/Pagination/PaginationMeta.vue";
 import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
+import Draggable from "vuedraggable";
 
 const props = defineProps<{
     category: App.Data.Category.CategoryData;
@@ -38,6 +39,7 @@ const title = props.category.name;
 
 //@ts-ignore
 const term = ref<string>(props.term!);
+const items = ref(props.products.data);
 
 function destroy() {
     router.delete(route("category.destroy", props.category), {
@@ -67,6 +69,15 @@ watch(
         );
     }, 1000),
 );
+
+function reorder() {
+    router.post(
+        route("product.reorder", { product: props.products.data[0].id }),
+        {
+            options: items.value.map((item) => ({ id: item.id })),
+        },
+    );
+}
 </script>
 
 <template>
@@ -166,13 +177,37 @@ watch(
                 v-model="term"
             />
 
-            <div class="flex flex-col gap-2">
-                <ProductCard
-                    v-for="product in products.data"
-                    :key="product.id!"
-                    :product="product"
-                />
-            </div>
+            <Draggable
+                v-if="items.length > 0"
+                v-model="items"
+                item-key="id"
+                @change="reorder"
+                :animation="200"
+                ghost-class="ghost"
+                drag-class="drag"
+                class="flex flex-col gap-2"
+            >
+                <template #item="{ element }">
+                    <ProductCard
+                        is-draggable
+                        :key="element.id!"
+                        :product="element"
+                    />
+                </template>
+            </Draggable>
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style scoped>
+.ghost {
+    opacity: 0.5;
+    background: #c8ebfb;
+}
+
+.drag {
+    opacity: 0.8;
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+</style>

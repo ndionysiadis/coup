@@ -25,8 +25,8 @@ class MenuTypeShowPageData extends Data
         $this->categories = CategoryData::collect(
             $menuType->categories()
                 ->searchShow()
-                ->orderBy('name')
-                ->paginate(20)
+                ->orderBy('order')
+                ->paginate(50)
                 ->withQueryString(),
             PaginatedDataCollection::class
         );

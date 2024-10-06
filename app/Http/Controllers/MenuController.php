@@ -10,6 +10,7 @@ use App\Models\MenuType;
 use App\Repositories\MenuRepository;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
 use Throwable;
 
 class MenuController extends Controller
@@ -110,5 +111,17 @@ class MenuController extends Controller
                     'Ο κατάλογος έχει αποκατασταθεί με επιτυχία.'
                 )
             ]);
+    }
+
+    public function reorder(MenuType $menu, Request $request)
+    {
+        foreach ($request->options as $index => $option) {
+            MenuType::find($option['id'])
+                ->update([
+                    'order' => $index + 1
+                ]);
+        }
+
+        return redirect()->back();
     }
 }
