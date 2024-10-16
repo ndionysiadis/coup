@@ -16,7 +16,7 @@ class CategoryController extends Controller
         $categories = CategoryData::collect(
             Category::query()
                 ->whereNull('menu_id')
-                ->orderBy('name')
+                ->orderBy('order')
                 ->searchIndex(request('term'))
                 ->paginate(request('perPage'))
         );

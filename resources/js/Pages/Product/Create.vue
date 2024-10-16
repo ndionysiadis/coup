@@ -17,6 +17,8 @@ import CardContainer from "@/Components/Cards/CardContainer.vue";
 import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
 import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
+import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
+import FormFile from "@/Components/FormElements/FormFile.vue";
 
 const props = defineProps<{
     product: App.Data.Product.ProductData;
@@ -24,11 +26,29 @@ const props = defineProps<{
 
 const title = "Δημιουργία προϊόντος";
 
-const form = useForm<App.Data.Product.ProductData>(
+const form = useForm<App.Data.Product.ProductData & { create_new: boolean }>(
     "post",
     route("product.store"),
-    props.product,
+    {
+        ...props.product,
+        create_new: false,
+    },
 );
+
+const submitForm = (createNew: boolean) => {
+    form.create_new = createNew;
+    form.submit({
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: () => {
+            if (createNew) {
+                form.reset();
+                form.clearErrors();
+                form.image = null;
+            }
+        },
+    });
+};
 </script>
 
 <template>
@@ -61,7 +81,7 @@ const form = useForm<App.Data.Product.ProductData>(
             </div>
         </div>
 
-        <form @submit.prevent="form.submit()">
+        <form @submit.prevent="submitForm(false)">
             <CardContainer class="flex flex-col gap-4">
                 <FormInput
                     id="text"
@@ -106,13 +126,31 @@ const form = useForm<App.Data.Product.ProductData>(
                     :route="route('api.category.index')"
                     :error="form.errors.category"
                 />
-                <div>
-                    <PrimaryButtonIcon type="submit" title="Αποθήκευση">
+
+                <FormFile
+                    :attachment="form.image"
+                    @added="(file) => (form.image = file)"
+                    @removed="() => (form.image = null)"
+                />
+
+                <div class="flex items-center gap-2">
+                    <PrimaryButtonIcon
+                        type="button"
+                        title="Αποθήκευση & δημιουργία νέου"
+                        @click="submitForm(true)"
+                    >
+                        <template #icon>
+                            <PhFloppyDiskBack weight="fill" size="16" />
+                        </template>
+                        Αποθήκευση & δημιουργία νέου
+                    </PrimaryButtonIcon>
+
+                    <SecondaryButtonIcon type="submit" title="Αποθήκευση">
                         <template #icon>
                             <PhFloppyDiskBack weight="fill" size="16" />
                         </template>
                         Αποθήκευση
-                    </PrimaryButtonIcon>
+                    </SecondaryButtonIcon>
                 </div>
             </CardContainer>
         </form>

@@ -37,14 +37,14 @@ const title = "Πίνακας ελέγχου";
                             >
                                 <PhFiles size="32" />
 
-                                <HeadingMedium>Κατάλογος</HeadingMedium>
+                                <HeadingMedium>Κατάλογοι</HeadingMedium>
                             </div>
 
                             <div
                                 class="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8"
                             >
                                 <div class="flex items-center gap-2">
-                                    <HeadingMedium>Κατάλογος</HeadingMedium>
+                                    <HeadingMedium>Κατάλογοι</HeadingMedium>
                                     <AppLink
                                         :href="route('menu.create')"
                                         title="Δημιουργία καταλόγου"

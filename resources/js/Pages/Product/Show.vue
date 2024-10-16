@@ -19,6 +19,7 @@ import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import TextLink from "@/Components/Links/TextLink.vue";
+import ImageCard from "@/Components/Cards/ImageCard.vue";
 
 const props = defineProps<{
     product: App.Data.Product.ProductData;
@@ -121,6 +122,13 @@ function destroy() {
                 <div>
                     {{ product.description }}
                 </div>
+
+                <ImageCard
+                    v-if="product.image"
+                    class="w-96"
+                    :image-url="product.image"
+                    :alt-text="product.name"
+                />
             </CardContainer>
         </div>
     </AuthenticatedLayout>

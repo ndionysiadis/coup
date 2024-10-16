@@ -15,7 +15,7 @@ class MenuController extends Controller
 
         $menus = MenuTypeData::collect(
             MenuType::query()
-            ->orderBy('name')
+            ->orderBy('order')
             ->searchIndex(request('term'))
             ->paginate(request('perPage'))
         );

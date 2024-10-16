@@ -17,6 +17,7 @@ class MenuTypeData extends Data
 
     public function __construct(
         public ?int                              $id,
+        public ?int                              $order,
         public string                            $name,
         public ?string                           $description,
         public ?string                           $createdAt,
@@ -29,6 +30,7 @@ class MenuTypeData extends Data
         /** @var Optional|Lazy|DataCollection<CategoryData> */
         public Lazy|DataCollection|Optional|null $categories,
 
+        public bool $create_new = false
     )
     {
     }
@@ -37,6 +39,7 @@ class MenuTypeData extends Data
     {
         return new self(
             id: $menuType->id,
+            order: $menuType->order,
             name: $menuType->name,
             description: $menuType->description,
             createdAt: $menuType->created_at,

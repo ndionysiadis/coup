@@ -10,6 +10,7 @@ use App\Models\MenuType;
 use App\Repositories\MenuRepository;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
 use Throwable;
 
 class MenuController extends Controller
@@ -23,6 +24,7 @@ class MenuController extends Controller
     {
         return Inertia::render('Menu/Archived', new MenuTypeIndexPageData(true));
     }
+
     public function create()
     {
         return Inertia::render('Menu/Create', [
@@ -33,17 +35,28 @@ class MenuController extends Controller
     /**
      * @throws Throwable
      */
-    public function store(MenuTypeData $request)
+    public function store(MenuTypeData $menuTypeData)
     {
-        MenuRepository::store($request);
+        MenuRepository::store($menuTypeData);
 
-        return redirect()
-            ->route('menu.index')
-            ->with([
-                'toast' => ToastData::success(
-                    'Ο κατάλογος δημιουργήθηκε με επιτυχία.'
-                )
-            ]);
+        if ($menuTypeData->create_new) {
+            return redirect()
+                ->route('menu.create')
+                ->with([
+                    'toast' => ToastData::success(
+                        'Ο κατάλογος δημιουργήθηκε με επιτυχία και μπορείτε να δημιουργήσετε νέο.'
+                    )
+                ]);
+        } else {
+            return redirect()
+                ->route('menu.index')
+                ->with([
+                    'toast' => ToastData::success(
+                        'Ο κατάλογος δημιουργήθηκε με επιτυχία.'
+                    )
+                ]);
+        }
+
     }
 
     public function show(MenuType $menuType): Response
@@ -110,5 +123,17 @@ class MenuController extends Controller
                     'Ο κατάλογος έχει αποκατασταθεί με επιτυχία.'
                 )
             ]);
+    }
+
+    public function reorder(MenuType $menu, Request $request)
+    {
+        foreach ($request->options as $index => $option) {
+            MenuType::find($option['id'])
+                ->update([
+                    'order' => $index + 1
+                ]);
+        }
+
+        return redirect()->back();
     }
 }

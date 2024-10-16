@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\Category\CategoryData;
 use App\Data\Product\ProductData;
 use App\Data\Product\ProductPageData;
 use App\Data\ToastData;
-use App\Models\Category;
 use App\Models\Product;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\LaravelData\PaginatedDataCollection;
+use Illuminate\Http\Request;
 use Throwable;
 
 class ProductController extends Controller
@@ -32,17 +30,32 @@ class ProductController extends Controller
         ]);
     }
 
-    public function store(ProductData $request)
+    public function store(ProductData $productData, Request $request)
     {
-        $product = Product::create($request->toDatabase());
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('images/products', 'public');
+            $productData->image = $request->file('image')->hashName();
+        }
 
-        return redirect()
-            ->route('product.show', $product)
-            ->with([
-                'toast' => ToastData::success(
-                    'Το προϊόν δημιουργήθηκε με επιτυχία.'
-                )
-            ]);
+        $product = Product::create($productData->toDatabase());
+
+        if ($request->input('create_new')) {
+            return redirect()
+                ->route('product.create')
+                ->with([
+                    'toast' => ToastData::success(
+                        'Το προϊόν δημιουργήθηκε με επιτυχία και μπορείτε να δημιουργήσετε νέο.'
+                    )
+                ]);
+        } else {
+            return redirect()
+                ->route('product.show', $product)
+                ->with([
+                    'toast' => ToastData::success(
+                        'Το προϊόν δημιουργήθηκε με επιτυχία.'
+                    )
+                ]);
+        }
     }
 
     public function show(Product $product): Response
@@ -116,5 +129,17 @@ class ProductController extends Controller
                     'Το προϊόν έχει αποκατασταθεί με επιτυχία.'
                 )
             ]);
+    }
+
+    public function reorder(Product $product, Request $request)
+    {
+        foreach ($request->options as $index => $option) {
+            Product::find($option['id'])
+                ->update([
+                    'order' => $index + 1
+                ]);
+        }
+
+        return redirect()->back();
     }
 }

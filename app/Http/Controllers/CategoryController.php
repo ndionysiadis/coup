@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
 use Throwable;
 
 class CategoryController extends Controller
@@ -34,17 +35,27 @@ class CategoryController extends Controller
     /**
      * @throws Throwable
      */
-    public function store(CategoryData $request)
+    public function store(CategoryData $categoryData)
     {
-        CategoryRepository::store($request);
+        CategoryRepository::store($categoryData);
 
-        return redirect()
-            ->route('category.index')
-            ->with([
-                'toast' => ToastData::success(
-                    'Η κατηγορία δημιουργήθηκε με επιτυχία.'
-                )
-            ]);
+        if ($categoryData->create_new) {
+            return redirect()
+                ->route('category.create')
+                ->with([
+                    'toast' => ToastData::success(
+                        'Η κατηγορία δημιουργήθηκε με επιτυχία και μπορείτε να δημιουργήσετε νέα.'
+                    )
+                ]);
+        } else {
+            return redirect()
+                ->route('category.index')
+                ->with([
+                    'toast' => ToastData::success(
+                        'Η κατηγορία δημιουργήθηκε με επιτυχία.'
+                    )
+                ]);
+        }
     }
 
     public function show(Category $category): Response
@@ -111,5 +122,17 @@ class CategoryController extends Controller
                     'Η κατηγορία έχει αποκατασταθεί με επιτυχία.'
                 )
             ]);
+    }
+
+    public function reorder(Category $category, Request $request)
+    {
+        foreach ($request->options as $index => $option) {
+            Category::find($option['id'])
+                ->update([
+                    'order' => $index + 1
+                ]);
+        }
+
+        return redirect()->back();
     }
 }

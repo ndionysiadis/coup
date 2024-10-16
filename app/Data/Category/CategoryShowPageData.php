@@ -25,8 +25,8 @@ class CategoryShowPageData extends Data
         $this->products = ProductData::collect(
             $category->products()
                 ->searchShow()
-                ->orderBy('name')
-                ->paginate(20)
+                ->orderBy('order')
+                ->paginate(50)
                 ->withQueryString(),
             PaginatedDataCollection::class
         );

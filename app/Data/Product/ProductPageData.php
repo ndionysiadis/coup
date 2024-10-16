@@ -15,7 +15,9 @@ class ProductPageData extends Data
 
     public function __construct(bool $withTrashed = false)
     {
-        $query = Product::query()->searchIndex()->orderBy('name');
+        $query = Product::query()
+            ->searchIndex()
+            ->orderBy('order');
 
         if ($withTrashed) {
             $query->onlyTrashed();

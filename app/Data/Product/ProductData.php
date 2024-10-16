@@ -4,6 +4,7 @@ namespace App\Data\Product;
 
 use App\Data\Category\CategoryData;
 use App\Models\Product;
+use Illuminate\Http\UploadedFile;
 use Spatie\LaravelData\Attributes\WithoutValidation;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
@@ -14,21 +15,22 @@ use Spatie\LaravelData\Optional;
 class ProductData extends Data
 {
     public function __construct(
-        public ?int                   $id,
+        public ?int                     $id,
+        public ?int                     $order,
 
         #[WithoutValidation]
-        public Optional|int|null      $categoryId,
+        public Optional|int|null        $categoryId,
 
-        public string                 $name,
+        public string                   $name,
 
-        public string                 $price,
-        public ?string                $image,
-        public ?string                $description,
-        public ?string                $createdAt,
-        public ?string                $updatedAt,
-        public ?string                $deletedAt,
+        public string                   $price,
+        public UploadedFile|string|null $image,
+        public ?string                  $description,
+        public ?string                  $createdAt,
+        public ?string                  $updatedAt,
+        public ?string                  $deletedAt,
 
-        public Lazy|CategoryData|null $category,
+        public Lazy|CategoryData|null   $category,
     )
     {
     }
@@ -37,6 +39,7 @@ class ProductData extends Data
     {
         return new self(
             id: $product->id,
+            order: $product->order,
             categoryId: $product->category_id,
             name: $product->name,
             price: $product->price,
@@ -56,6 +59,7 @@ class ProductData extends Data
             'description' => '',
             'price' => '',
             'category' => '',
+            'image' => null,
         ];
     }
 
@@ -66,6 +70,7 @@ class ProductData extends Data
             'description' => 'nullable',
             'price' => 'required',
             'category' => 'nullable',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:10240',
         ];
     }
 
@@ -73,7 +78,10 @@ class ProductData extends Data
     {
         return [
             'name.required' => 'Το πεδίο Όνομα είναι υποχρεωτικό',
-            'name.price' => 'Το πεδίο Τιμή είναι υποχρεωτικό'
+            'name.price' => 'Το πεδίο Τιμή είναι υποχρεωτικό',
+            'image.file' => 'Το πεδίο Εικόνα πρέπει να είναι αρχείο',
+            'image.mimes' => 'Η εικόνα πρέπει να είναι τύπου: jpg, jpeg, png, gif',
+            'image.max' => 'Η εικόνα δεν πρέπει να ξεπερνά τα 10MB',
         ];
     }
 
@@ -84,6 +92,7 @@ class ProductData extends Data
             'description' => $this->description,
             'price' => $this->price,
             'category_id' => $this->category?->id,
+            'image' => $this->image
         ];
     }
 }

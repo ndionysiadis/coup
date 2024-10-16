@@ -7,13 +7,15 @@ import PaginationLinks from "@/Components/Pagination/PaginationLinks.vue";
 import Breadcrumb from "@/Components/Pagination/Breadcrumb.vue";
 import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
-import { PhArchive, PhPlus } from "@phosphor-icons/vue";
+import { PhArchive, PhForkKnife, PhPlus } from "@phosphor-icons/vue";
 import ProductCard from "@/Models/ProductCard.vue";
 import { ref, watch } from "vue";
 import debounce from "lodash/debounce";
 import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
 import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
+import EmptyState from "@/Components/EmptyStates/EmptyState.vue";
+import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 
 const title = "Προϊόντα";
 
@@ -90,15 +92,40 @@ watch(
                 </div>
             </div>
 
-            <FormSearch :clear-route="route('product.index')" v-model="term" />
-
-            <div class="flex flex-col gap-2">
-                <ProductCard
-                    v-for="product in products.data"
-                    :key="product.id!"
-                    :product="product"
+            <template v-if="products.meta.total > 0">
+                <FormSearch
+                    :clear-route="route('product.index')"
+                    v-model="term"
                 />
-            </div>
+
+                <div class="flex flex-col gap-2">
+                    <ProductCard
+                        v-for="product in products.data"
+                        :key="product.id!"
+                        :product="product"
+                    />
+                </div>
+            </template>
+
+            <EmptyState v-else>
+                <template #icon>
+                    <PhForkKnife size="44" />
+                </template>
+                <template #content>
+                    Φαίνεται πως δεν υπάρχουν ενεργά προϊόντα
+                </template>
+                <template #action>
+                    <AppLink :href="route('product.create')" title="Δημιουργία">
+                        <PrimaryButtonIcon>
+                            <template #icon>
+                                <PhPlus weight="bold" size="16" />
+                            </template>
+
+                            Προσθήκη
+                        </PrimaryButtonIcon>
+                    </AppLink>
+                </template>
+            </EmptyState>
         </div>
     </AuthenticatedLayout>
 </template>
