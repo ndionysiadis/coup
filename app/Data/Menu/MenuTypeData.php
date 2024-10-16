@@ -30,6 +30,7 @@ class MenuTypeData extends Data
         /** @var Optional|Lazy|DataCollection<CategoryData> */
         public Lazy|DataCollection|Optional|null $categories,
 
+        public bool $create_new = false
     )
     {
     }

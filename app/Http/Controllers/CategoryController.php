@@ -35,17 +35,27 @@ class CategoryController extends Controller
     /**
      * @throws Throwable
      */
-    public function store(CategoryData $request)
+    public function store(CategoryData $categoryData)
     {
-        CategoryRepository::store($request);
+        CategoryRepository::store($categoryData);
 
-        return redirect()
-            ->route('category.index')
-            ->with([
-                'toast' => ToastData::success(
-                    'Η κατηγορία δημιουργήθηκε με επιτυχία.'
-                )
-            ]);
+        if ($categoryData->create_new) {
+            return redirect()
+                ->route('category.create')
+                ->with([
+                    'toast' => ToastData::success(
+                        'Η κατηγορία δημιουργήθηκε με επιτυχία και μπορείτε να δημιουργήσετε νέα.'
+                    )
+                ]);
+        } else {
+            return redirect()
+                ->route('category.index')
+                ->with([
+                    'toast' => ToastData::success(
+                        'Η κατηγορία δημιουργήθηκε με επιτυχία.'
+                    )
+                ]);
+        }
     }
 
     public function show(Category $category): Response

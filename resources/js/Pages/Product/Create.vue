@@ -25,11 +25,28 @@ const props = defineProps<{
 
 const title = "Δημιουργία προϊόντος";
 
-const form = useForm<App.Data.Product.ProductData & { createNew?: boolean }>(
+const form = useForm<App.Data.Product.ProductData & { create_new: boolean }>(
     "post",
     route("product.store"),
-    props.product,
+    {
+        ...props.product,
+        create_new: false,
+    },
 );
+
+const submitForm = (createNew: boolean) => {
+    form.create_new = createNew;
+    form.submit({
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: () => {
+            if (createNew) {
+                form.reset();
+                form.clearErrors();
+            }
+        },
+    });
+};
 </script>
 
 <template>
@@ -62,7 +79,7 @@ const form = useForm<App.Data.Product.ProductData & { createNew?: boolean }>(
             </div>
         </div>
 
-        <form @submit.prevent="form.submit()">
+        <form @submit.prevent="submitForm(false)">
             <CardContainer class="flex flex-col gap-4">
                 <FormInput
                     id="text"
@@ -110,9 +127,9 @@ const form = useForm<App.Data.Product.ProductData & { createNew?: boolean }>(
 
                 <div class="flex items-center gap-2">
                     <PrimaryButtonIcon
-                        type="submit"
+                        type="button"
                         title="Αποθήκευση & δημιουργία νέου"
-                        @click="form.createNew = true"
+                        @click="submitForm(true)"
                     >
                         <template #icon>
                             <PhFloppyDiskBack weight="fill" size="16" />
@@ -120,11 +137,7 @@ const form = useForm<App.Data.Product.ProductData & { createNew?: boolean }>(
                         Αποθήκευση & δημιουργία νέου
                     </PrimaryButtonIcon>
 
-                    <SecondaryButtonIcon
-                        type="submit"
-                        title="Αποθήκευση"
-                        @click="form.createNew = false"
-                    >
+                    <SecondaryButtonIcon type="submit" title="Αποθήκευση">
                         <template #icon>
                             <PhFloppyDiskBack weight="fill" size="16" />
                         </template>

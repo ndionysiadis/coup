@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onUnmounted } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
@@ -7,12 +7,41 @@ import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
 import { PhSignOut } from "@phosphor-icons/vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
+import HtmlToast from "@/Components/HtmlToast.vue";
+import { POSITION, TYPE, useToast } from "vue-toastification";
+import { router, usePage } from "@inertiajs/vue3";
 
 const showingNavigationDropdown = ref(false);
 
 const props = defineProps<{
     withGreeting?: boolean;
 }>();
+
+const toast = useToast();
+
+const removeFinishEvent = router.on("success", () => {
+    //@ts-ignore
+    const toastData = usePage().props?.toast;
+
+    if (toastData?.message) {
+        toast(
+            {
+                component: HtmlToast,
+                props: {
+                    htmlContent: toastData.message,
+                },
+            },
+            {
+                //@ts-ignore
+                type: TYPE[toastData.type],
+                //@ts-ignore
+                position: POSITION[toastData.position],
+            },
+        );
+    }
+});
+
+onUnmounted(() => removeFinishEvent());
 </script>
 
 <template>

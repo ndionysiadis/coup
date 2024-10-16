@@ -29,6 +29,8 @@ class CategoryData extends Data
         public Lazy|DataCollection|Optional|null $products,
 
         public Lazy|MenuTypeData|null            $menuType,
+
+        public bool $create_new = false
     )
     {
     }
