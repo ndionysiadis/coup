@@ -7,7 +7,7 @@ import AppLink from "@/Components/Links/AppLink.vue";
 const props = withDefaults(
     defineProps<{
         menuType: App.Data.Menu.MenuTypeData;
-        isDraggable: boolean;
+        isDraggable?: boolean;
     }>(),
     {
         isDraggable: false,

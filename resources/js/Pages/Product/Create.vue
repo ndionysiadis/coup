@@ -18,6 +18,7 @@ import PrimaryButtonIcon from "@/Components/Buttons/PrimaryButtonIcon.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
 import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
 import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
+import FormFile from "@/Components/FormElements/FormFile.vue";
 
 const props = defineProps<{
     product: App.Data.Product.ProductData;
@@ -123,6 +124,12 @@ const submitForm = (createNew: boolean) => {
                     "
                     :route="route('api.category.index')"
                     :error="form.errors.category"
+                />
+
+                <FormFile
+                    :attachment="form.image"
+                    @added="(file) => (form.image = file)"
+                    @removed="() => (form.image = null)"
                 />
 
                 <div class="flex items-center gap-2">

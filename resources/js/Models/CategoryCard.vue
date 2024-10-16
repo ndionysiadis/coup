@@ -8,7 +8,7 @@ import TextLink from "@/Components/Links/TextLink.vue";
 const props = withDefaults(
     defineProps<{
         category: App.Data.Category.CategoryData;
-        isDraggable: boolean;
+        isDraggable?: boolean;
     }>(),
     {
         isDraggable: false,
