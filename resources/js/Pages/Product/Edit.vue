@@ -23,6 +23,7 @@ import DangerButton from "@/Components/DangerButton.vue";
 import PrimaryModal from "@/Components/Modals/PrimaryModal.vue";
 import FormNumber from "@/Components/FormElements/FormNumber.vue";
 import ComboboxSelector from "@/Components/Selectors/ComboboxSelector.vue";
+import FormFile from "@/Components/FormElements/FormFile.vue";
 
 const props = defineProps<{
     product: App.Data.Product.ProductData;
@@ -156,6 +157,12 @@ function destroy() {
                     "
                     :route="route('api.category.index')"
                     :error="form.errors.category"
+                />
+
+                <FormFile
+                    :attachment="form.image"
+                    @added="(file) => (form.image = file)"
+                    @removed="() => (form.image = null)"
                 />
 
                 <div>

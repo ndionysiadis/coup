@@ -44,6 +44,7 @@ const submitForm = (createNew: boolean) => {
             if (createNew) {
                 form.reset();
                 form.clearErrors();
+                form.image = null;
             }
         },
     });

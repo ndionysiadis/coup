@@ -32,14 +32,12 @@ class ProductController extends Controller
 
     public function store(ProductData $productData, Request $request)
     {
-        $data = $productData->toDatabase();
-
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('images/products', 'public');
-            $data['image'] = $path;
+            $productData->image = $path;
         }
 
-        $product = Product::create($data);
+        $product = Product::create($productData->toDatabase());
 
         if ($request->input('create_new')) {
             return redirect()

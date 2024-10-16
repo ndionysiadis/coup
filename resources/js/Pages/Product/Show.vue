@@ -121,6 +121,8 @@ function destroy() {
                 <div>
                     {{ product.description }}
                 </div>
+
+                <div>image here if exists</div>
             </CardContainer>
         </div>
     </AuthenticatedLayout>

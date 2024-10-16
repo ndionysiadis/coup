@@ -15,22 +15,22 @@ use Spatie\LaravelData\Optional;
 class ProductData extends Data
 {
     public function __construct(
-        public ?int                   $id,
-        public ?int                   $order,
+        public ?int                     $id,
+        public ?int                     $order,
 
         #[WithoutValidation]
-        public Optional|int|null      $categoryId,
+        public Optional|int|null        $categoryId,
 
-        public string                 $name,
+        public string                   $name,
 
-        public string                 $price,
+        public string                   $price,
         public UploadedFile|string|null $image,
-        public ?string                $description,
-        public ?string                $createdAt,
-        public ?string                $updatedAt,
-        public ?string                $deletedAt,
+        public ?string                  $description,
+        public ?string                  $createdAt,
+        public ?string                  $updatedAt,
+        public ?string                  $deletedAt,
 
-        public Lazy|CategoryData|null $category,
+        public Lazy|CategoryData|null   $category,
     )
     {
     }
