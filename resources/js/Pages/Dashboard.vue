@@ -24,7 +24,7 @@ const title = "Πίνακας ελέγχου";
         <div class="mt-2 grid gap-2 lg:grid-cols-3">
             <CardContainer>
                 <AppLink :href="route('menu.index')">
-                    <div class="group relative block h-64">
+                    <div class="group relative block h-36 sm:h-64">
                         <span
                             class="absolute inset-0 border-2 border-dashed border-primary-500"
                         ></span>
@@ -64,7 +64,7 @@ const title = "Πίνακας ελέγχου";
             </CardContainer>
             <CardContainer>
                 <AppLink :href="route('category.index')">
-                    <div class="group relative block h-64">
+                    <div class="group relative block h-36 sm:h-64">
                         <span
                             class="absolute inset-0 border-2 border-dashed border-primary-500"
                         ></span>
@@ -105,7 +105,7 @@ const title = "Πίνακας ελέγχου";
             </CardContainer>
             <CardContainer>
                 <AppLink :href="route('product.index')">
-                    <div class="group relative block h-64">
+                    <div class="group relative block h-36 sm:h-64">
                         <span
                             class="absolute inset-0 border-2 border-dashed border-primary-500"
                         ></span>
