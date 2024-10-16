@@ -96,7 +96,9 @@ function reorder() {
             </Breadcrumbs>
         </template>
         <div class="space-y-4">
-            <div class="flex items-center justify-between">
+            <div
+                class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+            >
                 <div class="flex flex-col">
                     <HeadingLarge> {{ title }}</HeadingLarge>
                 </div>

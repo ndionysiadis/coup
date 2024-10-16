@@ -18,7 +18,10 @@ const fullImageUrl = computed(() => {
 <template>
     <img v-if="fullImageUrl" :src="fullImageUrl" :alt="altText" />
 
-    <div v-else class="flex items-center justify-center bg-gray-700 p-2">
-        <PhImageSquare size="32" />
+    <div
+        v-else
+        class="flex h-20 w-20 items-center justify-center bg-gray-700 text-gray-400"
+    >
+        <PhImageSquare size="42" />
     </div>
 </template>

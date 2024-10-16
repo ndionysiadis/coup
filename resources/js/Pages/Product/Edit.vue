@@ -68,7 +68,9 @@ function destroy() {
             </Breadcrumbs>
         </template>
 
-        <div class="mb-4 flex items-center justify-between">
+        <div
+            class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
+        >
             <div class="flex flex-col">
                 <HeadingLarge> {{ title }}</HeadingLarge>
             </div>
@@ -165,7 +167,7 @@ function destroy() {
                     @removed="() => (form.image = null)"
                 />
 
-                <div>
+                <div class="flex flex-col sm:flex-row">
                     <PrimaryButtonIcon type="submit" title="Αποθήκευση">
                         <template #icon>
                             <PhFloppyDiskBack weight="fill" size="16" />

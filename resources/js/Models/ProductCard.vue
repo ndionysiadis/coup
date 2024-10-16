@@ -23,7 +23,7 @@ const props = withDefaults(
             <div class="items-top flex justify-between">
                 <div class="items-top flex gap-2">
                     <ImageCard
-                        class="w-20"
+                        class="hidden h-20 w-20 lg:flex"
                         :image-url="product.image"
                         :alt-text="product.name"
                     />

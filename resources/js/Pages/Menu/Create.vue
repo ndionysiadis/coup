@@ -109,7 +109,7 @@ const submitForm = (createNew: boolean) => {
                     :error="form.errors.categories"
                 />
 
-                <div class="flex items-center gap-2">
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
                     <PrimaryButtonIcon
                         type="button"
                         title="Αποθήκευση & δημιουργία νέου"

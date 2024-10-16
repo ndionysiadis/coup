@@ -12,7 +12,7 @@ const props = withDefaults(
 <template>
     <button
         type="button"
-        class="group relative inline-flex items-center overflow-hidden bg-primary-600 px-8 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-0 active:bg-primary-500"
+        class="group relative inline-flex items-center justify-center overflow-hidden bg-primary-600 px-8 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-0 active:bg-primary-500"
     >
         <span
             v-if="direction === 'left'"
