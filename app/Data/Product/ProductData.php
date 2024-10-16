@@ -92,7 +92,7 @@ class ProductData extends Data
             'description' => $this->description,
             'price' => $this->price,
             'category_id' => $this->category?->id,
-            'image' => $this->image instanceof UploadedFile ? $this->image->hashName() : $this->image,
+            'image' => $this->image
         ];
     }
 }

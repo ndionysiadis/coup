@@ -34,7 +34,7 @@ class ProductController extends Controller
     {
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('images/products', 'public');
-            $productData->image = $path;
+            $productData->image = $request->file('image')->hashName();
         }
 
         $product = Product::create($productData->toDatabase());
