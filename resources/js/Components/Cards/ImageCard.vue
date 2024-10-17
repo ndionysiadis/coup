@@ -16,8 +16,7 @@ const fullImageUrl = computed(() => {
 </script>
 
 <template>
-    <img v-if="fullImageUrl" :src="fullImageUrl" :alt="altText" />
-
+    <img v-viewer v-if="fullImageUrl" :src="fullImageUrl" :alt="altText" />
     <div
         v-else
         class="flex h-20 w-20 items-center justify-center bg-gray-700 text-gray-400"
