@@ -27,7 +27,7 @@ const links = [
     <div class="grid grid-cols-3 items-center bg-gray-800 p-1.5 md:p-4">
         <!--        Desktop Menu-->
         <div class="ml-2 hidden justify-start md:flex">
-            <div class="flex items-center gap-4 text-primary-100">
+            <div class="flex items-center gap-4 text-white">
                 <span
                     v-for="link in links"
                     class="cursor-pointer px-4 py-1 transition duration-150 ease-in-out hover:bg-gray-600"
@@ -54,7 +54,7 @@ const links = [
                 leave-to-class="opacity-0 translate-y-1"
             >
                 <PopoverPanel
-                    class="absolute left-auto z-10 mt-5 flex w-screen max-w-min -translate-x-1.5 flex-col gap-4 bg-gray-800 p-2 text-primary-100"
+                    class="absolute left-auto z-10 mt-5 flex w-screen max-w-min -translate-x-1.5 flex-col gap-4 bg-gray-800 p-2 text-white"
                 >
                     <span
                         v-for="link in links"
