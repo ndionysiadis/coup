@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Copyrights from "@/Components/Copyrights.vue";
 import {
+    PhAt,
     PhFacebookLogo,
     PhInstagramLogo,
     PhMapPin,
@@ -38,6 +39,14 @@ import AppLink from "@/Components/Links/AppLink.vue";
 
             <AppLink href="callto:2384501161" blank>
                 <PhPhone
+                    :size="32"
+                    weight="fill"
+                    class="mt-0.5 text-gray-600 hover:text-gray-400"
+                />
+            </AppLink>
+
+            <AppLink href="mailto:coup.ewb@gmail.com" blank>
+                <PhAt
                     :size="32"
                     weight="fill"
                     class="mt-0.5 text-gray-600 hover:text-gray-400"

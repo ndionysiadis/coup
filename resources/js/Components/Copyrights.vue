@@ -6,7 +6,7 @@ const currentYear = moment().format("YYYY");
 </script>
 
 <template>
-    <div class="flex flex-col items-center text-sm text-gray-300">
+    <div class="flex flex-col items-center text-sm tracking-wide text-gray-300">
         <div>COUP - Coffee, Wine, Kitchen &#169; {{ currentYear }}</div>
         <div class="flex items-center gap-1 text-xs text-gray-500">
             Crafted with
