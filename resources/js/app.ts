@@ -7,7 +7,9 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist";
 import { MotionPlugin } from "@vueuse/motion";
 import PhosphorIcons from "@phosphor-icons/vue";
-import Toast, { PluginOptions } from "vue-toastification";
+import Toast from "vue-toastification";
+import VueViewer from "v-viewer";
+import "viewerjs/dist/viewer.css";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -25,6 +27,7 @@ createInertiaApp({
             .use(MotionPlugin)
             .use(PhosphorIcons)
             .use(Toast)
+            .use(VueViewer)
             .mount(el);
     },
     progress: {
