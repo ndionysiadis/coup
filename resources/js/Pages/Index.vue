@@ -3,6 +3,13 @@ import { Head } from "@inertiajs/vue3";
 import LandingLayout from "@/Layouts/LandingLayout.vue";
 import BackgroundLines from "@/Components/BackgroundLines.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
+import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
+import { PhArrowRight } from "@phosphor-icons/vue";
+import Tabs from "@/Components/Tabs/Tabs.vue";
+import TabItems from "@/Components/Tabs/TabItems.vue";
+import TabContents from "@/Components/Tabs/TabContents.vue";
+import MenuTabContent from "@/Components/Tabs/MenuTabContent.vue";
+import MenuTab from "@/Components/Tabs/MenuTab.vue";
 
 const title = "Coffee, Wine, Kitchen";
 </script>
@@ -16,14 +23,27 @@ const title = "Coffee, Wine, Kitchen";
         <LandingLayout>
             <div class="relative h-96">
                 <div
-                    class="absolute inset-0 z-10 flex items-center justify-center"
+                    class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-8"
                 >
-                    <HeadingLarge class="text-white">
-                        Welcome to COUP
-                    </HeadingLarge>
+                    <div class="flex flex-col items-center gap-2">
+                        <HeadingLarge class="text-white">
+                            Καλώς ήρθατε στο COUP
+                        </HeadingLarge>
+
+                        <div class="text-lg text-white">
+                            Coffee, Wine, Kitchen
+                        </div>
+                    </div>
+
+                    <SecondaryButtonIcon direction="right">
+                        <template #icon>
+                            <PhArrowRight size="16" />
+                        </template>
+                        Ανακαλύψτε τον online κατάλογο μας
+                    </SecondaryButtonIcon>
                 </div>
 
-                <div class="absolute h-full w-full bg-gray-900 opacity-85" />
+                <div class="absolute h-full w-full bg-gray-900 opacity-75" />
 
                 <img
                     class="h-full w-full object-cover"
@@ -32,7 +52,17 @@ const title = "Coffee, Wine, Kitchen";
                 />
             </div>
 
-            <div class="bg-white p-2">tabs</div>
+            <div class="bg-white p-2">
+                <Tabs>
+                    <TabItems>
+                        <MenuTab menu-type="" />
+                    </TabItems>
+
+                    <TabContents>
+                        <MenuTabContent />
+                    </TabContents>
+                </Tabs>
+            </div>
 
             <div class="grid grid-cols-4 gap-4">
                 <div class="col-span-2 bg-white p-2"></div>

@@ -7,7 +7,7 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 
 const links = [
     {
-        name: "Μενού",
+        name: "Κατάλογος",
         href: "#",
     },
 
