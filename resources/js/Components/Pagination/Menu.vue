@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import ApplicationLogoFull from "@/Components/ApplicationLogoFull.vue";
 import IconSecondaryButton from "@/Components/Buttons/IconSecondaryButton.vue";
-import { PhSignIn } from "@phosphor-icons/vue";
+import { PhDotsSixVertical, PhSignIn } from "@phosphor-icons/vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 </script>
 
 <template>
-    <div class="grid grid-cols-3 items-center bg-gray-800 p-4">
-        <div class="ml-2 flex justify-start">
-            <div class="flex items-center gap-8 text-primary-100">
+    <div class="grid grid-cols-3 items-center bg-gray-800 p-1.5 md:p-4">
+        <!--        Desktop Menu-->
+        <div class="ml-2 hidden justify-start md:flex">
+            <div class="flex items-center gap-4 text-primary-100">
                 <span
                     class="cursor-pointer px-4 py-1 transition duration-150 ease-in-out hover:bg-gray-600"
                 >
@@ -29,7 +30,18 @@ import AppLink from "@/Components/Links/AppLink.vue";
             </div>
         </div>
 
-        <div class="mx-auto w-32 fill-primary-500">
+        <!--        Mobile Menu-->
+        <div class="ml-2 flex justify-start md:hidden">
+            <AppLink :href="route('login')">
+                <IconSecondaryButton>
+                    <PhDotsSixVertical weight="bold" size="16" />
+                </IconSecondaryButton>
+            </AppLink>
+        </div>
+
+        <!--        Mobile Menu End-->
+
+        <div class="mx-auto w-24 fill-primary-500 md:w-32">
             <ApplicationLogoFull />
         </div>
 

@@ -3,7 +3,7 @@ import Menu from "@/Components/Pagination/Menu.vue";
 </script>
 
 <template>
-    <div class="m-4">
+    <div>
         <Menu />
     </div>
 </template>
