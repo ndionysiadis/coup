@@ -15,6 +15,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap" rel="stylesheet">
 
         <!-- Standard Favicon -->
         <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"/>
@@ -28,7 +29,7 @@
         <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}" sizes="180x180">
 
         <!-- Android and Chrome (Manifest) -->
-        <link rel="manifest" href="{{ asset('images/manifest.json') }}">
+        <link rel="manifest" href="{{ asset('manifest.json') }}">
 
         <!-- Microsoft Tiles -->
         <meta name="msapplication-TileColor" content="#222222">

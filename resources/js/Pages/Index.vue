@@ -2,8 +2,11 @@
 import { Head } from "@inertiajs/vue3";
 import LandingLayout from "@/Layouts/LandingLayout.vue";
 import BackgroundLines from "@/Components/BackgroundLines.vue";
-import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
-import { PhBookOpenText, PhInstagramLogo } from "@phosphor-icons/vue";
+import {
+    PhArticle,
+    PhBookOpenText,
+    PhInstagramLogo,
+} from "@phosphor-icons/vue";
 import Tabs from "@/Components/Tabs/Tabs.vue";
 import TabItems from "@/Components/Tabs/TabItems.vue";
 import TabContents from "@/Components/Tabs/TabContents.vue";
@@ -11,6 +14,9 @@ import MenuTabContent from "@/Components/Tabs/MenuTabContent.vue";
 import MenuTab from "@/Components/Tabs/MenuTab.vue";
 import { onMounted } from "vue";
 import HeadingMedium from "@/Components/Texts/HeadingMedium.vue";
+import ApplicationLogoFull from "@/Components/ApplicationLogoFull.vue";
+import AppLink from "@/Components/Links/AppLink.vue";
+import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
 
 const title = "Coffee, Wine, Kitchen";
 
@@ -35,22 +41,80 @@ onMounted(() => {
         <LandingLayout>
             <div class="group relative h-96">
                 <div
-                    class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-8"
+                    class="absolute inset-0 z-10 flex flex-col justify-center px-6"
                 >
-                    <div class="flex flex-col items-center gap-2 text-center">
-                        <HeadingLarge class="text-white">
-                            Καλώς ήρθατε στο COUP
-                        </HeadingLarge>
+                    <div class="flex flex-col items-center gap-6 text-center">
+                        <AppLink :href="route('index')" class="w-32 fill-white">
+                            <ApplicationLogoFull />
+                        </AppLink>
 
-                        <div class="text-lg text-white">
-                            Ανακαλύψτε τον online κατάλογο μας
+                        <div class="grid w-full grid-cols-12">
+                            <div
+                                v-motion-slide-visible-once-left
+                                :delay="700"
+                                :duration="700"
+                                class="col-span-3 flex items-center gap-2"
+                            >
+                                <HeadingTiny class="text-white/50">
+                                    ESTB
+                                </HeadingTiny>
+                                <div
+                                    class="my-2 w-full border-t border-white/50"
+                                />
+                            </div>
+                            <div
+                                class="font-title col-span-6 flex flex-col items-center text-5xl text-white"
+                            >
+                                <div
+                                    v-motion-fade-visible-once
+                                    :delay="250"
+                                    :duration="800"
+                                >
+                                    <span class="text-primary"> Coffee </span>
+                                    to start,
+                                </div>
+                                <div
+                                    v-motion-fade-visible-once
+                                    :delay="350"
+                                    :duration="800"
+                                >
+                                    <span class="text-primary"> Wine </span>
+                                    to unwind,
+                                </div>
+                                <div
+                                    v-motion-fade-visible-once
+                                    :delay="450"
+                                    :duration="800"
+                                >
+                                    <span class="text-primary"> Dishes </span>
+                                    to remember
+                                </div>
+                            </div>
+                            <div
+                                v-motion-slide-visible-once-right
+                                :delay="700"
+                                :duration="700"
+                                class="col-span-3 flex items-center gap-2"
+                            >
+                                <div class="w-full border-t border-white/50" />
+                                <HeadingTiny class="text-white/50">
+                                    2013
+                                </HeadingTiny>
+                            </div>
                         </div>
+
+                        <HeadingTiny
+                            v-motion-pop-visible-once
+                            :delay="700"
+                            :duration="500"
+                            class="text-white"
+                        >
+                            Ανακαλύψτε τον online κατάλογο μας
+                        </HeadingTiny>
                     </div>
                 </div>
 
-                <div
-                    class="absolute h-full w-full bg-gradient-to-b from-gray-900 to-primary-700 opacity-75"
-                />
+                <div class="absolute h-full w-full bg-gray-900 opacity-80" />
 
                 <img
                     class="h-full w-full object-cover"
@@ -60,10 +124,18 @@ onMounted(() => {
             </div>
 
             <div
-                id="menu"
                 v-if="menus.length > 0"
                 class="max-h-[650px] overflow-auto bg-gray-800 scrollbar sm:px-4"
             >
+                <div class="mt-4 flex items-center gap-2">
+                    <PhArticle
+                        weight="fill"
+                        size="32"
+                        class="text-primary-400"
+                    />
+                    <HeadingMedium id="menu">Κατάλογοι</HeadingMedium>
+                </div>
+
                 <Tabs class="relative">
                     <TabItems class="sticky top-0 z-10">
                         <MenuTab
