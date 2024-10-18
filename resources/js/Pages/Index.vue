@@ -2,11 +2,7 @@
 import { Head } from "@inertiajs/vue3";
 import LandingLayout from "@/Layouts/LandingLayout.vue";
 import BackgroundLines from "@/Components/BackgroundLines.vue";
-import {
-    PhArticle,
-    PhBookOpenText,
-    PhInstagramLogo,
-} from "@phosphor-icons/vue";
+import { PhBookOpenText, PhInstagramLogo } from "@phosphor-icons/vue";
 import Tabs from "@/Components/Tabs/Tabs.vue";
 import TabItems from "@/Components/Tabs/TabItems.vue";
 import TabContents from "@/Components/Tabs/TabContents.vue";
@@ -44,11 +40,14 @@ onMounted(() => {
                     class="absolute inset-0 z-10 flex flex-col justify-center px-6"
                 >
                     <div class="flex flex-col items-center gap-6 text-center">
-                        <AppLink :href="route('index')" class="w-32 fill-white">
+                        <AppLink
+                            :href="route('index')"
+                            class="w-24 fill-white lg:w-32"
+                        >
                             <ApplicationLogoFull />
                         </AppLink>
 
-                        <div class="grid w-full grid-cols-12">
+                        <div class="w-full md:grid md:grid-cols-12">
                             <div
                                 v-motion-slide-visible-once-left
                                 :delay="700"
@@ -63,7 +62,7 @@ onMounted(() => {
                                 />
                             </div>
                             <div
-                                class="font-title col-span-6 flex flex-col items-center text-5xl text-white"
+                                class="font-title col-span-6 flex flex-col items-center text-3xl text-white md:text-4xl lg:text-5xl"
                             >
                                 <div
                                     v-motion-fade-visible-once
@@ -124,18 +123,10 @@ onMounted(() => {
             </div>
 
             <div
+                id="menu"
                 v-if="menus.length > 0"
                 class="max-h-[650px] overflow-auto bg-gray-800 scrollbar sm:px-4"
             >
-                <div class="mt-4 flex items-center gap-2">
-                    <PhArticle
-                        weight="fill"
-                        size="32"
-                        class="text-primary-400"
-                    />
-                    <HeadingMedium id="menu">Κατάλογοι</HeadingMedium>
-                </div>
-
                 <Tabs class="relative">
                     <TabItems class="sticky top-0 z-10">
                         <MenuTab
