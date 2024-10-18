@@ -9,7 +9,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('public')->group(function () {
-    Route::get('/', IndexController::class);
+    Route::get('/', IndexController::class)->name('index');
 });
 
 Route::middleware(['auth', 'verified'])

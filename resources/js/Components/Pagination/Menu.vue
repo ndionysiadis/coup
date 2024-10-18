@@ -8,17 +8,16 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 const links = [
     {
         name: "Κατάλογος",
-        href: "#",
+        href: route("index") + "#menu",
     },
-
     {
         name: "Σχετικά",
-        href: "#",
+        href: route("index") + "#about-us",
     },
 
     {
         name: "Αξιολογήσεις",
-        href: "#",
+        href: route("index") + "#reviews",
     },
 ];
 </script>
@@ -28,12 +27,14 @@ const links = [
         <!--        Desktop Menu-->
         <div class="ml-2 hidden justify-start md:flex">
             <div class="flex items-center gap-4 text-white">
-                <span
+                <AppLink
                     v-for="link in links"
+                    :key="link.name"
+                    :href="link.href"
                     class="cursor-pointer px-4 py-1 transition duration-150 ease-in-out hover:bg-gray-600"
                 >
                     {{ link.name }}
-                </span>
+                </AppLink>
             </div>
         </div>
 
@@ -56,12 +57,14 @@ const links = [
                 <PopoverPanel
                     class="absolute left-auto z-10 mt-5 flex w-screen max-w-min -translate-x-1.5 flex-col gap-4 bg-gray-800 p-2 text-white"
                 >
-                    <span
+                    <AppLink
                         v-for="link in links"
+                        :key="link.name"
+                        :href="link.href"
                         class="cursor-pointer px-4 py-2 transition duration-150 ease-in-out hover:bg-gray-600"
                     >
                         {{ link.name }}
-                    </span>
+                    </AppLink>
                 </PopoverPanel>
             </transition>
         </Popover>

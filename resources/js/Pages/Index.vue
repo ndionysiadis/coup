@@ -4,18 +4,32 @@ import LandingLayout from "@/Layouts/LandingLayout.vue";
 import BackgroundLines from "@/Components/BackgroundLines.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
 import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
-import { PhArrowRight } from "@phosphor-icons/vue";
+import {
+    PhArrowRight,
+    PhBookOpenText,
+    PhInstagramLogo,
+    PhStar,
+} from "@phosphor-icons/vue";
 import Tabs from "@/Components/Tabs/Tabs.vue";
 import TabItems from "@/Components/Tabs/TabItems.vue";
 import TabContents from "@/Components/Tabs/TabContents.vue";
 import MenuTabContent from "@/Components/Tabs/MenuTabContent.vue";
 import MenuTab from "@/Components/Tabs/MenuTab.vue";
+import { onMounted } from "vue";
+import HeadingMedium from "@/Components/Texts/HeadingMedium.vue";
 
 const title = "Coffee, Wine, Kitchen";
 
 const props = defineProps<{
     menus: App.Data.Menu.MenuTypeData[];
 }>();
+
+onMounted(() => {
+    const script = document.createElement("script");
+    script.src = "https://cdn.lightwidget.com/widgets/lightwidget.js";
+    script.async = true;
+    document.body.appendChild(script);
+});
 </script>
 
 <template>
@@ -80,11 +94,63 @@ const props = defineProps<{
             </div>
 
             <div class="grid grid-cols-4 gap-4">
-                <div class="col-span-2 bg-white p-2"></div>
-                <div class="col-span-2 bg-white p-2"></div>
+                <div
+                    class="col-span-2 max-h-72 overflow-auto bg-gray-800 p-2 scrollbar"
+                >
+                    <div class="mb-2 flex items-center gap-2">
+                        <PhBookOpenText
+                            weight="fill"
+                            size="32"
+                            class="text-primary-400"
+                        />
+                        <HeadingMedium id="about-us">Σχετικά</HeadingMedium>
+                    </div>
+
+                    <div class="text-white">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Ab alias amet atque cum debitis deleniti dolore
+                        eius esse ex excepturi exercitationem expedita facere
+                        fuga, illo ipsa, magni modi nihil odio placeat possimus
+                        quas quis quo repellat reprehenderit similique suscipit
+                        temporibus tenetur vel vero voluptatum! Alias asperiores
+                        delectus enim, incidunt ipsa numquam perspiciatis
+                        provident, reiciendis similique sint sunt velit vitae
+                        voluptates. A ad amet blanditiis, consequuntur
+                        cupiditate eos esse excepturi, expedita hic inventore
+                        ipsa, libero nobis non nulla quibusdam repellendus
+                        tempora vero. Cum deserunt eligendi, eum iure molestiae
+                        repellendus totam. Aliquid asperiores deleniti inventore
+                        ipsum molestiae numquam quod vero voluptas.
+                    </div>
+                </div>
+
+                <div
+                    class="col-span-2 max-h-72 overflow-auto bg-gray-800 p-2 scrollbar"
+                >
+                    <div class="flex items-center gap-2">
+                        <PhInstagramLogo
+                            weight="fill"
+                            size="32"
+                            class="text-primary-400"
+                        />
+                        <HeadingMedium id="instagram">Instagram</HeadingMedium>
+                    </div>
+                    <iframe
+                        src="//lightwidget.com/widgets/d2d697d22f80545fbbf4857152f2b0f9.html"
+                        scrolling="no"
+                        allowtransparency="true"
+                        class="lightwidget-widget"
+                        style="width: 100%; border: 0; overflow: hidden"
+                    ></iframe>
+                </div>
             </div>
 
-            <div class="bg-white p-2"></div>
+            <div class="bg-gray-800 p-2">
+                <div class="flex items-center gap-2">
+                    <PhStar weight="fill" size="32" class="text-primary-400" />
+                    <HeadingMedium id="reviews">Αξιολογήσεις</HeadingMedium>
+                </div>
+            </div>
         </LandingLayout>
     </div>
 </template>
