@@ -63,9 +63,7 @@ const props = defineProps<{
                             v-for="menu in menus"
                             :key="menu.id"
                             :menu="menu"
-                        >
-                            {{ menu.name }}
-                        </MenuTab>
+                        />
                     </TabItems>
 
                     <TabContents>

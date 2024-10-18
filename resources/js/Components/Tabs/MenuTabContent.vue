@@ -1,5 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps<{
+    menu: App.Data.Menu.MenuTypeData;
+}>();
+</script>
 
 <template></template>
-
-<style scoped></style>
