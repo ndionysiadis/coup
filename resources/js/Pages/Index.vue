@@ -3,13 +3,7 @@ import { Head } from "@inertiajs/vue3";
 import LandingLayout from "@/Layouts/LandingLayout.vue";
 import BackgroundLines from "@/Components/BackgroundLines.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
-import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
-import {
-    PhArrowRight,
-    PhBookOpenText,
-    PhInstagramLogo,
-    PhStar,
-} from "@phosphor-icons/vue";
+import { PhBookOpenText, PhInstagramLogo } from "@phosphor-icons/vue";
 import Tabs from "@/Components/Tabs/Tabs.vue";
 import TabItems from "@/Components/Tabs/TabItems.vue";
 import TabContents from "@/Components/Tabs/TabContents.vue";
@@ -39,29 +33,24 @@ onMounted(() => {
         <BackgroundLines class="absolute" />
 
         <LandingLayout>
-            <div class="relative h-96">
+            <div class="group relative h-96">
                 <div
                     class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-8"
                 >
-                    <div class="flex flex-col items-center gap-2">
+                    <div class="flex flex-col items-center gap-2 text-center">
                         <HeadingLarge class="text-white">
                             Καλώς ήρθατε στο COUP
                         </HeadingLarge>
 
                         <div class="text-lg text-white">
-                            Coffee, Wine, Kitchen
+                            Ανακαλύψτε τον online κατάλογο μας
                         </div>
                     </div>
-
-                    <SecondaryButtonIcon direction="right">
-                        <template #icon>
-                            <PhArrowRight size="16" />
-                        </template>
-                        Ανακαλύψτε τον online κατάλογο μας
-                    </SecondaryButtonIcon>
                 </div>
 
-                <div class="absolute h-full w-full bg-gray-900 opacity-75" />
+                <div
+                    class="absolute h-full w-full bg-gradient-to-b from-gray-900 to-primary-700 opacity-75"
+                />
 
                 <img
                     class="h-full w-full object-cover"
@@ -71,11 +60,12 @@ onMounted(() => {
             </div>
 
             <div
+                id="menu"
                 v-if="menus.length > 0"
-                class="max-h-[650px] overflow-auto bg-gray-800 p-2 scrollbar"
+                class="max-h-[650px] overflow-auto bg-gray-800 scrollbar sm:px-4"
             >
-                <Tabs>
-                    <TabItems>
+                <Tabs class="relative">
+                    <TabItems class="sticky top-0 z-10">
                         <MenuTab
                             v-for="menu in menus"
                             :key="menu.id"
@@ -85,6 +75,7 @@ onMounted(() => {
 
                     <TabContents>
                         <MenuTabContent
+                            v-motion-slide-top
                             v-for="menu in menus"
                             :key="menu.id"
                             :menu="menu"
@@ -93,9 +84,10 @@ onMounted(() => {
                 </Tabs>
             </div>
 
-            <div class="grid grid-cols-4 gap-4">
+            <div class="grid gap-4 md:grid-cols-4">
                 <div
-                    class="col-span-2 max-h-72 overflow-auto bg-gray-800 p-2 scrollbar"
+                    v-motion-slide-visible-once-left
+                    class="col-span-2 overflow-auto bg-gray-800/70 p-4 ring-1 ring-inset ring-primary-500 scrollbar md:max-h-80"
                 >
                     <div class="mb-2 flex items-center gap-2">
                         <PhBookOpenText
@@ -103,7 +95,7 @@ onMounted(() => {
                             size="32"
                             class="text-primary-400"
                         />
-                        <HeadingMedium id="about-us">Σχετικά</HeadingMedium>
+                        <HeadingMedium id="about-us">Το COUP</HeadingMedium>
                     </div>
 
                     <div class="text-white">
@@ -125,9 +117,10 @@ onMounted(() => {
                 </div>
 
                 <div
-                    class="col-span-2 max-h-72 overflow-auto bg-gray-800 p-2 scrollbar"
+                    v-motion-slide-visible-once-right
+                    class="col-span-2 overflow-auto bg-gray-800/70 p-4 ring-1 ring-inset ring-primary-500 scrollbar md:max-h-80"
                 >
-                    <div class="flex items-center gap-2">
+                    <div class="mb-4 flex items-center gap-2">
                         <PhInstagramLogo
                             weight="fill"
                             size="32"
@@ -142,13 +135,6 @@ onMounted(() => {
                         class="lightwidget-widget"
                         style="width: 100%; border: 0; overflow: hidden"
                     ></iframe>
-                </div>
-            </div>
-
-            <div class="bg-gray-800 p-2">
-                <div class="flex items-center gap-2">
-                    <PhStar weight="fill" size="32" class="text-primary-400" />
-                    <HeadingMedium id="reviews">Αξιολογήσεις</HeadingMedium>
                 </div>
             </div>
         </LandingLayout>

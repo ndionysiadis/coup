@@ -11,7 +11,9 @@ import AppLink from "@/Components/Links/AppLink.vue";
 </script>
 
 <template>
-    <footer class="flex flex-col items-center justify-center gap-2">
+    <footer
+        class="flex flex-col items-center justify-center gap-2 bg-gray-800/70 p-2"
+    >
         <div class="flex items-center gap-4">
             <AppLink href="https://www.facebook.com/CoupEspressoWine" blank>
                 <PhFacebookLogo

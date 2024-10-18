@@ -14,11 +14,6 @@ const links = [
         name: "Σχετικά",
         href: route("index") + "#about-us",
     },
-
-    {
-        name: "Αξιολογήσεις",
-        href: route("index") + "#reviews",
-    },
 ];
 </script>
 
@@ -70,9 +65,12 @@ const links = [
         </Popover>
         <!--        Mobile Menu End-->
 
-        <div class="mx-auto w-24 fill-primary-500 md:w-32">
+        <AppLink
+            :href="route('index')"
+            class="mx-auto w-24 fill-primary-500 md:w-32"
+        >
             <ApplicationLogoFull />
-        </div>
+        </AppLink>
 
         <div class="mr-2 flex justify-end">
             <AppLink :href="route('login')">
