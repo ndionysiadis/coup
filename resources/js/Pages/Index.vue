@@ -125,7 +125,7 @@ onMounted(() => {
             <div
                 id="menu"
                 v-if="menus.length > 0"
-                class="max-h-[650px] overflow-auto bg-gray-800 scrollbar sm:px-4"
+                class="max-h-[850px] overflow-auto bg-gray-800 scrollbar sm:px-4 md:max-h-[650px]"
             >
                 <Tabs class="relative">
                     <TabItems class="sticky top-0 z-10">
@@ -183,7 +183,7 @@ onMounted(() => {
                     v-motion-slide-visible-once-right
                     class="col-span-2 overflow-auto bg-gray-800/70 p-4 ring-1 ring-inset ring-primary-500 scrollbar md:max-h-80"
                 >
-                    <div class="mb-4 flex items-center gap-2">
+                    <div class="flex items-center gap-2 md:mb-4">
                         <PhInstagramLogo
                             weight="fill"
                             size="32"
