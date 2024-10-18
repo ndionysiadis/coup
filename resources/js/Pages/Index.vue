@@ -56,7 +56,10 @@ const props = defineProps<{
                 />
             </div>
 
-            <div class="bg-white p-2">
+            <div
+                v-if="menus.length > 0"
+                class="max-h-[650px] overflow-auto bg-gray-800 p-2 scrollbar"
+            >
                 <Tabs>
                     <TabItems>
                         <MenuTab
@@ -67,7 +70,11 @@ const props = defineProps<{
                     </TabItems>
 
                     <TabContents>
-                        <MenuTabContent />
+                        <MenuTabContent
+                            v-for="menu in menus"
+                            :key="menu.id"
+                            :menu="menu"
+                        />
                     </TabContents>
                 </Tabs>
             </div>
