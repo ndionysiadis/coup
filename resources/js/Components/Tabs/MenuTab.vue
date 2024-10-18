@@ -2,10 +2,10 @@
 import Tab from "@/Components/Tabs/Tab.vue";
 
 const props = defineProps<{
-    menuType: App.Data.Menu.MenuTypeData;
+    menu: App.Data.Menu.MenuTypeData;
 }>();
 </script>
 
 <template>
-    <Tab>{{ menuType.name }}</Tab>
+    <Tab>{{ menu.name }}</Tab>
 </template>

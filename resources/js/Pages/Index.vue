@@ -12,6 +12,10 @@ import MenuTabContent from "@/Components/Tabs/MenuTabContent.vue";
 import MenuTab from "@/Components/Tabs/MenuTab.vue";
 
 const title = "Coffee, Wine, Kitchen";
+
+const props = defineProps<{
+    menus: App.Data.Menu.MenuTypeData[];
+}>();
 </script>
 
 <template>
@@ -55,7 +59,13 @@ const title = "Coffee, Wine, Kitchen";
             <div class="bg-white p-2">
                 <Tabs>
                     <TabItems>
-                        <MenuTab menu-type="" />
+                        <MenuTab
+                            v-for="menu in menus"
+                            :key="menu.id"
+                            :menu="menu"
+                        >
+                            {{ menu.name }}
+                        </MenuTab>
                     </TabItems>
 
                     <TabContents>
