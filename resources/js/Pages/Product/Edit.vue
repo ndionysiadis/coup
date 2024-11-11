@@ -38,7 +38,6 @@ const form = useForm<App.Data.Product.ProductData>(
     route("product.update", props.product),
     props.product,
 );
-
 function destroy() {
     router.delete(route("product.destroy", props.product), {
         preserveState: true,

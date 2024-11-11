@@ -67,9 +67,9 @@ class ProductData extends Data
     public static function rules(): array
     {
         return [
-            'name' => 'required',
+            'name' => 'sometimes|required|string',
             'description' => 'nullable',
-            'price' => 'required',
+            'price' => 'sometimes|required|numeric',
             'category' => 'nullable',
             'image' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:10240',
         ];

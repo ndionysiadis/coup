@@ -28,6 +28,7 @@
         "@phosphor-icons/vue": "^2.2.1",
         "@vueuse/components": "^11.0.3",
         "@vueuse/core": "^11.0.3",
+        "@vueuse/head": "^2.0.0",
         "@vueuse/motion": "^2.2.3",
         "axios": "^1.7.6",
         "laravel-precognition-vue-inertia": "^0.5.7",

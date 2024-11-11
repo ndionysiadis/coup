@@ -13,6 +13,7 @@ import HeadingMedium from "@/Components/Texts/HeadingMedium.vue";
 import ApplicationLogoFull from "@/Components/ApplicationLogoFull.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
+import { useHead } from "@vueuse/head";
 
 const title = "Coffee, Wine, Kitchen";
 
@@ -25,6 +26,60 @@ onMounted(() => {
     script.src = "https://cdn.lightwidget.com/widgets/lightwidget.js";
     script.async = true;
     document.body.appendChild(script);
+});
+
+useHead({
+    title: "COUP - Coffee, Wine, Kitchen | Aridaia, Pella, Greece",
+    meta: [
+        {
+            name: "description",
+            content:
+                "Ανακαλύψτε το COUP στην Αριδαία, Πέλλας, ένα γαστρονομικό μπαρ που σερβίρει πρωινό, κοκτέιλ, καφέ, δείπνο και ποικιλία κρασιών κοντά στα Λουτρά Πόζαρ.",
+        },
+        {
+            name: "keywords",
+            content:
+                "COUP, Αριδαία, Πέλλα, Ελλάδα, γαστρονομικό μπαρ, brunch, κοκτέιλ, καφές, δείπνο, κρασιά, Loutra Pozar, wine bar, coffee, cocktails, brunch, dinner, Aridaia, Pella, Greece, λουτρά πόζαρ, πρωινό",
+        },
+        { name: "robots", content: "index, follow" },
+
+        {
+            property: "og:title",
+            content: "COUP - Coffee, Wine, Kitchen | Aridaia, Pella, Greece",
+        },
+        {
+            property: "og:description",
+            content:
+                "Ανακαλύψτε το COUP, ανακάλυψε ένα γαστρονομικό μπαρ, που σερβίρει πρωινό, κοκτέιλ, καφέ και δείπνο στην Αριδαία.",
+        },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: "https://coup.com.gr" },
+        {
+            property: "og:image",
+            content: "http://coup.com.gr/images/coup-coffee-wine-kitchen.jpg",
+        },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+
+        { name: "twitter:card", content: "summary_large_image" },
+        {
+            name: "twitter:title",
+            content: "COUP - Coffee, Wine, Kitchen | Aridaia, Pella, Greece",
+        },
+        {
+            name: "twitter:description",
+            content:
+                "Ανακαλύψτε το COUP, ανακάλυψε ένα γαστρονομικό μπαρ, που σερβίρει πρωινό, κοκτέιλ, καφέ και δείπνο στην Αριδαία.",
+        },
+        {
+            name: "twitter:image",
+            content: "http://coup.com.gr/images/coup-coffee-wine-kitchen.jpg",
+        },
+
+        { name: "author", content: "COUP - Coffee, Wine, Kitchen" },
+        { name: "theme-color", content: "#111827" },
+    ],
+    link: [{ rel: "canonical", href: "https://coup.com.gr" }],
 });
 </script>
 
@@ -62,7 +117,7 @@ onMounted(() => {
                                 />
                             </div>
                             <div
-                                class="font-title col-span-6 flex flex-col items-center text-3xl text-white md:text-4xl lg:text-5xl"
+                                class="col-span-6 flex flex-col items-center font-title text-3xl text-white md:text-4xl lg:text-5xl"
                             >
                                 <div
                                     v-motion-fade-visible-once
@@ -131,7 +186,7 @@ onMounted(() => {
                     <TabItems class="sticky top-0 z-10">
                         <MenuTab
                             v-for="menu in menus"
-                            :key="menu.id"
+                            :key="menu.id as PropertyKey"
                             :menu="menu"
                         />
                     </TabItems>
@@ -140,7 +195,7 @@ onMounted(() => {
                         <MenuTabContent
                             v-motion-slide-top
                             v-for="menu in menus"
-                            :key="menu.id"
+                            :key="menu.id as PropertyKey"
                             :menu="menu"
                         />
                     </TabContents>
