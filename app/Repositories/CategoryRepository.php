@@ -23,7 +23,7 @@ class CategoryRepository
             $category = Category::create([
                 'name' => $request->name,
                 'description' => $request->description,
-                'menu_id' => $request->menuType->id
+                'menu_id' => $request->menuType?->id
             ]);
 
             if (!empty($request->products)) {
