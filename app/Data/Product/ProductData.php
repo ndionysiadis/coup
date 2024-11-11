@@ -79,7 +79,7 @@ class ProductData extends Data
     {
         return [
             'name.required' => 'Το πεδίο Όνομα είναι υποχρεωτικό',
-            'name.price' => 'Το πεδίο Τιμή είναι υποχρεωτικό',
+            'price.required' => 'Το πεδίο Τιμή είναι υποχρεωτικό',
             'image.file' => 'Το πεδίο Εικόνα πρέπει να είναι αρχείο',
             'image.mimes' => 'Η εικόνα πρέπει να είναι τύπου: jpg, jpeg, png, gif',
             'image.max' => 'Η εικόνα δεν πρέπει να ξεπερνά τα 10MB',
