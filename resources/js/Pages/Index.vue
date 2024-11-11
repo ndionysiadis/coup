@@ -186,7 +186,7 @@ useHead({
                     <TabItems class="sticky top-0 z-10">
                         <MenuTab
                             v-for="menu in menus"
-                            :key="menu.id"
+                            :key="menu.id as PropertyKey"
                             :menu="menu"
                         />
                     </TabItems>
@@ -195,7 +195,7 @@ useHead({
                         <MenuTabContent
                             v-motion-slide-top
                             v-for="menu in menus"
-                            :key="menu.id"
+                            :key="menu.id as PropertyKey"
                             :menu="menu"
                         />
                     </TabContents>
