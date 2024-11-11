@@ -33,7 +33,7 @@ class ProductController extends Controller
     public function store(ProductData $productData, Request $request)
     {
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/products', 'public');
+            $path = $request->file('image')->storePublicly('images/products', 'public');
             $productData->image = $request->file('image')->hashName();
         }
 
