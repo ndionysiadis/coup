@@ -67,7 +67,7 @@ const termsModalOpen = ref<boolean>(false);
         </div>
 
         <div
-            class="flex items-center gap-2 text-sm text-gray-300 underline underline-offset-4"
+            class="flex flex-col items-center gap-2 text-sm text-gray-300 underline underline-offset-4 md:flex-row"
         >
             <div
                 class="cursor-pointer hover:text-gray-100"
