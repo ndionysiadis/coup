@@ -15,6 +15,24 @@ import { createHead } from "@vueuse/head";
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 const head = createHead();
 
+const googleAnalyticsId = import.meta.env.VITE_GOOGLE_ANALYTICS_ID;
+
+if (googleAnalyticsId) {
+    const script = document.createElement("script");
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
+    script.async = true;
+    document.head.appendChild(script);
+
+    script.onload = () => {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(...args: any[]) {
+            window.dataLayer.push(args);
+        }
+        gtag("js", new Date());
+        gtag("config", googleAnalyticsId);
+    };
+}
+
 createInertiaApp({
     title: (title) => `${appName} - ${title}`,
     resolve: (name) =>
