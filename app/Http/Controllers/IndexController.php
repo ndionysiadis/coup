@@ -21,7 +21,11 @@ class IndexController extends Controller
             'phpVersion' => PHP_VERSION,
 
             'menus' => MenuTypeData::collect(
-                MenuType::all(), DataCollection::class)->include('categories.products')
+                MenuType::query()
+                    ->orderBy('order')
+                    ->get(),
+                DataCollection::class
+            )->include('categories.products')
         ]);
     }
 }
