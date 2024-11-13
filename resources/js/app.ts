@@ -15,7 +15,7 @@ import { createHead } from "@vueuse/head";
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 const head = createHead();
 
-const googleAnalyticsId = import.meta.env.VITE_GOOGLE_ANALYTICS_ID;
+const googleAnalyticsId = (window as any).appConfig?.googleAnalyticsId;
 
 if (googleAnalyticsId) {
     const script = document.createElement("script");
@@ -24,9 +24,9 @@ if (googleAnalyticsId) {
     document.head.appendChild(script);
 
     script.onload = () => {
-        window.dataLayer = window.dataLayer || [];
+        (window as any).dataLayer = (window as any).dataLayer || [];
         function gtag(...args: any[]) {
-            window.dataLayer.push(args);
+            (window as any).dataLayer.push(args);
         }
         gtag("js", new Date());
         gtag("config", googleAnalyticsId);
