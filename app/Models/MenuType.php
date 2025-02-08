@@ -13,6 +13,10 @@ class MenuType extends Model
     use SoftDeletes;
 
     public $guarded = [];
+    protected $fillable = [
+        'name',
+        'description',
+    ];
 
     public function categories(): HasMany
     {

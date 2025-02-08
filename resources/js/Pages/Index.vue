@@ -2,18 +2,18 @@
 import { Head } from "@inertiajs/vue3";
 import LandingLayout from "@/Layouts/LandingLayout.vue";
 import BackgroundLines from "@/Components/BackgroundLines.vue";
-import { PhBookOpenText, PhInstagramLogo } from "@phosphor-icons/vue";
+import { PhBookOpenText, PhStar } from "@phosphor-icons/vue";
 import Tabs from "@/Components/Tabs/Tabs.vue";
 import TabItems from "@/Components/Tabs/TabItems.vue";
 import TabContents from "@/Components/Tabs/TabContents.vue";
 import MenuTabContent from "@/Components/Tabs/MenuTabContent.vue";
 import MenuTab from "@/Components/Tabs/MenuTab.vue";
-import { onMounted } from "vue";
 import HeadingMedium from "@/Components/Texts/HeadingMedium.vue";
 import ApplicationLogoFull from "@/Components/ApplicationLogoFull.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
 import { useHead } from "@vueuse/head";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 
 const title = "Coffee, Wine, Kitchen";
 
@@ -21,12 +21,12 @@ const props = defineProps<{
     menus: App.Data.Menu.MenuTypeData[];
 }>();
 
-onMounted(() => {
-    const script = document.createElement("script");
-    script.src = "https://cdn.lightwidget.com/widgets/lightwidget.js";
-    script.async = true;
-    document.body.appendChild(script);
-});
+// onMounted(() => {
+//     const script = document.createElement("script");
+//     script.src = "https://cdn.lightwidget.com/widgets/lightwidget.js";
+//     script.async = true;
+//     document.body.appendChild(script);
+// });
 
 useHead({
     title: "COUP - Coffee, Wine, Kitchen | Aridaia, Pella, Greece",
@@ -238,21 +238,21 @@ useHead({
                     v-motion-slide-visible-once-right
                     class="col-span-2 overflow-auto bg-gray-800/70 p-4 ring-1 ring-inset ring-primary-500 scrollbar md:max-h-80"
                 >
-                    <div class="flex items-center gap-2 md:mb-4">
-                        <PhInstagramLogo
-                            weight="fill"
-                            size="32"
-                            class="text-primary-400"
-                        />
-                        <HeadingMedium id="instagram">Instagram</HeadingMedium>
+                    <div class="flex items-center justify-between md:mb-4">
+                        <div class="flex items-center gap-2 ">
+                            <PhStar
+                                weight="fill"
+                                size="32"
+                                class="text-primary-400"
+                            />
+                            <HeadingMedium id="google-reviews"
+                                >Google Reviews</HeadingMedium
+                            >
+                        </div>
+                        <AppLink blank href="https://www.google.com/search?hl=el-GR&gl=gr&q=Coup+Espresso+%26+Wine+Bar,+%CE%9A%CF%8D%CF%80%CF%81%CE%BF%CF%85+14,+%CE%91%CF%81%CE%B9%CE%B4%CE%B1%CE%AF%CE%B1+584+00&ludocid=3107005031310613240&lsig=AB86z5X-J2ednnKDOnszI-1gTq4r#lrd=0x1357b288d884f787:0x2b1e4c9d469edaf8,3">
+                            <PrimaryButton> Αξιολογήστε μας!</PrimaryButton>
+                        </AppLink>
                     </div>
-                    <iframe
-                        src="//lightwidget.com/widgets/d2d697d22f80545fbbf4857152f2b0f9.html"
-                        scrolling="no"
-                        allowtransparency="true"
-                        class="lightwidget-widget"
-                        style="width: 100%; border: 0; overflow: hidden"
-                    ></iframe>
                 </div>
             </div>
         </LandingLayout>
