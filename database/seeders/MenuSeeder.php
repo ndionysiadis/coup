@@ -30,7 +30,7 @@ class MenuSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'name' => 'Wine',
+                'name' => 'Wine by Glass',
                 'description' => null,
                 'order' => 3,
                 'created_at' => now(),
@@ -38,7 +38,7 @@ class MenuSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'name' => 'Coffee & Drinks',
+                'name' => 'Wine List',
                 'description' => null,
                 'order' => 4,
                 'created_at' => now(),
@@ -46,9 +46,17 @@ class MenuSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'name' => 'Cocktails',
+                'name' => 'Coffee & Drinks',
                 'description' => null,
                 'order' => 5,
+                'created_at' => now(),
+                'updated_at' => now(),
+                'deleted_at' => null,
+            ],
+            [
+                'name' => 'Cocktails',
+                'description' => null,
+                'order' => 6,
                 'created_at' => now(),
                 'updated_at' => now(),
                 'deleted_at' => null,
