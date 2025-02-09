@@ -14,7 +14,7 @@
             gtag('config', '{{ config('services.google_analytics.id') }}');
         </script>
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ config('app.name', 'COUP') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

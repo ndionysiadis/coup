@@ -21,13 +21,6 @@ const props = defineProps<{
     menus: App.Data.Menu.MenuTypeData[];
 }>();
 
-// onMounted(() => {
-//     const script = document.createElement("script");
-//     script.src = "https://cdn.lightwidget.com/widgets/lightwidget.js";
-//     script.async = true;
-//     document.body.appendChild(script);
-// });
-
 useHead({
     title: "COUP - Coffee, Wine, Kitchen | Aridaia, Pella, Greece",
     meta: [
@@ -168,11 +161,11 @@ useHead({
                     </div>
                 </div>
 
-                <div class="absolute h-full w-full bg-gray-900 opacity-80" />
+                <div class="absolute h-full w-full bg-gray-900 opacity-30"/>
 
                 <img
-                    class="h-full w-full object-cover"
-                    src="https://images.unsplash.com/photo-1508766917616-d22f3f1eea14?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    class="h-full w-full object-cover opacity-30"
+                    src="/images/header-bg.jpg"
                     alt="COUP-Coffee, Wine, Kitchen"
                 />
             </div>
@@ -202,56 +195,79 @@ useHead({
                 </Tabs>
             </div>
 
-            <div class="grid gap-4 md:grid-cols-4">
+            <div class="grid gap-4 md:grid-cols-6">
                 <div
                     v-motion-slide-visible-once-left
-                    class="col-span-2 overflow-auto bg-gray-800/70 p-4 ring-1 ring-inset ring-primary-500 scrollbar md:max-h-80"
+                    class="col-span-6 flex flex-col gap-4 overflow-auto bg-gray-800/70 p-4 ring-1 ring-inset ring-primary-500 scrollbar md:max-h-80 md:flex-row lg:col-span-4"
                 >
-                    <div class="mb-2 flex items-center gap-2">
-                        <PhBookOpenText
-                            weight="fill"
-                            size="32"
-                            class="text-primary-400"
-                        />
-                        <HeadingMedium id="about-us">Το COUP</HeadingMedium>
-                    </div>
+                    <img
+                        class="h-full w-full object-contain md:object-cover"
+                        src="/images/about-us.jpg"
+                        alt="COUP-Coffee, Wine, Kitchen"
+                    />
 
-                    <div class="text-white">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Ab alias amet atque cum debitis deleniti dolore
-                        eius esse ex excepturi exercitationem expedita facere
-                        fuga, illo ipsa, magni modi nihil odio placeat possimus
-                        quas quis quo repellat reprehenderit similique suscipit
-                        temporibus tenetur vel vero voluptatum! Alias asperiores
-                        delectus enim, incidunt ipsa numquam perspiciatis
-                        provident, reiciendis similique sint sunt velit vitae
-                        voluptates. A ad amet blanditiis, consequuntur
-                        cupiditate eos esse excepturi, expedita hic inventore
-                        ipsa, libero nobis non nulla quibusdam repellendus
-                        tempora vero. Cum deserunt eligendi, eum iure molestiae
-                        repellendus totam. Aliquid asperiores deleniti inventore
-                        ipsum molestiae numquam quod vero voluptas.
+                    <div>
+                        <div class="mb-2 flex items-center gap-2">
+                            <PhBookOpenText
+                                weight="fill"
+                                size="32"
+                                class="text-primary-400"
+                            />
+                            <HeadingMedium id="about-us">Το COUP</HeadingMedium>
+                        </div>
+
+                        <div class="text-white">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit. Ab alias amet atque cum debitis deleniti
+                            dolore eius esse ex excepturi exercitationem
+                            expedita facere fuga, illo ipsa, magni modi nihil
+                            odio placeat possimus quas quis quo repellat
+                            reprehenderit similique suscipit temporibus tenetur
+                            vel vero voluptatum! Alias asperiores delectus enim,
+                            incidunt ipsa numquam perspiciatis provident,
+                            reiciendis similique sint sunt velit vitae
+                            voluptates. A ad amet blanditiis, consequuntur
+                            cupiditate eos esse excepturi, expedita hic
+                            inventore ipsa, libero nobis non nulla quibusdam
+                            repellendus tempora vero.
+                        </div>
                     </div>
                 </div>
 
                 <div
                     v-motion-slide-visible-once-right
-                    class="col-span-2 overflow-auto bg-gray-800/70 p-4 ring-1 ring-inset ring-primary-500 scrollbar md:max-h-80"
+                    class="col-span-6 overflow-auto bg-gray-800/70 p-4 ring-1 ring-inset ring-primary-500 scrollbar md:max-h-80 lg:col-span-2"
                 >
-                    <div class="flex items-center justify-between md:mb-4">
-                        <div class="flex items-center gap-2 ">
+                    <div
+                        class="flex flex-col md:mb-4 md:flex-row md:items-center md:justify-between"
+                    >
+                        <div class="flex items-center gap-2">
                             <PhStar
                                 weight="fill"
                                 size="32"
                                 class="text-primary-400"
                             />
                             <HeadingMedium id="google-reviews"
-                                >Google Reviews</HeadingMedium
-                            >
+                                >Reviews
+                            </HeadingMedium>
                         </div>
-                        <AppLink blank href="https://www.google.com/search?hl=el-GR&gl=gr&q=Coup+Espresso+%26+Wine+Bar,+%CE%9A%CF%8D%CF%80%CF%81%CE%BF%CF%85+14,+%CE%91%CF%81%CE%B9%CE%B4%CE%B1%CE%AF%CE%B1+584+00&ludocid=3107005031310613240&lsig=AB86z5X-J2ednnKDOnszI-1gTq4r#lrd=0x1357b288d884f787:0x2b1e4c9d469edaf8,3">
+                        <AppLink
+                            blank
+                            href="https://www.google.com/search?hl=el-GR&gl=gr&q=Coup+Espresso+%26+Wine+Bar,+%CE%9A%CF%8D%CF%80%CF%81%CE%BF%CF%85+14,+%CE%91%CF%81%CE%B9%CE%B4%CE%B1%CE%AF%CE%B1+584+00&ludocid=3107005031310613240&lsig=AB86z5X-J2ednnKDOnszI-1gTq4r#lrd=0x1357b288d884f787:0x2b1e4c9d469edaf8,3"
+                        >
                             <PrimaryButton> Αξιολογήστε μας!</PrimaryButton>
                         </AppLink>
+                    </div>
+
+                    <div class="w-full aspect-video mt-4 lg:mt-0">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3012.3372542582574!2d22.05970867665293!3d40.97409537135539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1357b288d884f787%3A0x2b1e4c9d469edaf8!2sCoup%20Espresso%20%26%20Wine%20Bar!5e0!3m2!1sel!2sgr!4v1739098846464!5m2!1sel!2sgr"
+                            class="w-full h-full"
+                            style="border: 0;"
+                            allowfullscreen
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
             </div>
