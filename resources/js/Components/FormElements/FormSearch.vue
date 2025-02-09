@@ -21,8 +21,6 @@ function updateValue(event: Event) {
     const input = event.target as HTMLInputElement;
     emit("update:modelValue", input.value);
 }
-
-console.log("Props:", props);
 </script>
 
 <template>

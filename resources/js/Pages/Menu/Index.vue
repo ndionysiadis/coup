@@ -30,8 +30,6 @@ const term = ref<string>(props.term!);
 const items = ref(props.menuTypes.data);
 
 function reorder() {
-    console.log('Route:', route("menu.reorder", { menuType: items.value[0].id }));
-    console.log('First item:', items.value[0]);
     router.post(
         route("menu.reorder", { menuType: items.value[0].id }),  // Changed to menuType to match route parameter
         {
