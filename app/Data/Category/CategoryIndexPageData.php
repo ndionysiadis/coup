@@ -17,7 +17,9 @@ class CategoryIndexPageData extends Data
     public function __construct(bool $withTrashed = false)
     {
 
-        $query = Category::query()->searchIndex()->orderBy('order');
+        $query = Category::query()
+            ->searchIndex()
+            ->orderBy('order');
 
         if ($withTrashed) {
             $query->onlyTrashed();

@@ -11,6 +11,7 @@ class ProductPageData extends Data
 {
     /** @var PaginatedDataCollection<ProductData> */
     public PaginatedDataCollection $products;
+
     public string $term;
 
     public function __construct(bool $withTrashed = false)

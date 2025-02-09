@@ -124,7 +124,7 @@ class CategoryController extends Controller
             ]);
     }
 
-    public function reorder(Category $category, Request $request)
+    public function reorder(Request $request)
     {
         foreach ($request->options as $index => $option) {
             Category::find($option['id'])

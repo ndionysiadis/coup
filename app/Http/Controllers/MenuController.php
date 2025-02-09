@@ -8,6 +8,7 @@ use App\Data\Menu\MenuTypeShowPageData;
 use App\Data\ToastData;
 use App\Models\MenuType;
 use App\Repositories\MenuRepository;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -125,7 +126,7 @@ class MenuController extends Controller
             ]);
     }
 
-    public function reorder(MenuType $menu, Request $request)
+    public function reorder(Request $request)
     {
         foreach ($request->options as $index => $option) {
             MenuType::find($option['id'])

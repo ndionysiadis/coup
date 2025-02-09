@@ -63,6 +63,7 @@ watch(
             {
                 preserveState: true,
                 only: ["categories"],
+                onSuccess: () => items.value = props.categories.data,
             },
         );
     }, 1000),

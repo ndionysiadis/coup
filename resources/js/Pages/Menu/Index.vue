@@ -10,7 +10,7 @@ import Breadcrumbs from "@/Components/Pagination/Breadcrumbs.vue";
 import AppLink from "@/Components/Links/AppLink.vue";
 import { PhArchive, PhFiles, PhPlus } from "@phosphor-icons/vue";
 import IconPrimaryButton from "@/Components/Buttons/IconPrimaryButton.vue";
-import { ref, watch, computed } from "vue";
+import { ref, watch } from "vue";
 import debounce from "lodash/debounce";
 import FormSearch from "@/Components/FormElements/FormSearch.vue";
 import SecondaryButtonIcon from "@/Components/Buttons/SecondaryButtonIcon.vue";
@@ -28,66 +28,38 @@ const props = defineProps<{
 //@ts-ignore
 const term = ref<string>(props.term!);
 const items = ref(props.menuTypes.data);
-const isDragging = ref(false);
-
-watch(
-    () => props.menuTypes,
-    (newMenuTypes) => {
-        if (!isDragging.value) {
-            items.value = newMenuTypes.data;
-        }
-    },
-    { deep: true },
-);
-
-const draggableEnabled = computed(() => {
-    return !term.value && items.value.length > 0;
-});
-
-const handleSearch = debounce((value: string) => {
-    let url = new URL(window.location.href);
-    let params = new URLSearchParams(url.search);
-
-    if (value) {
-        params.set("term", value);
-    } else {
-        params.delete("term");
-    }
-
-    url.search = params.toString();
-    router.get(
-        url.href,
-        {},
-        {
-            preserveState: true,
-            preserveScroll: true,
-            only: ["menuTypes"],
-        },
-    );
-}, 300);
-
-watch(term, handleSearch);
 
 function reorder() {
-    if (!term.value) {
-        isDragging.value = true;
-        router.post(
-            route("menu.reorder", { menuType: items.value[0].id }),
+    console.log('Route:', route("menu.reorder", { menuType: items.value[0].id }));
+    console.log('First item:', items.value[0]);
+    router.post(
+        route("menu.reorder", { menuType: items.value[0].id }),  // Changed to menuType to match route parameter
+        {
+            options: items.value.map((item) => ({ id: item.id })),
+        },
+    );
+}
+
+watch(
+    term,
+    debounce((value) => {
+        let fullUrl: string = window.location.href;
+        let url: URL = new URL(fullUrl);
+        let params: URLSearchParams = new URLSearchParams(url.search);
+
+        params.set("term", value);
+
+        url.search = params.toString();
+        router.get(
+            url.href,
+            {},
             {
-                options: items.value.map((item) => ({ id: item.id })),
-            },
-            {
-                onSuccess: () => {
-                    isDragging.value = false;
-                },
-                onError: () => {
-                    isDragging.value = false;
-                    items.value = props.menuTypes.data;
-                },
+                preserveState: true,
+                only: ["menuTypes"],
             },
         );
-    }
-}
+    }, 1000),
+);
 </script>
 
 <template>
@@ -135,6 +107,7 @@ function reorder() {
                 <FormSearch :clear-route="route('menu.index')" v-model="term" />
 
                 <Draggable
+                    v-if="items.length > 0"
                     v-model="items"
                     item-key="id"
                     @change="reorder"
@@ -142,11 +115,10 @@ function reorder() {
                     ghost-class="ghost"
                     drag-class="drag"
                     class="flex flex-col gap-2"
-                    :disabled="!draggableEnabled"
                 >
                     <template #item="{ element }">
                         <MenuCard
-                            :is-draggable="draggableEnabled"
+                            is-draggable
                             :key="element.id!"
                             :menu-type="element"
                             class="transition-all duration-300 ease-in-out"
