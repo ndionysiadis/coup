@@ -56,6 +56,7 @@ watch(
             {
                 preserveState: true,
                 only: ["menuTypes"],
+                onSuccess: () => items.value = props.menuTypes.data,
             },
         );
     }, 1000),

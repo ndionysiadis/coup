@@ -65,6 +65,7 @@ watch(
             {
                 preserveState: true,
                 only: ["products"],
+                onSuccess: () => items.value = props.products.data,
             },
         );
     }, 1000),

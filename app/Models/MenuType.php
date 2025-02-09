@@ -16,6 +16,7 @@ class MenuType extends Model
     protected $fillable = [
         'name',
         'description',
+        'order'
     ];
 
     public function categories(): HasMany
