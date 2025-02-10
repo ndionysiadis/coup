@@ -161,7 +161,7 @@ useHead({
                     </div>
                 </div>
 
-                <div class="absolute h-full w-full bg-gray-900 opacity-30"/>
+                <div class="absolute h-full w-full bg-gray-900 opacity-30" />
 
                 <img
                     class="h-full w-full object-cover opacity-30"
@@ -216,20 +216,31 @@ useHead({
                             <HeadingMedium id="about-us">Το COUP</HeadingMedium>
                         </div>
 
-                        <div class="text-white">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit. Ab alias amet atque cum debitis deleniti
-                            dolore eius esse ex excepturi exercitationem
-                            expedita facere fuga, illo ipsa, magni modi nihil
-                            odio placeat possimus quas quis quo repellat
-                            reprehenderit similique suscipit temporibus tenetur
-                            vel vero voluptatum! Alias asperiores delectus enim,
-                            incidunt ipsa numquam perspiciatis provident,
-                            reiciendis similique sint sunt velit vitae
-                            voluptates. A ad amet blanditiis, consequuntur
-                            cupiditate eos esse excepturi, expedita hic
-                            inventore ipsa, libero nobis non nulla quibusdam
-                            repellendus tempora vero.
+                        <div class="text-white space-y-2">
+                            <p>
+                                Το COUP γεννήθηκε το 2013 στην Αριδαία, μια πόλη
+                                γνωστή για τα Λουτρά Πόζαρ.
+                            </p>
+
+                            <p>
+                                Με πάθος για ποιότητα και αισθητική, συνδυάζει
+                                εκλεκτό καφέ, ενημερωμένη λίστα κρασιών, premium
+                                spirits και μοναδικά cocktails.
+                            </p>
+                            <p>
+                                Από το 2015, εξελίχθηκε στη γαστρονομία,
+                                προσφέροντας εκλεκτά τυριά, αλλαντικά και
+                                συνοδευτικά για κρασί και ποτό. Σήμερα, το μενού
+                                του εμπνέεται από τη μεσογειακή και διεθνή
+                                κουζίνα, από brunch μέχρι premium steak και
+                                ριζότο μανιταριών.
+                            </p>
+                            <p>
+                                Με ζεστό design, φιλική εξυπηρέτηση και
+                                προσεγμένη μουσική, το COUP είναι το απόλυτο
+                                σημείο συνάντησης. Ανακαλύψτε το και γίνετε
+                                μέρος της εμπειρίας!
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -259,14 +270,15 @@ useHead({
                         </AppLink>
                     </div>
 
-                    <div class="w-full aspect-video mt-4 lg:mt-0">
+                    <div class="mt-4 aspect-video w-full lg:mt-0">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3012.3372542582574!2d22.05970867665293!3d40.97409537135539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1357b288d884f787%3A0x2b1e4c9d469edaf8!2sCoup%20Espresso%20%26%20Wine%20Bar!5e0!3m2!1sel!2sgr!4v1739098846464!5m2!1sel!2sgr"
-                            class="w-full h-full"
-                            style="border: 0;"
+                            class="h-full w-full"
+                            style="border: 0"
                             allowfullscreen
                             loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
+                            referrerpolicy="no-referrer-when-downgrade"
+                        >
                         </iframe>
                     </div>
                 </div>
