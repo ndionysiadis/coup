@@ -11,6 +11,8 @@ import Toast from "vue-toastification";
 import VueViewer from "v-viewer";
 import "viewerjs/dist/viewer.css";
 import { createHead } from "@vueuse/head";
+import { VueCookieNext } from "vue-cookie-next";
+
 
 const appName = import.meta.env.VITE_APP_NAME || "COUP";
 const head = createHead();
@@ -31,6 +33,7 @@ createInertiaApp({
             .use(Toast)
             .use(VueViewer)
             .use(head)
+            .use(VueCookieNext)
             .mount(el);
     },
     progress: {

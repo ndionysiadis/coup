@@ -14,6 +14,7 @@ import AppLink from "@/Components/Links/AppLink.vue";
 import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
 import { useHead } from "@vueuse/head";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
+import CookieConsent from "@/Components/Cards/CookieConsent.vue";
 
 const title = "Coffee, Wine, Kitchen";
 
@@ -83,6 +84,7 @@ useHead({
         <BackgroundLines class="absolute" />
 
         <LandingLayout>
+            <CookieConsent/>
             <div class="group relative h-96">
                 <div
                     class="absolute inset-0 z-10 flex flex-col justify-center px-6"

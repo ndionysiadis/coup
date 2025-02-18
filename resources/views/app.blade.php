@@ -5,13 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.google_analytics.id') }}"></script>
         <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+            document.addEventListener("DOMContentLoaded", function() {
+                function getCookie(name) {
+                    let match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+                    return match ? match[2] : null;
+                }
 
-            gtag('config', '{{ config('services.google_analytics.id') }}');
+                const GA_ID = "{{ config('services.google_analytics.id') }}";
+
+                if (getCookie("cookie_consent") === "true" && GA_ID) {
+                    let gtagScript = document.createElement("script");
+                    gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+                    gtagScript.async = true;
+                    document.head.appendChild(gtagScript);
+
+                    gtagScript.onload = function() {
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){ window.dataLayer.push(arguments); }
+                        gtag('js', new Date());
+                        gtag('config', GA_ID);
+                    };
+                }
+            });
         </script>
 
         <title inertia>{{ config('app.name', 'COUP') }}</title>
