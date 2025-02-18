@@ -12,7 +12,7 @@ import VueViewer from "v-viewer";
 import "viewerjs/dist/viewer.css";
 import { createHead } from "@vueuse/head";
 
-const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+const appName = import.meta.env.VITE_APP_NAME || "COUP";
 const head = createHead();
 
 createInertiaApp({
