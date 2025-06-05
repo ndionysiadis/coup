@@ -81,6 +81,7 @@ class ProductController extends Controller
     /**
      * @throws Throwable
      */
+
     public function update(ProductData $requestData, Product $product)
     {
         if (request()->hasFile('image')) {
