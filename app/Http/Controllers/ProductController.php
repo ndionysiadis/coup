@@ -81,11 +81,12 @@ class ProductController extends Controller
     /**
      * @throws Throwable
      */
-    public function update(ProductData $requestData, Product $product, Request $request)
+
+    public function update(ProductData $requestData, Product $product)
     {
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->storePublicly('images/products', 'public');
-            $requestData->image = $request->file('image')->hashName();
+        if (request()->hasFile('image')) {
+            request()->file('image')->storePublicly('images/products', 'public');
+            $requestData->image = request()->file('image')->hashName();
         }
 
         $product->update($requestData->toDatabase());

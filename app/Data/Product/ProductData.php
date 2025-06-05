@@ -21,9 +21,9 @@ class ProductData extends Data
         #[WithoutValidation]
         public Optional|int|null                 $categoryId,
 
-        public string                            $name,
+        public Optional|string|null              $name,
 
-        public string                            $price,
+        public Optional|string|null              $price,
         #[WithoutValidation]
         public UploadedFile|Optional|string|null $image,
         public ?string                           $description,
@@ -88,12 +88,14 @@ class ProductData extends Data
 
     public function toDatabase(): array
     {
-        return [
+        $data = [
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
             'category_id' => $this->category?->id,
-            'image' => $this->image
+            'image' => $this->image,
         ];
+
+        return array_filter($data, fn ($value) => ! $value instanceof Optional);
     }
 }
