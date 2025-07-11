@@ -3,25 +3,57 @@ import TabContent from "@/Components/Tabs/TabContent.vue";
 import HeadingMedium from "@/Components/Texts/HeadingMedium.vue";
 import ImageCard from "@/Components/Cards/ImageCard.vue";
 import HeadingLarge from "@/Components/Texts/HeadingLarge.vue";
+import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 
 const props = defineProps<{
     menu: App.Data.Menu.MenuTypeData;
 }>();
+
+const scrollTo = (id: string) => {
+    const container = document.getElementById("menu");
+    const target = document.getElementById(id);
+
+    if (container && target) {
+        const containerTop = container.getBoundingClientRect().top;
+        const targetTop = target.getBoundingClientRect().top;
+        const offset = -200;
+
+        const scrollPosition = container.scrollTop + (targetTop - containerTop) + offset;
+
+        container.scrollTo({
+            top: scrollPosition,
+            behavior: "smooth",
+        });
+    }
+};
 </script>
 
 <template>
     <TabContent>
         <div>
-            <div class="flex flex-col text-center">
-                <HeadingLarge>{{ menu.name }}</HeadingLarge>
-                <div class="text-sm text-gray-400">
-                    {{ menu.description }}
+            <div class="sticky top-9 z-10 bg-gray-800 py-4">
+                <div class="flex flex-col text-center">
+                    <HeadingLarge>{{ menu.name }}</HeadingLarge>
+                    <div class="text-sm text-gray-400">
+                        {{ menu.description }}
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-2 pt-4">
+                    <a
+                        v-for="category in menu.categories"
+                        :key="category.id"
+                        :href="'#' + category.name"
+                        @click.prevent="scrollTo(category.name)"
+                    >
+                        <SecondaryButton>{{category.name}}</SecondaryButton>
+                    </a>
                 </div>
             </div>
 
             <div v-for="category in menu.categories" :key="category.id">
                 <div>
-                    <HeadingMedium>{{ category.name }}</HeadingMedium>
+                    <HeadingMedium :id="category.name">{{ category.name }}</HeadingMedium>
                     <div class="text-sm text-gray-400">
                         {{ category.description }}
                     </div>
@@ -56,6 +88,6 @@ const props = defineProps<{
                     </li>
                 </ul>
             </div>
-        </div></TabContent
-    >
+        </div>
+    </TabContent>
 </template>
