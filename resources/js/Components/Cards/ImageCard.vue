@@ -25,7 +25,7 @@ const fullImageUrl = computed(() => {
     />
     <div
         v-else
-        class="flex size-20 items-center justify-center bg-gray-700 text-gray-400"
+        class="flex size-16 lg:size-20 items-center justify-center bg-gray-700 text-gray-400"
     >
         <PhImageSquare size="42" />
     </div>

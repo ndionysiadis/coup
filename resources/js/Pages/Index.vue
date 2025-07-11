@@ -15,12 +15,25 @@ import HeadingTiny from "@/Components/Texts/HeadingTiny.vue";
 import { useHead } from "@vueuse/head";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 import CookieConsent from "@/Components/Cards/CookieConsent.vue";
+import { ref } from "vue";
+import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
+import MenuTabContentModal from "@/Components/Tabs/MenuTabContentModal.vue";
 
 const title = "Coffee, Wine, Kitchen";
 
 const props = defineProps<{
     menus: App.Data.Menu.MenuTypeData[];
 }>();
+
+const openMenuId = ref<number | null>(null)
+
+const openMenuModal = (menuId: number) => {
+    openMenuId.value = menuId
+}
+
+const closeMenuModal = () => {
+    openMenuId.value = null
+}
 
 useHead({
     title: "COUP - Coffee, Wine, Kitchen | Aridaia, Pella, Greece",
@@ -175,7 +188,7 @@ useHead({
             <div
                 id="menu"
                 v-if="menus.length > 0"
-                class="max-h-[850px] overflow-auto bg-gray-800 scrollbar sm:px-4 md:max-h-[650px]"
+                class="max-h-[1240px] overflow-auto bg-gray-800 scrollbar sm:px-4 md:max-h-[950px] hidden lg:block"
             >
                 <Tabs class="relative">
                     <TabItems class="sticky top-0 z-10">
@@ -196,6 +209,25 @@ useHead({
                     </TabContents>
                 </Tabs>
             </div>
+
+            <div class="p-4 space-y-2 bg-gray-800 lg:hidden">
+                <template v-for="menu in menus" :key="menu.id as PropertyKey">
+                    <SecondaryButton
+                        class="w-full rounded bg-primary-500 px-4 py-2 text-white"
+                        @click="openMenuModal(menu.id)"
+                    >
+                        {{ menu.name }}
+                    </SecondaryButton>
+                </template>
+            </div>
+
+            <MenuTabContentModal
+                v-for="menu in menus"
+                :key="menu.id as PropertyKey"
+                :menu="menu"
+                :open="openMenuId === menu.id"
+                @closeModal="closeMenuModal"
+            />
 
             <div class="grid gap-4 md:grid-cols-6">
                 <div
