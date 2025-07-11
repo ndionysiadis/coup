@@ -214,7 +214,7 @@ useHead({
                 <template v-for="menu in menus" :key="menu.id as PropertyKey">
                     <SecondaryButton
                         class="w-full rounded bg-primary-500 px-4 py-2 text-white"
-                        @click="openMenuModal(menu.id)"
+                        @click="openMenuModal(menu.id!)"
                     >
                         {{ menu.name }}
                     </SecondaryButton>
