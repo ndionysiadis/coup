@@ -77,7 +77,7 @@ const scrollTo = (id: string) => {
                     >
                         <DialogPanel
                             id="modal-content"
-                            class="relative transform h-screen bg-gray-800 p-4 text-left ring-1 ring-gray-600 overflow-y-auto shadow-xl shadow-gray-900 transition-all"
+                            class="relative transform h-[100dvh] bg-gray-800 p-4 text-left ring-1 ring-gray-600 overflow-y-auto shadow-xl shadow-gray-900 transition-all"
                         >
                             <div class="sticky -top-5 z-10 bg-gray-800 py-2">
                                 <div class="flex justify-between">
@@ -138,7 +138,7 @@ const scrollTo = (id: string) => {
                                             <div class="flex flex-1 flex-col">
                                                 <div class="flex items-center justify-between">
                                                     <div class="line-clamp-1 hover:line-clamp-0">{{ product.name }}</div>
-                                                    <div class="text-xs font-semibold">{{ product.price }} &#8364;</div>
+                                                    <div class="font-semibold flex-shrink-0">{{ product.price }} &#8364;</div>
                                                 </div>
 
                                                 <div class="text-sm text-gray-400">
