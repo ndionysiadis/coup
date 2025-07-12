@@ -105,7 +105,7 @@ useHead({
                     <div class="flex flex-col items-center gap-6 text-center">
                         <AppLink
                             :href="route('index')"
-                            class="w-24 fill-white lg:w-32"
+                            class="fill-white w-32"
                         >
                             <ApplicationLogoFull />
                         </AppLink>
@@ -213,7 +213,7 @@ useHead({
             <div class="p-4 space-y-2 bg-gray-800 lg:hidden">
                 <template v-for="menu in menus" :key="menu.id as PropertyKey">
                     <SecondaryButton
-                        class="w-full rounded bg-primary-500 px-4 py-2 text-white"
+                        class="w-full"
                         @click="openMenuModal(menu.id!)"
                     >
                         {{ menu.name }}
